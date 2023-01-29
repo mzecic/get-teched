@@ -7,6 +7,7 @@ import TechGridTile from "./components/TechGridTile";
 
 import * as news from "./utils/gnews";
 import { articles } from "./dummy-data";
+import { WebView } from "react-native-webview";
 
 export default function App() {
   const [techNews, setTechNews] = useState([]);

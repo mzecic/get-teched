@@ -6,14 +6,21 @@ import {
   Platform,
   Image,
   Linking,
+  Alert,
 } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 
 export default function TechGridTile({ data }) {
-  console.log(data.item.image);
+  console.log(data.item.url);
+  async function onPressHandler() {
+    let result = await WebBrowser.openBrowserAsync(data.item.url);
+    return result;
+  }
+
   return (
     <View style={styles.gridItem}>
       <Pressable
-        onPress={() => Linking.openURL(data.item.url)}
+        onPress={onPressHandler}
         android_ripple={{ color: "ccc" }}
         style={({ pressed }) => [
           styles.button,
