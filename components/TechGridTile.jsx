@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Platform,
   Image,
+  Linking,
 } from "react-native";
 
 export default function TechGridTile({ data }) {
@@ -12,6 +13,7 @@ export default function TechGridTile({ data }) {
   return (
     <View style={styles.gridItem}>
       <Pressable
+        onPress={() => Linking.openURL(data.item.url)}
         android_ripple={{ color: "ccc" }}
         style={({ pressed }) => [
           styles.button,
@@ -23,10 +25,9 @@ export default function TechGridTile({ data }) {
           <Text style={styles.title}>{data.item.title}</Text>
         </View>
         <View style={styles.imageContainer}>
-          <Text>This is the image</Text>
           <Image
-            style={{ width: "100%", height: "100%" }}
-            source={{ url: data.item.image }}
+            style={[{ width: "80%", height: "80%" }, styles.image]}
+            source={{ uri: data.item.image }}
           />
         </View>
       </Pressable>
@@ -38,10 +39,9 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     height: 300,
-    width: "90%",
-    marginHorizontal: "5%",
     marginVertical: 16,
-    borderRadius: 8,
+    marginHorizontal: 16,
+    borderRadius: 18,
     elevation: 8,
     backgroundColor: "white",
     shadowColor: "black",
@@ -52,10 +52,11 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
-    width: "100%",
-    height: "100%",
+    padding: 16,
   },
   button: {
     flex: 1,
