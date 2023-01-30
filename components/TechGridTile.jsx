@@ -26,7 +26,6 @@ export default function TechGridTile({ data }) {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
-        // onPress={onPress}
       >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{data.item.title}</Text>
