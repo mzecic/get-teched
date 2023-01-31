@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 18,
     elevation: 8,
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowColor: "black",
     shadowOpacity: 0.5,
     shadowOffset: { width: 4, height: 4 },
@@ -57,12 +57,17 @@ const styles = StyleSheet.create({
     overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
   imageContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 16,
   },
   image: {
-    padding: 16,
+    width: "100%",
+    height: "100%",
+    borderBottomEndRadius: 16,
+    borderBottomStartRadius: 16,
   },
   button: {
     flex: 1,
