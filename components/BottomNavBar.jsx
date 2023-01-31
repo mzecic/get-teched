@@ -95,17 +95,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     backgroundColor: "#E6E6E6",
-    borderRadius: 24,
     border: "2px solid black",
     overflow: "hidden",
   },
   innerContainer: {
-    borderRadius: 24,
-    backgroundColor: "red",
+    backgroundColor: "grey",
   },
   navIcon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     margin: 16,
   },
   buttonPressed: {

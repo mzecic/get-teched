@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { Alert, StyleSheet, Animated } from "react-native";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -19,6 +19,13 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
 
+  const yOffset = useRef(new Animated.Value(0)).current;
+  const headerOpacity = yOffset.interpolate({
+    inputRange: [0, 200],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
+
   useEffect(function () {
     (async function () {
       // const techNews = await news.getTechNews();
@@ -34,8 +41,27 @@ export default function App() {
       {/* <SafeAreaView style={styles.mainContainer}> */}
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen options={{ title: "GetTeched" }} name="HomeScreen">
-            {(props) => <HomeScreen techNews={fakeNews} />}
+          <Stack.Screen
+            options={{
+              title: "GetTeched",
+              headerStyle: {
+                position: "fixed",
+                backgroundColor: "transparent",
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
+              },
+            }}
+            name="HomeScreen"
+          >
+            {(props) => (
+              <HomeScreen
+                techNews={fakeNews}
+                yOffset={yOffset}
+                headerOpacity={headerOpacity}
+              />
+            )}
           </Stack.Screen>
           <Stack.Screen options={{ title: "Gaming" }} name="GamingNewsScreen">
             {(props) => <GamingNewsScreen techNews={fakeNews} />}
@@ -55,6 +81,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   mainContainer: {
+    flex: 1,
+  },
+  scrollContainer: {
     flex: 1,
   },
 });
