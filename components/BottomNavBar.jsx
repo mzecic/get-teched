@@ -10,7 +10,7 @@ export default function BottomNavBar() {
       <View style={styles.navContainer}>
         <View>
           <Pressable
-            onPress={() => navigation.navigate("GamingNewsScreen")}
+            onPress={() => navigation.navigate("HomeScreen")}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -40,7 +40,7 @@ export default function BottomNavBar() {
         </View>
         <View>
           <Pressable
-            onPress={() => navigation.navigate("GamingNewsScreen")}
+            onPress={() => navigation.navigate("AudioNewsScreen")}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -55,7 +55,7 @@ export default function BottomNavBar() {
         </View>
         <View>
           <Pressable
-            onPress={() => navigation.navigate("GamingNewsScreen")}
+            onPress={() => navigation.navigate("MobileNewsScreen")}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -70,7 +70,9 @@ export default function BottomNavBar() {
         </View>
         <View>
           <Pressable
-            onPress={() => navigation.navigate("GamingNewsScreen")}
+            onPress={() => {
+              return;
+            }}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,

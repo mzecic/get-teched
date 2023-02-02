@@ -6,11 +6,6 @@ import TechGridTile from "../components/TechGridTile";
 
 export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
   function renderTechItem(itemData) {
-    // function pressHandler() {
-    //   navigation.navigate("MealsOverview", {
-    //     categoryId: itemData.item.id,
-    //   });
-    // }
     return <TechGridTile data={itemData} />;
   }
   const navigation = useNavigation();
@@ -70,6 +65,7 @@ const styles = StyleSheet.create({
     paddingTop: "25%",
   },
   list: {
+    paddingTop: Platform.OS === "android" ? 16 : 0,
     justifyContent: "center",
   },
   headerTitle: {

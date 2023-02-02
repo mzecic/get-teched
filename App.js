@@ -1,22 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated, Platform } from "react-native";
+import { StyleSheet, Animated, Platform, View } from "react-native";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
 import AudioNewsScreen from "./screens/AudioNewsScreen";
-import MobileNewsScreen from "./screens/GamingNewsScreen";
+import MobileNewsScreen from "./screens/MobileNewsScreen";
 import BottomNavBar from "./components/BottomNavBar";
 
 import * as news from "./utils/gnews";
 import { articles } from "./dummy-data";
-
-import { enableLayoutAnimations } from "react-native-reanimated";
-if (Platform.OS === "android") {
-  enableLayoutAnimations(false);
-}
 
 export default function App() {
   const [techNews, setTechNews] = useState([]);
@@ -55,9 +50,14 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      {/* <SafeAreaView style={styles.mainContainer}> */}
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerLeft: () => {
+              return <View style={{ marginLeft: 50 }}></View>;
+            },
+          }}
+        >
           <Stack.Screen
             options={{
               title: Platform.OS === "android" ? "GetTeched" : "",
@@ -81,14 +81,74 @@ export default function App() {
               />
             )}
           </Stack.Screen>
-          <Stack.Screen options={{ title: "Gaming" }} name="GamingNewsScreen">
-            {(props) => <GamingNewsScreen techNews={fakeNews} />}
+          <Stack.Screen
+            options={{
+              title: Platform.OS === "android" ? "Gaming" : "",
+              headerTitleAlign: "center",
+              headerShown: true,
+              headerStyle: {
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              },
+            }}
+            name="GamingNewsScreen"
+          >
+            {(props) => (
+              <GamingNewsScreen
+                techNews={fakeNews}
+                yOffset={yOffset}
+                headerOpacity={headerOpacity}
+              />
+            )}
           </Stack.Screen>
-          <Stack.Screen options={{ title: "Audio" }} name="AudioNewsScreen">
-            {(props) => <AudioNewsScreen techNews={fakeNews} />}
+          <Stack.Screen
+            options={{
+              title: Platform.OS === "android" ? "Audio" : "",
+              headerTitleAlign: "center",
+              headerShown: true,
+              headerStyle: {
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              },
+            }}
+            name="AudioNewsScreen"
+          >
+            {(props) => (
+              <AudioNewsScreen
+                techNews={fakeNews}
+                yOffset={yOffset}
+                headerOpacity={headerOpacity}
+              />
+            )}
           </Stack.Screen>
-          <Stack.Screen options={{ title: "Mobile" }} name="MobileNewsScreen">
-            {(props) => <MobileNewsScreen techNews={fakeNews} />}
+          <Stack.Screen
+            options={{
+              title: Platform.OS === "android" ? "Mobile" : "",
+              headerTitleAlign: "center",
+              headerShown: true,
+              headerStyle: {
+                zIndex: 100,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+              },
+            }}
+            name="MobileNewsScreen"
+          >
+            {(props) => (
+              <MobileNewsScreen
+                techNews={fakeNews}
+                yOffset={yOffset}
+                headerOpacity={headerOpacity}
+              />
+            )}
           </Stack.Screen>
         </Stack.Navigator>
         <BottomNavBar />
