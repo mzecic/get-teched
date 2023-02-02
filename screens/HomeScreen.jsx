@@ -1,4 +1,4 @@
-import { Animated, FlatList, StyleSheet, View, Text } from "react-native";
+import { Animated, StyleSheet, View, Text, Platform } from "react-native";
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -15,34 +15,33 @@ export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
   }
   const navigation = useNavigation();
 
-  function scrollHandler() {}
-
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        opacity: headerOpacity,
-      },
-      headerBackground: () => (
-        <>
-          <Animated.View
-            style={{
-              backgroundColor: "white",
-              ...StyleSheet.absoluteFillObject,
-              opacity: headerOpacity,
-            }}
-          >
-            <Text style={styles.headerTitle}>GetTeched</Text>
-          </Animated.View>
-        </>
-      ),
-      headerTransparent: true,
-    });
+    if (Platform.OS === "ios") {
+      navigation.setOptions({
+        headerStyle: {
+          opacity: headerOpacity,
+        },
+        headerBackground: () => (
+          <>
+            <Animated.View
+              style={{
+                backgroundColor: "white",
+                ...StyleSheet.absoluteFillObject,
+                opacity: headerOpacity,
+              }}
+            >
+              <Text style={styles.headerTitle}>GetTeched</Text>
+            </Animated.View>
+          </>
+        ),
+        headerTransparent: true,
+      });
+    }
   }, [headerOpacity, navigation]);
 
   return (
     <View style={styles.list}>
       <Animated.FlatList
-        onMomentumScrollBegin={scrollHandler}
         onScroll={Animated.event(
           [
             {
@@ -67,8 +66,10 @@ export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
 }
 
 const styles = StyleSheet.create({
+  listHeader: {
+    paddingTop: "25%",
+  },
   list: {
-    marginTop: "25%",
     justifyContent: "center",
   },
   headerTitle: {

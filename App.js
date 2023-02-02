@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated, Platform } from "react-native";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -12,6 +12,11 @@ import BottomNavBar from "./components/BottomNavBar";
 
 import * as news from "./utils/gnews";
 import { articles } from "./dummy-data";
+
+import { enableLayoutAnimations } from "react-native-reanimated";
+if (Platform.OS === "android") {
+  enableLayoutAnimations(false);
+}
 
 export default function App() {
   const [techNews, setTechNews] = useState([]);
@@ -27,7 +32,7 @@ export default function App() {
   });
 
   const MyTheme = {
-    dark: false,
+    dark: true,
     colors: {
       primary: "rgba(255, 255, 255, 0.8)",
       background: "rgb(242, 242, 242)",
@@ -51,14 +56,14 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       {/* <SafeAreaView style={styles.mainContainer}> */}
-      <NavigationContainer theme={MyTheme}>
+      <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             options={{
-              title: "",
+              title: Platform.OS === "android" ? "GetTeched" : "",
+              headerTitleAlign: "center",
+              headerShown: true,
               headerStyle: {
-                position: "absolute",
-                backgroundColor: "transparent",
                 zIndex: 100,
                 top: 0,
                 left: 0,

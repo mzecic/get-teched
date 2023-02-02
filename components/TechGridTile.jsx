@@ -5,8 +5,6 @@ import {
   StyleSheet,
   Platform,
   Image,
-  Linking,
-  Alert,
 } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 
@@ -18,7 +16,9 @@ export default function TechGridTile({ data }) {
   }
 
   return (
-    <View style={styles.gridItem}>
+    <View
+      style={[styles.gridItem, { marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0 }]}
+    >
       <Pressable
         onPress={onPressHandler}
         android_ripple={{ color: "ccc" }}
@@ -28,13 +28,12 @@ export default function TechGridTile({ data }) {
         ]}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{data.item.title}</Text>
+          <Text style={styles.title}>
+            {data.item.title} - {data.index}
+          </Text>
         </View>
         <View style={styles.imageContainer}>
-          <Image
-            style={[{ width: "80%", height: "80%" }, styles.image]}
-            source={{ uri: data.item.image }}
-          />
+          <Image style={styles.image} source={{ uri: data.item.image }} />
         </View>
       </Pressable>
     </View>
