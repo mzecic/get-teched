@@ -1,6 +1,5 @@
-import { View, Pressable, StyleSheet, Image } from "react-native";
+import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { NavigationContainer } from "@react-navigation/native";
 
 export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
   const navigation = useNavigation();
@@ -12,6 +11,7 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
           <Pressable
             onPress={() => {
               navigation.navigate("HomeScreen");
+              setLastVisitedScreen("HomeScreen");
             }}
             style={({ pressed }) => [
               styles.button,
@@ -24,12 +24,16 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
                 style={styles.navIcon}
                 source={require("../assets/home-icon.png")}
               />
+              <Text style={styles.imageTag}>Home</Text>
             </View>
           </Pressable>
         </View>
         <View style={styles.pressableContainer}>
           <Pressable
-            onPress={() => navigation.navigate("GamingNewsScreen")}
+            onPress={() => {
+              navigation.navigate("GamingNewsScreen");
+              setLastVisitedScreen("GamingNewsScreen");
+            }}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -41,12 +45,16 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
                 style={styles.navIcon}
                 source={require("../assets/gaming-icon.png")}
               />
+              <Text style={styles.imageTag}>Gaming</Text>
             </View>
           </Pressable>
         </View>
         <View style={styles.pressableContainer}>
           <Pressable
-            onPress={() => navigation.navigate("AudioNewsScreen")}
+            onPress={() => {
+              navigation.navigate("AudioNewsScreen");
+              setLastVisitedScreen("AudioNewsScreen");
+            }}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -58,12 +66,16 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
                 style={styles.navIcon}
                 source={require("../assets/audio-icon.png")}
               />
+              <Text style={styles.imageTag}>Audio</Text>
             </View>
           </Pressable>
         </View>
         <View style={styles.pressableContainer}>
           <Pressable
-            onPress={() => navigation.navigate("MobileNewsScreen")}
+            onPress={() => {
+              navigation.navigate("MobileNewsScreen");
+              setLastVisitedScreen("MobileNewsScreen");
+            }}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -75,12 +87,16 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
                 style={styles.navIcon}
                 source={require("../assets/mobile-icon.png")}
               />
+              <Text style={styles.imageTag}>Mobile</Text>
             </View>
           </Pressable>
         </View>
         <View style={styles.pressableContainer}>
           <Pressable
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate("MenuScreen");
+              setShowNavBar(false);
+            }}
             style={({ pressed }) => [
               styles.button,
               pressed ? styles.buttonPressed : null,
@@ -118,12 +134,13 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 16,
   },
-  //   buttonContainer: {
-  //     backgroundColor: "blue",
-  //   },
+  buttonContainer: {
+    flexDirection: "column-reverse",
+    justifyContent: "space-between",
+  },
   pressableContainer: {
     borderRadius: 16,
-    margin: 8,
+    margin: 4,
     height: "70%",
     overflow: "hidden",
   },
@@ -136,5 +153,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
     backgroundColor: "#ccc",
+  },
+  imageTag: {
+    position: "absolute",
+    alignSelf: "center",
+    justifySelf: "end",
+    fontSize: 12,
   },
 });

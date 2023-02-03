@@ -1,14 +1,24 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function MenuScreen() {
+export default function MenuScreen({ lastVisitedScreen, setShowNavBar }) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.mainContainer}>
       <Text>This is a menu screen</Text>
       <View>
-        <Image
-          style={styles.closeIconContainer}
-          source={require("../assets/close-icon.png")}
-        />
+        <Pressable
+          onPress={() => {
+            navigation.navigate(lastVisitedScreen);
+            setShowNavBar(true);
+          }}
+        >
+          <Image
+            style={styles.closeIconContainer}
+            source={require("../assets/close-icon.png")}
+          />
+        </Pressable>
       </View>
     </View>
   );

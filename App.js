@@ -163,13 +163,22 @@ export default function App() {
             }}
             name="MenuScreen"
           >
-            {(props) => <MenuScreen />}
+            {(props) => (
+              <MenuScreen
+                lastVisitedScreen={lastVisitedScreen}
+                setShowNavBar={setShowNavBar}
+              />
+            )}
           </Stack.Screen>
         </Stack.Navigator>
-        <BottomNavBar
-          setShowNavBar={setShowNavBar}
-          setLastVisitedScreen={setLastVisitedScreen}
-        />
+        {showNavBar ? (
+          <BottomNavBar
+            setShowNavBar={setShowNavBar}
+            setLastVisitedScreen={setLastVisitedScreen}
+          />
+        ) : (
+          <></>
+        )}
       </NavigationContainer>
     </>
   );
