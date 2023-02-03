@@ -25,7 +25,7 @@ export default function AudioNewsScreen({ techNews, yOffset, headerOpacity }) {
                 opacity: headerOpacity,
               }}
             >
-              <Text style={styles.headerTitle}>Audio</Text>
+              <Text style={styles.headerTitle}>Audio News</Text>
             </Animated.View>
           </>
         ),

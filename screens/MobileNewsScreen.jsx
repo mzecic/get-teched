@@ -1,10 +1,11 @@
 import { Animated, StyleSheet, View, Text, Platform } from "react-native";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import TechGridTile from "../components/TechGridTile";
 
 export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
+
   function renderTechItem(itemData) {
     return <TechGridTile data={itemData} />;
   }
@@ -25,7 +26,7 @@ export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
                 opacity: headerOpacity,
               }}
             >
-              <Text style={styles.headerTitle}>Mobile</Text>
+              <Text style={styles.headerTitle}>Mobile News</Text>
             </Animated.View>
           </>
         ),

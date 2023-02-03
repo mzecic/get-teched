@@ -1,13 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Animated, Platform, View } from "react-native";
-import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DarkTheme,
+  useNavigation,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
 import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
+import MenuScreen from "./screens/MenuScreen";
 import BottomNavBar from "./components/BottomNavBar";
 
 import * as news from "./utils/gnews";
@@ -16,6 +21,8 @@ import { articles } from "./dummy-data";
 export default function App() {
   const [techNews, setTechNews] = useState([]);
   const [fakeNews, setFakeNews] = useState([]);
+  const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
+  const [showNavBar, setShowNavBar] = useState(true);
 
   const Stack = createNativeStackNavigator();
 
@@ -83,7 +90,7 @@ export default function App() {
           </Stack.Screen>
           <Stack.Screen
             options={{
-              title: Platform.OS === "android" ? "Gaming" : "",
+              title: Platform.OS === "android" ? "Gaming News" : "",
               headerTitleAlign: "center",
               headerShown: true,
               headerStyle: {
@@ -106,7 +113,7 @@ export default function App() {
           </Stack.Screen>
           <Stack.Screen
             options={{
-              title: Platform.OS === "android" ? "Audio" : "",
+              title: Platform.OS === "android" ? "Audio News" : "",
               headerTitleAlign: "center",
               headerShown: true,
               headerStyle: {
@@ -129,7 +136,7 @@ export default function App() {
           </Stack.Screen>
           <Stack.Screen
             options={{
-              title: Platform.OS === "android" ? "Mobile" : "",
+              title: Platform.OS === "android" ? "Mobile News" : "",
               headerTitleAlign: "center",
               headerShown: true,
               headerStyle: {
@@ -150,8 +157,19 @@ export default function App() {
               />
             )}
           </Stack.Screen>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="MenuScreen"
+          >
+            {(props) => <MenuScreen />}
+          </Stack.Screen>
         </Stack.Navigator>
-        <BottomNavBar />
+        <BottomNavBar
+          setShowNavBar={setShowNavBar}
+          setLastVisitedScreen={setLastVisitedScreen}
+        />
       </NavigationContainer>
     </>
   );

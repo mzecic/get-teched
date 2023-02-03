@@ -25,7 +25,7 @@ export default function GamingNewsScreen({ techNews, yOffset, headerOpacity }) {
                 opacity: headerOpacity,
               }}
             >
-              <Text style={styles.headerTitle}>Gaming</Text>
+              <Text style={styles.headerTitle}>Gaming News</Text>
             </Animated.View>
           </>
         ),
