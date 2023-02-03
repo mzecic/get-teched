@@ -50,10 +50,8 @@ export default function App() {
 
   useEffect(function () {
     (async function () {
-      // const techNews = await news.getTechNews();
-      // setTechNews([...techNews.articles]);
-      // setFakeNews([...articles]);
-      // console.log(articles);
+      setFakeNews([...articles]);
+      console.log(audioNews);
     })();
   }, []);
 
@@ -109,7 +107,8 @@ export default function App() {
           >
             {(props) => (
               <GamingNewsScreen
-                techNews={fakeNews}
+                techNews={gamingNews}
+                setGamingNews={setGamingNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
               />
@@ -132,7 +131,8 @@ export default function App() {
           >
             {(props) => (
               <AudioNewsScreen
-                techNews={fakeNews}
+                techNews={audioNews}
+                setAudioNews={setAudioNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
               />
@@ -155,7 +155,8 @@ export default function App() {
           >
             {(props) => (
               <MobileNewsScreen
-                techNews={fakeNews}
+                techNews={mobileNews}
+                setMobileNews={setMobileNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
               />

@@ -1,14 +1,37 @@
-import { Animated, StyleSheet, View, Text, Platform } from "react-native";
-import { useLayoutEffect } from "react";
+import {
+  Animated,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  RefreshControl,
+} from "react-native";
+import { useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
 
-export default function GamingNewsScreen({ techNews, yOffset, headerOpacity }) {
+export default function GamingNewsScreen({ techNews, yOffset, headerOpacity, setGamingNews }) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
   function renderTechItem(itemData) {
     return <TechGridTile data={itemData} />;
   }
   const navigation = useNavigation();
+
+  useEffect(function () {
+    (async function () {
+      const techNews = await news.getGamingNews();
+      setGamingNews([...techNews.articles]);
+    })();
+  }, []);
 
   useLayoutEffect(() => {
     if (Platform.OS === "ios") {
@@ -37,6 +60,9 @@ export default function GamingNewsScreen({ techNews, yOffset, headerOpacity }) {
   return (
     <View style={styles.list}>
       <Animated.FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         onScroll={
           Platform.OS === "ios"
             ? Animated.event(

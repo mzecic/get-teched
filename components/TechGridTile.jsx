@@ -82,9 +82,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "flex-start",
     alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: "bolder",
+    textAlign: "center",
     fontSize: 16,
   },
 });

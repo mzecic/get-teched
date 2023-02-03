@@ -1,10 +1,31 @@
-import { Animated, StyleSheet, View, Text, Platform } from "react-native";
-import { useLayoutEffect, useRef } from "react";
+import {
+  Animated,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  RefreshControl,
+} from "react-native";
+import { useLayoutEffect, useEffect, useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
+import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
 
-export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
+export default function MobileNewsScreen({
+  techNews,
+  yOffset,
+  headerOpacity,
+  setMobileNews,
+}) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
   function renderTechItem(itemData) {
     return <TechGridTile data={itemData} />;
   }
@@ -34,9 +55,19 @@ export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
     }
   }, [headerOpacity, navigation]);
 
+  useEffect(function () {
+    (async function () {
+      const techNews = await news.getMobileNews();
+      setMobileNews([...techNews.articles]);
+    })();
+  }, []);
+
   return (
     <View style={styles.list}>
       <Animated.FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         onScroll={
           Platform.OS === "ios"
             ? Animated.event(
