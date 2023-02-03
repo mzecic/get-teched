@@ -20,7 +20,7 @@ export default function AudioNewsScreen({ techNews, yOffset, headerOpacity }) {
           <>
             <Animated.View
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#E6E6E6",
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}

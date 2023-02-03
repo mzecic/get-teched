@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import TechGridTile from "../components/TechGridTile";
 
 export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
-
   function renderTechItem(itemData) {
     return <TechGridTile data={itemData} />;
   }
@@ -21,7 +20,7 @@ export default function MobileNewsScreen({ techNews, yOffset, headerOpacity }) {
           <>
             <Animated.View
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#E6E6E6",
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}

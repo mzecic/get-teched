@@ -20,7 +20,7 @@ export default function GamingNewsScreen({ techNews, yOffset, headerOpacity }) {
           <>
             <Animated.View
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#E6E6E6",
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}

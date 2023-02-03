@@ -1,10 +1,32 @@
-import { Animated, StyleSheet, View, Text, Platform } from "react-native";
-import { useLayoutEffect } from "react";
+import {
+  Animated,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+  RefreshControl,
+} from "react-native";
+import { useLayoutEffect, useEffect, useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
+import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
 
-export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
+export default function HomeScreen({
+  techNews,
+  yOffset,
+  headerOpacity,
+  setTechNews,
+}) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
+
   function renderTechItem(itemData) {
     return <TechGridTile data={itemData} />;
   }
@@ -20,7 +42,7 @@ export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
           <>
             <Animated.View
               style={{
-                backgroundColor: "white",
+                backgroundColor: "#E6E6E6",
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}
@@ -34,9 +56,19 @@ export default function HomeScreen({ techNews, yOffset, headerOpacity }) {
     }
   }, [headerOpacity, navigation]);
 
+  useEffect(function () {
+    (async function () {
+      const techNews = await news.getTechNews();
+      setTechNews([...techNews.articles]);
+    })();
+  }, []);
+
   return (
     <View style={styles.list}>
       <Animated.FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         onScroll={Animated.event(
           [
             {

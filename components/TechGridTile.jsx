@@ -6,6 +6,7 @@ import {
   Platform,
   Image,
 } from "react-native";
+import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 
 export default function TechGridTile({ data }) {
@@ -17,7 +18,10 @@ export default function TechGridTile({ data }) {
 
   return (
     <View
-      style={[styles.gridItem, { marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0 }]}
+      style={[
+        styles.gridItem,
+        { marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0 },
+      ]}
     >
       <Pressable
         onPress={onPressHandler}
@@ -28,9 +32,7 @@ export default function TechGridTile({ data }) {
         ]}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>
-            {data.item.title} - {data.index}
-          </Text>
+          <Text style={styles.title}>{data.item.title}</Text>
         </View>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: data.item.image }} />

@@ -6,8 +6,7 @@ export default function MenuScreen({ lastVisitedScreen, setShowNavBar }) {
 
   return (
     <View style={styles.mainContainer}>
-      <Text>This is a menu screen</Text>
-      <View>
+      <View style={styles.closeMenuContainer}>
         <Pressable
           onPress={() => {
             navigation.navigate(lastVisitedScreen);
@@ -27,10 +26,13 @@ export default function MenuScreen({ lastVisitedScreen, setShowNavBar }) {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    justifyContent: "center",
   },
   closeIconContainer: {
     justifySelf: "center",
     alignSelf: "center",
-    marginTop: "30%",
+  },
+  closeMenuContainer: {
+    flex: 1 / 2,
   },
 });

@@ -20,6 +20,9 @@ import { articles } from "./dummy-data";
 
 export default function App() {
   const [techNews, setTechNews] = useState([]);
+  const [gamingNews, setGamingNews] = useState([]);
+  const [audioNews, setAudioNews] = useState([]);
+  const [mobileNews, setMobileNews] = useState([]);
   const [fakeNews, setFakeNews] = useState([]);
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
   const [showNavBar, setShowNavBar] = useState(true);
@@ -49,8 +52,8 @@ export default function App() {
     (async function () {
       // const techNews = await news.getTechNews();
       // setTechNews([...techNews.articles]);
-      setFakeNews([...articles]);
-      console.log(articles);
+      // setFakeNews([...articles]);
+      // console.log(articles);
     })();
   }, []);
 
@@ -82,7 +85,8 @@ export default function App() {
           >
             {(props) => (
               <HomeScreen
-                techNews={fakeNews}
+                techNews={techNews}
+                setTechNews={setTechNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
               />
