@@ -59,7 +59,7 @@ export default function HomeScreen({
   useEffect(function () {
     (async function () {
       const techNews = await news.getTechNews();
-      setTechNews([...techNews.articles]);
+      setTechNews([...techNews]);
     })();
   }, []);
 

@@ -58,7 +58,7 @@ export default function MobileNewsScreen({
   useEffect(function () {
     (async function () {
       const techNews = await news.getMobileNews();
-      setMobileNews([...techNews.articles]);
+      setMobileNews([...techNews]);
     })();
   }, []);
 

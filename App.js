@@ -51,7 +51,6 @@ export default function App() {
   useEffect(function () {
     (async function () {
       setFakeNews([...articles]);
-      console.log(audioNews);
     })();
   }, []);
 

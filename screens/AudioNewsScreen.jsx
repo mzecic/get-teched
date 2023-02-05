@@ -58,7 +58,7 @@ export default function AudioNewsScreen({
   useEffect(function () {
     (async function () {
       const techNews = await news.getAudioNews();
-      setAudioNews([...techNews.articles]);
+      setAudioNews([...techNews]);
     })();
   }, []);
 

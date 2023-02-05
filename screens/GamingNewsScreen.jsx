@@ -12,7 +12,12 @@ import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
 
-export default function GamingNewsScreen({ techNews, yOffset, headerOpacity, setGamingNews }) {
+export default function GamingNewsScreen({
+  techNews,
+  yOffset,
+  headerOpacity,
+  setGamingNews,
+}) {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -29,7 +34,7 @@ export default function GamingNewsScreen({ techNews, yOffset, headerOpacity, set
   useEffect(function () {
     (async function () {
       const techNews = await news.getGamingNews();
-      setGamingNews([...techNews.articles]);
+      setGamingNews([...techNews]);
     })();
   }, []);
 
