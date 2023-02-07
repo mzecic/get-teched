@@ -17,6 +17,7 @@ export default function HomeScreen({
   yOffset,
   headerOpacity,
   setTechNews,
+  onLayoutRootView,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -59,12 +60,12 @@ export default function HomeScreen({
   useEffect(function () {
     (async function () {
       const techNews = await news.getTechNews();
-      setTechNews([...techNews]);
+      setTechNews([...techNews.reverse()]);
     })();
   }, []);
 
   return (
-    <View style={styles.list}>
+    <View style={styles.list} onLayout={onLayoutRootView}>
       <Animated.FlatList
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -102,7 +103,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     marginTop: "15%",
-    fontSize: 24,
+    fontFamily: "Audiowide",
+    fontSize: 20,
     justifySelf: "center",
     alignSelf: "center",
   },

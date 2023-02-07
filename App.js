@@ -1,12 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated, Platform, View } from "react-native";
-import {
-  NavigationContainer,
-  DarkTheme,
-  useNavigation,
-} from "@react-navigation/native";
+import { StyleSheet, Animated, Platform, View, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
@@ -15,8 +13,9 @@ import MobileNewsScreen from "./screens/MobileNewsScreen";
 import MenuScreen from "./screens/MenuScreen";
 import BottomNavBar from "./components/BottomNavBar";
 
-import * as news from "./utils/gnews";
 import { articles } from "./dummy-data";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [techNews, setTechNews] = useState([]);
@@ -33,7 +32,6 @@ export default function App() {
   const headerOpacity = yOffset.interpolate({
     inputRange: [0, 200],
     outputRange: [1, 0],
-    extrapolate: "clamp",
   });
 
   const MyTheme = {
@@ -48,11 +46,25 @@ export default function App() {
     },
   };
 
-  useEffect(function () {
-    (async function () {
-      setFakeNews([...articles]);
-    })();
-  }, []);
+  const [fontsLoaded] = useFonts({
+    Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
+  // useEffect(function () {
+  //   (async function () {
+  //     setFakeNews([...articles]);
+  //   })();
+  // }, []);
 
   return (
     <>
@@ -82,6 +94,7 @@ export default function App() {
           >
             {(props) => (
               <HomeScreen
+                onLayoutRootView={onLayoutRootView}
                 techNews={techNews}
                 setTechNews={setTechNews}
                 yOffset={yOffset}

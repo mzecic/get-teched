@@ -10,7 +10,6 @@ import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 
 export default function TechGridTile({ data }) {
-  console.log(data.item.url);
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
@@ -20,7 +19,9 @@ export default function TechGridTile({ data }) {
     <View
       style={[
         styles.gridItem,
-        { marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0 },
+        {
+          marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0,
+        },
       ]}
     >
       <Pressable

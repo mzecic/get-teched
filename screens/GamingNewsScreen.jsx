@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
@@ -19,6 +20,9 @@ export default function GamingNewsScreen({
   setGamingNews,
 }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [fontsLoaded] = useFonts({
+    "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
+  });
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -34,7 +38,7 @@ export default function GamingNewsScreen({
   useEffect(function () {
     (async function () {
       const techNews = await news.getGamingNews();
-      setGamingNews([...techNews]);
+      setGamingNews([...techNews.reverse()]);
     })();
   }, []);
 
@@ -107,7 +111,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     marginTop: "15%",
-    fontSize: 24,
+    fontFamily: "Audiowide",
+    fontSize: 20,
     justifySelf: "center",
     alignSelf: "center",
   },
