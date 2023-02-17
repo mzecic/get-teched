@@ -106,7 +106,7 @@ export default function App() {
             options={{
               title: Platform.OS === "android" ? "Gaming News" : "",
               headerTitleAlign: "center",
-              headerShown: true,
+              headerShown: false,
               headerStyle: {
                 zIndex: 100,
                 top: 0,
@@ -191,6 +191,7 @@ export default function App() {
         {showNavBar ? (
           <BottomNavBar
             setShowNavBar={setShowNavBar}
+            lastVisitedScreen={lastVisitedScreen}
             setLastVisitedScreen={setLastVisitedScreen}
           />
         ) : (

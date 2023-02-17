@@ -1,13 +1,17 @@
 import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
+export default function BottomNavBar({
+  lastVisitedScreen,
+  setLastVisitedScreen,
+  setShowNavBar,
+}) {
   const navigation = useNavigation();
 
   return (
     <View style={styles.innerContainer}>
       <View style={styles.navContainer}>
-        <View style={styles.pressableContainer}>
+        <View style={[styles.pressableContainer]}>
           <Pressable
             onPress={() => {
               navigation.navigate("HomeScreen");
@@ -28,7 +32,17 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
             </View>
           </Pressable>
         </View>
-        <View style={styles.pressableContainer}>
+        <View
+          style={[
+            styles.pressableContainer,
+            {
+              backgroundColor:
+                lastVisitedScreen === "GamingNewsScreen"
+                  ? "rgb(215, 215, 215)"
+                  : null,
+            },
+          ]}
+        >
           <Pressable
             onPress={() => {
               navigation.navigate("GamingNewsScreen");
@@ -49,7 +63,17 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
             </View>
           </Pressable>
         </View>
-        <View style={styles.pressableContainer}>
+        <View
+          style={[
+            styles.pressableContainer,
+            {
+              backgroundColor:
+                lastVisitedScreen === "AudioNewsScreen"
+                  ? "rgb(215, 215, 215)"
+                  : null,
+            },
+          ]}
+        >
           <Pressable
             onPress={() => {
               navigation.navigate("AudioNewsScreen");
@@ -70,7 +94,17 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
             </View>
           </Pressable>
         </View>
-        <View style={styles.pressableContainer}>
+        <View
+          style={[
+            styles.pressableContainer,
+            {
+              backgroundColor:
+                lastVisitedScreen === "MobileNewsScreen"
+                  ? "rgb(215, 215, 215)"
+                  : null,
+            },
+          ]}
+        >
           <Pressable
             onPress={() => {
               navigation.navigate("MobileNewsScreen");
@@ -108,6 +142,7 @@ export default function BottomNavBar({ setLastVisitedScreen, setShowNavBar }) {
                 style={styles.navIcon}
                 source={require("../assets/menu-icon.png")}
               />
+              <Text style={styles.imageTag}>Menu</Text>
             </View>
           </Pressable>
         </View>
@@ -135,6 +170,7 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   buttonContainer: {
+    // backgroundColor: "rgb(215, 215, 215)",
     flexDirection: "column-reverse",
     justifyContent: "space-between",
   },
@@ -158,6 +194,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     justifySelf: "end",
-    fontSize: 12,
+    fontSize: 10,
   },
 });
