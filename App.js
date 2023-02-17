@@ -99,6 +99,7 @@ export default function App() {
                 setTechNews={setTechNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
+                lastVisitedScreen={lastVisitedScreen}
               />
             )}
           </Stack.Screen>
@@ -130,7 +131,7 @@ export default function App() {
             options={{
               title: Platform.OS === "android" ? "Audio News" : "",
               headerTitleAlign: "center",
-              headerShown: true,
+              headerShown: false,
               headerStyle: {
                 zIndex: 100,
                 top: 0,
@@ -154,7 +155,7 @@ export default function App() {
             options={{
               title: Platform.OS === "android" ? "Mobile News" : "",
               headerTitleAlign: "center",
-              headerShown: true,
+              headerShown: false,
               headerStyle: {
                 zIndex: 100,
                 top: 0,

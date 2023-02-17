@@ -18,6 +18,7 @@ export default function HomeScreen({
   headerOpacity,
   setTechNews,
   onLayoutRootView,
+  lastVisitedScreen
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -29,7 +30,9 @@ export default function HomeScreen({
   }, []);
 
   function renderTechItem(itemData) {
-    return <TechGridTile data={itemData} />;
+    return (
+      <TechGridTile data={itemData} lastVisitedScreen={lastVisitedScreen} />
+    );
   }
   const navigation = useNavigation();
 

@@ -9,7 +9,7 @@ import {
 import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 
-export default function TechGridTile({ data }) {
+export default function TechGridTile({ data, lastVisitedScreen }) {
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
@@ -20,7 +20,12 @@ export default function TechGridTile({ data }) {
       style={[
         styles.gridItem,
         {
-          marginTop: data.index === 0 && Platform.OS === "ios" ? "30%" : 0,
+          marginTop:
+            data.index === 0 &&
+            Platform.OS === "ios" &&
+            lastVisitedScreen === "HomeScreen"
+              ? "30%"
+              : "15%",
         },
       ]}
     >

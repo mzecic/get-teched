@@ -35,29 +35,29 @@ export default function MobileNewsScreen({
   }
   const navigation = useNavigation();
 
-  useLayoutEffect(() => {
-    if (Platform.OS === "ios") {
-      navigation.setOptions({
-        headerStyle: {
-          opacity: headerOpacity,
-        },
-        headerBackground: () => (
-          <>
-            <Animated.View
-              style={{
-                backgroundColor: "#E6E6E6",
-                ...StyleSheet.absoluteFillObject,
-                opacity: headerOpacity,
-              }}
-            >
-              <Text style={styles.headerTitle}>Mobile News</Text>
-            </Animated.View>
-          </>
-        ),
-        headerTransparent: true,
-      });
-    }
-  }, [headerOpacity, navigation]);
+  // useLayoutEffect(() => {
+  //   if (Platform.OS === "ios") {
+  //     navigation.setOptions({
+  //       headerStyle: {
+  //         opacity: headerOpacity,
+  //       },
+  //       headerBackground: () => (
+  //         <>
+  //           <Animated.View
+  //             style={{
+  //               backgroundColor: "#E6E6E6",
+  //               ...StyleSheet.absoluteFillObject,
+  //               opacity: headerOpacity,
+  //             }}
+  //           >
+  //             <Text style={styles.headerTitle}>Mobile News</Text>
+  //           </Animated.View>
+  //         </>
+  //       ),
+  //       headerTransparent: true,
+  //     });
+  //   }
+  // }, [headerOpacity, navigation]);
 
   useEffect(function () {
     (async function () {

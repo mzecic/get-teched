@@ -42,29 +42,29 @@ export default function GamingNewsScreen({
     })();
   }, []);
 
-  useLayoutEffect(() => {
-    if (Platform.OS === "ios") {
-      navigation.setOptions({
-        headerStyle: {
-          opacity: headerOpacity,
-        },
-        headerBackground: () => (
-          <>
-            <Animated.View
-              style={{
-                backgroundColor: "#E6E6E6",
-                ...StyleSheet.absoluteFillObject,
-                opacity: headerOpacity,
-              }}
-            >
-              <Text style={styles.headerTitle}>Gaming News</Text>
-            </Animated.View>
-          </>
-        ),
-        headerTransparent: true,
-      });
-    }
-  }, [headerOpacity, navigation]);
+  // useLayoutEffect(() => {
+  //   if (Platform.OS === "ios") {
+  //     navigation.setOptions({
+  //       headerStyle: {
+  //         opacity: headerOpacity,
+  //       },
+  //       headerBackground: () => (
+  //         <>
+  //           <Animated.View
+  //             style={{
+  //               backgroundColor: "#E6E6E6",
+  //               ...StyleSheet.absoluteFillObject,
+  //               opacity: headerOpacity,
+  //             }}
+  //           >
+  //             <Text style={styles.headerTitle}>Gaming News</Text>
+  //           </Animated.View>
+  //         </>
+  //       ),
+  //       headerTransparent: true,
+  //     });
+  //   }
+  // }, [headerOpacity, navigation]);
 
   return (
     <View style={styles.list}>
