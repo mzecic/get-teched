@@ -23,9 +23,11 @@ export default function TechGridTile({ data, lastVisitedScreen }) {
           marginTop:
             data.index === 0 &&
             Platform.OS === "ios" &&
-            lastVisitedScreen === "HomeScreen"
-              ? "30%"
-              : "15%",
+            lastVisitedScreen !== "HomeScreen"
+              ? "15%"
+              : data.index === 0
+              ? "27%"
+              : 0,
         },
       ]}
     >
