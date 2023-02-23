@@ -1,5 +1,6 @@
 import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import primaryColors from "../assets/colors/primaryColors";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -16,118 +17,154 @@ export default function BottomNavBar({
             navigation.navigate("HomeScreen");
             setLastVisitedScreen("HomeScreen");
           }}
-          style={({ pressed }) => [
-            styles.button,
-            styles.pressableContainer,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          android_ripple={{ color: "ccc" }}
+          style={({ pressed }) => [styles.button, styles.pressableContainer]}
         >
-          <View style={[styles.buttonContainer, { backgroundColor: "yellow" }]}>
-            {/* <Image
-                style={styles.navIcon}
-                source={require("../assets/home-icon.png")}
-              /> */}
+          <View style={[styles.buttonContainer]}>
+            <Image
+              style={[
+                styles.navIcon,
+                {
+                  tintColor:
+                    lastVisitedScreen === "HomeScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
+              source={require("../assets/home-icon.png")}
+            />
             <Text
-              style={({ fontSize: 38, marginBottom: 24 }, styles.htmlEntity)}
+              style={[
+                styles.imageTag,
+                {
+                  color:
+                    lastVisitedScreen === "HomeScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
             >
-              &#8962;
+              Home
             </Text>
-            <Text style={styles.imageTag}>Home</Text>
           </View>
         </Pressable>
       </View>
-      <View
-        style={[
-          styles.pressableContainer,
-          {
-            backgroundColor:
-              lastVisitedScreen === "GamingNewsScreen"
-                ? "rgb(215, 215, 215)"
-                : null,
-          },
-        ]}
-      >
+      <View>
         <Pressable
           onPress={() => {
             navigation.navigate("GamingNewsScreen");
             setLastVisitedScreen("GamingNewsScreen");
           }}
-          style={({ pressed }) => [
-            styles.button,
-            styles.pressableContainer,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          android_ripple={{ color: "ccc" }}
+          style={({ pressed }) => [styles.button, styles.pressableContainer]}
         >
           <View style={styles.buttonContainer}>
             <Image
-              style={styles.navIcon}
+              style={[
+                styles.navIcon,
+                {
+                  tintColor:
+                    lastVisitedScreen === "GamingNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
               source={require("../assets/gaming-icon.png")}
             />
-            <Text style={styles.imageTag}>Gaming</Text>
+            {/* <Text
+              style={{
+                fontSize: 35,
+                textAlign: "center",
+                color:
+                  lastVisitedScreen === "GamingNewsScreen" ? "blue" : "black",
+              }}
+            >
+              &#128377;
+            </Text> */}
+            <Text
+              style={[
+                styles.imageTag,
+                {
+                  color:
+                    lastVisitedScreen === "GamingNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
+            >
+              Gaming
+            </Text>
           </View>
         </Pressable>
       </View>
-      <View
-        style={[
-          styles.pressableContainer,
-          {
-            backgroundColor:
-              lastVisitedScreen === "AudioNewsScreen"
-                ? "rgb(215, 215, 215)"
-                : null,
-          },
-        ]}
-      >
+      <View style={[styles.pressableContainer]}>
         <Pressable
           onPress={() => {
             navigation.navigate("AudioNewsScreen");
             setLastVisitedScreen("AudioNewsScreen");
           }}
-          style={({ pressed }) => [
-            styles.button,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          android_ripple={{ color: "ccc" }}
         >
           <View style={styles.buttonContainer}>
             <Image
-              style={styles.navIcon}
+              style={[
+                styles.navIcon,
+                {
+                  tintColor:
+                    lastVisitedScreen === "AudioNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
               source={require("../assets/audio-icon.png")}
             />
-            <Text style={styles.imageTag}>Audio</Text>
+            <Text
+              style={[
+                styles.imageTag,
+                {
+                  color:
+                    lastVisitedScreen === "AudioNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
+            >
+              Audio
+            </Text>
           </View>
         </Pressable>
       </View>
-      <View
-        style={[
-          styles.pressableContainer,
-          {
-            backgroundColor:
-              lastVisitedScreen === "MobileNewsScreen"
-                ? "rgb(215, 215, 215)"
-                : null,
-          },
-        ]}
-      >
+      <View style={styles.pressableContainer}>
         <Pressable
           onPress={() => {
             navigation.navigate("MobileNewsScreen");
             setLastVisitedScreen("MobileNewsScreen");
           }}
-          style={({ pressed }) => [
-            styles.button,
-            pressed ? styles.buttonPressed : null,
-          ]}
-          android_ripple={{ color: "ccc" }}
+          style={({ pressed }) => [styles.button]}
         >
           <View style={styles.buttonContainer}>
             <Image
-              style={styles.navIcon}
+              style={[
+                styles.navIcon,
+                {
+                  tintColor:
+                    lastVisitedScreen === "MobileNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
               source={require("../assets/mobile-icon.png")}
             />
-            <Text style={styles.imageTag}>Mobile</Text>
+            <Text
+              style={[
+                styles.imageTag,
+                {
+                  color:
+                    lastVisitedScreen === "MobileNewsScreen"
+                      ? primaryColors.colors.primaryBlue
+                      : "black",
+                },
+              ]}
+            >
+              Mobile
+            </Text>
           </View>
         </Pressable>
       </View>
@@ -141,7 +178,6 @@ export default function BottomNavBar({
             styles.button,
             pressed ? styles.buttonPressed : null,
           ]}
-          android_ripple={{ color: "ccc", overflow: "hidden" }}
         >
           <View style={styles.buttonContainer}>
             <Image
@@ -162,6 +198,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignItems: "center",
     backgroundColor: "#E6E6E6",
     border: "2px solid black",
     overflow: "hidden",
@@ -173,6 +210,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     padding: 16,
+    alignSelf: "center",
   },
   buttonContainer: {
     // backgroundColor: "rgb(215, 215, 215)",
@@ -194,10 +232,7 @@ const styles = StyleSheet.create({
   imageTag: {
     // position: "absolute",
     alignSelf: "center",
+    justifySelf: "flex-start",
     fontSize: 10,
-  },
-  htmlEntity: {
-    width: 50,
-    height: 50,
   },
 });
