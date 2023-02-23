@@ -16,8 +16,8 @@ import TechGridTile from "../components/TechGridTile";
 export default function GamingNewsScreen({
   techNews,
   yOffset,
-  headerOpacity,
   setGamingNews,
+  listViewGamingRef,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -96,6 +96,7 @@ export default function GamingNewsScreen({
         data={techNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderTechItem}
+        ref={listViewGamingRef}
       />
     </View>
   );

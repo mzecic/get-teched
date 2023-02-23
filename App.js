@@ -34,6 +34,24 @@ export default function App() {
     outputRange: [1, 0],
   });
 
+  let listViewRef = useRef(null);
+  let listViewGamingRef = useRef(null);
+  let listViewAudioRef = useRef(null);
+  let listViewMobileRef = useRef(null);
+
+  function scrollToTopHandler() {
+    listViewRef.current.scrollToOffset({ offset: 0, animated: true });
+  }
+  function scrollToTopGamingHandler() {
+    listViewGamingRef.current.scrollToOffset({ offset: 0, animated: true });
+  }
+  function scrollToTopAudioHandler() {
+    listViewAudioRef.current.scrollToOffset({ offset: 0, animated: true });
+  }
+  function scrollToTopMobileHandler() {
+    listViewMobileRef.current.scrollToOffset({ offset: 0, animated: true });
+  }
+
   const MyTheme = {
     dark: true,
     colors: {
@@ -100,6 +118,7 @@ export default function App() {
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
                 lastVisitedScreen={lastVisitedScreen}
+                listViewRef={listViewRef}
               />
             )}
           </Stack.Screen>
@@ -124,6 +143,7 @@ export default function App() {
                 setGamingNews={setGamingNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
+                listViewGamingRef={listViewGamingRef}
               />
             )}
           </Stack.Screen>
@@ -148,6 +168,7 @@ export default function App() {
                 setAudioNews={setAudioNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
+                listViewAudioRef={listViewAudioRef}
               />
             )}
           </Stack.Screen>
@@ -172,6 +193,7 @@ export default function App() {
                 setMobileNews={setMobileNews}
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
+                listViewMobileRef={listViewMobileRef}
               />
             )}
           </Stack.Screen>
@@ -194,6 +216,10 @@ export default function App() {
             setShowNavBar={setShowNavBar}
             lastVisitedScreen={lastVisitedScreen}
             setLastVisitedScreen={setLastVisitedScreen}
+            scrollToTopHandler={scrollToTopHandler}
+            scrollToTopGamingHandler={scrollToTopGamingHandler}
+            scrollToTopAudioHandler={scrollToTopAudioHandler}
+            scrollToTopMobileHandler={scrollToTopMobileHandler}
           />
         ) : (
           <></>

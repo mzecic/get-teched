@@ -6,6 +6,10 @@ export default function BottomNavBar({
   lastVisitedScreen,
   setLastVisitedScreen,
   setShowNavBar,
+  scrollToTopHandler,
+  scrollToTopGamingHandler,
+  scrollToTopAudioHandler,
+  scrollToTopMobileHandler,
 }) {
   const navigation = useNavigation();
 
@@ -16,6 +20,9 @@ export default function BottomNavBar({
           onPress={() => {
             navigation.navigate("HomeScreen");
             setLastVisitedScreen("HomeScreen");
+            if (lastVisitedScreen === "HomeScreen") {
+              scrollToTopHandler();
+            }
           }}
           style={({ pressed }) => [styles.button, styles.pressableContainer]}
         >
@@ -53,6 +60,9 @@ export default function BottomNavBar({
           onPress={() => {
             navigation.navigate("GamingNewsScreen");
             setLastVisitedScreen("GamingNewsScreen");
+            if (lastVisitedScreen === "GamingNewsScreen") {
+              scrollToTopGamingHandler();
+            }
           }}
           style={({ pressed }) => [styles.button, styles.pressableContainer]}
         >
@@ -100,6 +110,9 @@ export default function BottomNavBar({
           onPress={() => {
             navigation.navigate("AudioNewsScreen");
             setLastVisitedScreen("AudioNewsScreen");
+            if (lastVisitedScreen === "AudioNewsScreen") {
+              scrollToTopAudioHandler();
+            }
           }}
         >
           <View style={styles.buttonContainer}>
@@ -136,6 +149,9 @@ export default function BottomNavBar({
           onPress={() => {
             navigation.navigate("MobileNewsScreen");
             setLastVisitedScreen("MobileNewsScreen");
+            if (lastVisitedScreen === "MobileNewsScreen") {
+              scrollToTopMobileHandler();
+            }
           }}
           style={({ pressed }) => [styles.button]}
         >

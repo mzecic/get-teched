@@ -16,8 +16,8 @@ import TechGridTile from "../components/TechGridTile";
 export default function AudioNewsScreen({
   techNews,
   yOffset,
-  headerOpacity,
   setAudioNews,
+  listViewAudioRef,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -96,6 +96,7 @@ export default function AudioNewsScreen({
         data={techNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderTechItem}
+        ref={listViewAudioRef}
       />
     </View>
   );

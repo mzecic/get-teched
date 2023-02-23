@@ -16,8 +16,8 @@ import TechGridTile from "../components/TechGridTile";
 export default function MobileNewsScreen({
   techNews,
   yOffset,
-  headerOpacity,
   setMobileNews,
+  listViewMobileRef,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -96,6 +96,7 @@ export default function MobileNewsScreen({
         data={techNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderTechItem}
+        ref={listViewMobileRef}
       />
     </View>
   );

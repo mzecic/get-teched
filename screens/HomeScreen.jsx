@@ -6,7 +6,13 @@ import {
   Platform,
   RefreshControl,
 } from "react-native";
-import { useLayoutEffect, useEffect, useState, useCallback } from "react";
+import {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as news from "../utils/gnews";
 
@@ -18,7 +24,8 @@ export default function HomeScreen({
   headerOpacity,
   setTechNews,
   onLayoutRootView,
-  lastVisitedScreen
+  lastVisitedScreen,
+  listViewRef,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -67,6 +74,13 @@ export default function HomeScreen({
     })();
   }, []);
 
+  useEffect(
+    function () {
+      
+    },
+    [lastVisitedScreen]
+  );
+
   return (
     <View style={styles.list} onLayout={onLayoutRootView}>
       <Animated.FlatList
@@ -91,6 +105,7 @@ export default function HomeScreen({
         data={techNews}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderTechItem}
+        ref={listViewRef}
       />
     </View>
   );
