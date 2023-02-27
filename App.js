@@ -18,6 +18,7 @@ import { articles } from "./dummy-data";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
   const [gamingNews, setGamingNews] = useState([]);
   const [audioNews, setAudioNews] = useState([]);
@@ -70,7 +71,9 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      setTimeout(async function () {
+        await SplashScreen.hideAsync();
+      }, 2000);
     }
   }, [fontsLoaded]);
 
@@ -113,6 +116,8 @@ export default function App() {
             {(props) => (
               <HomeScreen
                 onLayoutRootView={onLayoutRootView}
+                generalNews={generalNews}
+                setGeneralNews={setGeneralNews}
                 techNews={techNews}
                 setTechNews={setTechNews}
                 yOffset={yOffset}

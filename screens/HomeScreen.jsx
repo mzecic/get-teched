@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   RefreshControl,
+  FlatList,
 } from "react-native";
 import {
   useLayoutEffect,
@@ -17,12 +18,15 @@ import { useNavigation } from "@react-navigation/native";
 import * as news from "../utils/gnews";
 
 import TechGridTile from "../components/TechGridTile";
+import GeneralNewsLine from "../components/GeneralNewsLine";
 
 export default function HomeScreen({
   techNews,
   yOffset,
   headerOpacity,
   setTechNews,
+  setGeneralNews,
+  generalNews,
   onLayoutRootView,
   lastVisitedScreen,
   listViewRef,
@@ -40,6 +44,10 @@ export default function HomeScreen({
     return (
       <TechGridTile data={itemData} lastVisitedScreen={lastVisitedScreen} />
     );
+  }
+
+  function renderGeneralTechItem(itemData) {
+    return <GeneralNewsLine data={itemData} />;
   }
   const navigation = useNavigation();
 
@@ -71,43 +79,53 @@ export default function HomeScreen({
     (async function () {
       const techNews = await news.getTechNews();
       setTechNews([...techNews.reverse()]);
+      const generalNews = await news.getGeneralNews();
+      let result = [...generalNews.reverse().splice(0, 4)];
+      setGeneralNews([...result]);
+      console.log(result);
     })();
   }, []);
 
-  useEffect(
-    function () {
-      
-    },
-    [lastVisitedScreen]
-  );
-
   return (
-    <View style={styles.list} onLayout={onLayoutRootView}>
-      <Animated.FlatList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  y: yOffset,
+    <>
+      <View
+        style={{
+          paddingTop: "30%",
+        }}
+      >
+        <FlatList
+          data={generalNews}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderGeneralTechItem}
+        />
+      </View>
+      <View style={styles.list} onLayout={onLayoutRootView}>
+        <Animated.FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    y: yOffset,
+                  },
                 },
               },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        data={techNews}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderTechItem}
-        ref={listViewRef}
-      />
-    </View>
+            ],
+            { useNativeDriver: true }
+          )}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          data={techNews}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderTechItem}
+          ref={listViewRef}
+        />
+      </View>
+    </>
   );
 }
 
@@ -115,7 +133,9 @@ const styles = StyleSheet.create({
   listHeader: {
     paddingTop: "25%",
   },
+  generalNews: {},
   list: {
+    flex: 1,
     paddingTop: Platform.OS === "android" ? 16 : 0,
     justifyContent: "center",
   },

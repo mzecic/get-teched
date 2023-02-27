@@ -27,7 +27,7 @@ export default function TechGridTile({ data, lastVisitedScreen }) {
                 lastVisitedScreen !== "HomeScreen"
                 ? "15%"
                 : data.index === 0
-                ? "27%"
+                ? "7%"
                 : 0
               : "5%",
         },
