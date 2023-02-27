@@ -9,7 +9,11 @@ import {
 import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 
-export default function TechGridTile({ data, lastVisitedScreen }) {
+export default function TechGridTile({
+  data,
+  lastVisitedScreen,
+  isGeneralVisible,
+}) {
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
@@ -26,9 +30,9 @@ export default function TechGridTile({ data, lastVisitedScreen }) {
                 Platform.OS === "ios" &&
                 lastVisitedScreen !== "HomeScreen"
                 ? "15%"
-                : data.index === 0
-                ? "7%"
-                : 0
+                : data.index === 0 && !isGeneralVisible
+                ? "65%"
+                : "5%"
               : "5%",
         },
       ]}

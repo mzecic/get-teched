@@ -27,6 +27,8 @@ export default function App() {
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
   const [showNavBar, setShowNavBar] = useState(true);
 
+  const [isGeneralVisible, setIsGeneralVisible] = useState(true);
+
   const Stack = createNativeStackNavigator();
 
   const yOffset = useRef(new Animated.Value(0)).current;
@@ -124,6 +126,8 @@ export default function App() {
                 headerOpacity={headerOpacity}
                 lastVisitedScreen={lastVisitedScreen}
                 listViewRef={listViewRef}
+                isGeneralVisible={isGeneralVisible}
+                setIsGeneralVisible={setIsGeneralVisible}
               />
             )}
           </Stack.Screen>
