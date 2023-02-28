@@ -32,10 +32,10 @@ export default function HomeScreen({
   listViewRef,
   isGeneralVisible,
   setIsGeneralVisible,
+  yScroll,
+  generalListOffset,
 }) {
   const [refreshing, setRefreshing] = useState(false);
-
-  let yScroll = useRef(null);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -45,17 +45,43 @@ export default function HomeScreen({
   }, []);
 
   function renderTechItem(itemData) {
-    return (
-      <TechGridTile
-        isGeneralVisible={isGeneralVisible}
-        data={itemData}
-        lastVisitedScreen={lastVisitedScreen}
-      />
-    );
+    if (itemData.index >= 0 && itemData.index < 4) {
+      return itemData.index === 0 ? (
+        <>
+          <View
+            style={{
+              marginTop: "30%",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ paddingLeft: 24, fontSize: 16, fontWeight: "bold" }}>
+              Top Stories
+            </Text>
+            <GeneralNewsLine
+              lastVisitedScreen={lastVisitedScreen}
+              data={itemData}
+            />
+          </View>
+        </>
+      ) : (
+        <GeneralNewsLine
+          lastVisitedScreen={lastVisitedScreen}
+          data={itemData}
+        />
+      );
+    } else {
+      return (
+        <TechGridTile
+          isGeneralVisible={isGeneralVisible}
+          data={itemData}
+          lastVisitedScreen={lastVisitedScreen}
+        />
+      );
+    }
   }
 
   function renderGeneralTechItem(itemData) {
-    return <GeneralNewsLine data={itemData} />;
+    return;
   }
   const navigation = useNavigation();
 
@@ -96,32 +122,8 @@ export default function HomeScreen({
 
   return (
     <>
-      {isGeneralVisible ? (
-        <Animated.View
-          style={{
-            paddingTop: "30%",
-            marginHorizontal: "auto",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <FlatList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            data={generalNews}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderGeneralTechItem}
-          />
-        </Animated.View>
-      ) : (
-        <></>
-      )}
-
       <View style={styles.list} onLayout={onLayoutRootView}>
         <Animated.FlatList
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -136,34 +138,16 @@ export default function HomeScreen({
               },
             ],
             {
-              listener: (e) => {
-                console.log(headerOpacity);
-                yScroll.current = e.nativeEvent.contentOffset.y;
-                if (yScroll.current > 150) {
-                  setIsGeneralVisible(false);
-                } else {
-                  setIsGeneralVisible(true);
-                }
-              },
               useNativeDriver: true,
             }
           )}
           scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          data={techNews}
+          showsVerticalScrollIndicator={false}
+          data={[...generalNews, ...techNews]}
           keyExtractor={(item, index) => index.toString()}
           renderItem={renderTechItem}
           ref={listViewRef}
-          // onScrollBeginDrag={(e) => {
-          //   const y = e.nativeEvent.contentOffset.y;
-          //   if ((y) => 10) {
-          //     setIsGeneralVisible(false);
-          //   } else {
-          //     setIsGeneralVisible(true);
-          //   }
-          //   console.log(y);
-          // }}
         />
       </View>
     </>

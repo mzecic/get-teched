@@ -36,6 +36,11 @@ export default function App() {
     inputRange: [0, 200],
     outputRange: [1, 0],
   });
+  const yScroll = useRef(new Animated.Value(0)).current;
+  const generalListOffset = yScroll.interpolate({
+    inputRange: [0, 200],
+    outputRange: [0, -600],
+  });
 
   let listViewRef = useRef(null);
   let listViewGamingRef = useRef(null);
@@ -117,6 +122,8 @@ export default function App() {
           >
             {(props) => (
               <HomeScreen
+                yScroll={yScroll}
+                generalListOffset={generalListOffset}
                 onLayoutRootView={onLayoutRootView}
                 generalNews={generalNews}
                 setGeneralNews={setGeneralNews}
