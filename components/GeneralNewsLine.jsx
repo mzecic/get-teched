@@ -8,8 +8,13 @@ import {
 } from "react-native";
 
 import * as WebBrowser from "expo-web-browser";
+import * as colors from "../assets/colors/primaryColors";
 
-export default function GeneralNewsLine({ data, lastVisitedScreen }) {
+export default function GeneralNewsLine({
+  data,
+  lastVisitedScreen,
+  isDarkMode,
+}) {
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
@@ -38,8 +43,24 @@ export default function GeneralNewsLine({ data, lastVisitedScreen }) {
           pressed ? styles.buttonPressed : null,
         ]}
       >
-        <View style={styles.lineItemContainer}>
-          <Text style={styles.lineItem}>{data.item.title}</Text>
+        <View
+          style={[
+            styles.lineItemContainer,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.black
+                : colors.colors.white,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.lineItem,
+              { color: isDarkMode ? colors.colors.white : colors.colors.black },
+            ]}
+          >
+            {data.item.title}
+          </Text>
           <Image style={styles.image} source={{ uri: data.item.image }} />
         </View>
       </Pressable>
@@ -49,12 +70,17 @@ export default function GeneralNewsLine({ data, lastVisitedScreen }) {
 const styles = StyleSheet.create({
   lineItem: {
     justifySelf: "center",
-    alignSelf: "start",
+    alignSelf: "center",
     textAlign: "center",
     width: "80%",
     padding: 12,
   },
   lineItemContainer: {
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowRadius: 12,
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
     flexDirection: "row",
     justifyContent: "space-between",
     border: "2px solid black",

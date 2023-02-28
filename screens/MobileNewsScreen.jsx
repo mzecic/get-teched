@@ -5,19 +5,23 @@ import {
   Text,
   Platform,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { useLayoutEffect, useEffect, useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
-
 import TechGridTile from "../components/TechGridTile";
+import * as colors from "../assets/colors/primaryColors";
 
 export default function MobileNewsScreen({
   techNews,
   yOffset,
   setMobileNews,
   listViewMobileRef,
+  isLoading,
+  setIsLoading,
+  isDarkMode,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -31,74 +35,71 @@ export default function MobileNewsScreen({
     }, 500);
   }, []);
   function renderTechItem(itemData) {
-    return <TechGridTile data={itemData} />;
+    return <TechGridTile isDarkMode={isDarkMode} data={itemData} />;
   }
   const navigation = useNavigation();
 
-  // useLayoutEffect(() => {
-  //   if (Platform.OS === "ios") {
-  //     navigation.setOptions({
-  //       headerStyle: {
-  //         opacity: headerOpacity,
-  //       },
-  //       headerBackground: () => (
-  //         <>
-  //           <Animated.View
-  //             style={{
-  //               backgroundColor: "#E6E6E6",
-  //               ...StyleSheet.absoluteFillObject,
-  //               opacity: headerOpacity,
-  //             }}
-  //           >
-  //             <Text style={styles.headerTitle}>Mobile News</Text>
-  //           </Animated.View>
-  //         </>
-  //       ),
-  //       headerTransparent: true,
-  //     });
-  //   }
-  // }, [headerOpacity, navigation]);
-
   useEffect(function () {
     (async function () {
+      setIsLoading(true);
       const techNews = await news.getMobileNews();
       setMobileNews([...techNews.reverse()]);
+      setIsLoading(false);
     })();
   }, []);
 
   return (
-    <View style={styles.list}>
-      <Animated.FlatList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        onScroll={
-          Platform.OS === "ios"
-            ? Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: yOffset,
+    <>
+      {isLoading ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#5500dc" />
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.list,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.backgroundDarkMode
+                : colors.colors.white,
+            },
+          ]}
+        >
+          <Animated.FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            onScroll={
+              Platform.OS === "ios"
+                ? Animated.event(
+                    [
+                      {
+                        nativeEvent: {
+                          contentOffset: {
+                            y: yOffset,
+                          },
+                        },
                       },
-                    },
-                  },
-                ],
-                { useNativeDriver: true }
-              )
-            : () => {
-                return;
-              }
-        }
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        data={techNews}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderTechItem}
-        ref={listViewMobileRef}
-      />
-    </View>
+                    ],
+                    { useNativeDriver: true }
+                  )
+                : () => {
+                    return;
+                  }
+            }
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={techNews}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderTechItem}
+            ref={listViewMobileRef}
+          />
+        </View>
+      )}
+    </>
   );
 }
 

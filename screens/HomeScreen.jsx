@@ -5,7 +5,7 @@ import {
   Text,
   Platform,
   RefreshControl,
-  FlatList,
+  ActivityIndicator,
 } from "react-native";
 import {
   useLayoutEffect,
@@ -20,6 +20,9 @@ import * as news from "../utils/gnews";
 import TechGridTile from "../components/TechGridTile";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 
+import * as SplashScreen from "expo-splash-screen";
+import * as colors from "../assets/colors/primaryColors";
+
 export default function HomeScreen({
   techNews,
   yOffset,
@@ -31,9 +34,9 @@ export default function HomeScreen({
   lastVisitedScreen,
   listViewRef,
   isGeneralVisible,
-  setIsGeneralVisible,
-  yScroll,
-  generalListOffset,
+  isLoading,
+  setIsLoading,
+  isDarkMode,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -54,10 +57,18 @@ export default function HomeScreen({
               justifyContent: "center",
             }}
           >
-            <Text style={{ paddingLeft: 24, fontSize: 16, fontWeight: "bold" }}>
+            <Text
+              style={{
+                paddingLeft: 24,
+                fontSize: 16,
+                fontWeight: "bold",
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              }}
+            >
               Top Stories
             </Text>
             <GeneralNewsLine
+              isDarkMode={isDarkMode}
               lastVisitedScreen={lastVisitedScreen}
               data={itemData}
             />
@@ -65,6 +76,7 @@ export default function HomeScreen({
         </>
       ) : (
         <GeneralNewsLine
+          isDarkMode={isDarkMode}
           lastVisitedScreen={lastVisitedScreen}
           data={itemData}
         />
@@ -72,6 +84,7 @@ export default function HomeScreen({
     } else {
       return (
         <TechGridTile
+          isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
           lastVisitedScreen={lastVisitedScreen}
@@ -80,9 +93,6 @@ export default function HomeScreen({
     }
   }
 
-  function renderGeneralTechItem(itemData) {
-    return;
-  }
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -95,12 +105,23 @@ export default function HomeScreen({
           <>
             <Animated.View
               style={{
-                backgroundColor: "#E6E6E6",
+                backgroundColor: isDarkMode ? colors.colors.black : "#E6E6E6",
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}
             >
-              <Text style={styles.headerTitle}>GetTeched</Text>
+              <Text
+                style={[
+                  styles.headerTitle,
+                  {
+                    color: isDarkMode
+                      ? colors.colors.white
+                      : colors.colors.black,
+                  },
+                ]}
+              >
+                GetTeched
+              </Text>
             </Animated.View>
           </>
         ),
@@ -111,45 +132,67 @@ export default function HomeScreen({
 
   useEffect(function () {
     (async function () {
+      setIsLoading(true);
       const techNews = await news.getTechNews();
       setTechNews([...techNews.reverse()]);
       const generalNews = await news.getGeneralNews();
       let result = [...generalNews.reverse().splice(0, 4)];
       setGeneralNews([...result]);
-      console.log(result);
+      setIsLoading(false);
+      setTimeout(function () {
+        SplashScreen.hideAsync();
+      }, 1500);
     })();
   }, []);
 
   return (
     <>
-      <View style={styles.list} onLayout={onLayoutRootView}>
-        <Animated.FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    y: yOffset,
+      {isLoading ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#5500dc" />
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.list,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.backgroundDarkMode
+                : colors.colors.white,
+            },
+          ]}
+          onLayout={onLayoutRootView}
+        >
+          <Animated.FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            onScroll={Animated.event(
+              [
+                {
+                  nativeEvent: {
+                    contentOffset: {
+                      y: yOffset,
+                    },
                   },
                 },
-              },
-            ],
-            {
-              useNativeDriver: true,
-            }
-          )}
-          scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          data={[...generalNews, ...techNews]}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderTechItem}
-          ref={listViewRef}
-        />
-      </View>
+              ],
+              {
+                useNativeDriver: true,
+              }
+            )}
+            scrollEventThrottle={16}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={[...generalNews, ...techNews]}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderTechItem}
+            ref={listViewRef}
+          />
+        </View>
+      )}
     </>
   );
 }
@@ -158,7 +201,6 @@ const styles = StyleSheet.create({
   listHeader: {
     paddingTop: "25%",
   },
-  generalNews: {},
   list: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? 16 : 0,

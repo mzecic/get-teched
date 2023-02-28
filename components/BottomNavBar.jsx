@@ -10,11 +10,21 @@ export default function BottomNavBar({
   scrollToTopGamingHandler,
   scrollToTopAudioHandler,
   scrollToTopMobileHandler,
+  isDarkMode,
 }) {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.navContainer}>
+    <View
+      style={[
+        styles.navContainer,
+        {
+          backgroundColor: isDarkMode
+            ? primaryColors.colors.black
+            : primaryColors.colors.white,
+        },
+      ]}
+    >
       <View>
         <Pressable
           onPress={() => {
@@ -31,10 +41,13 @@ export default function BottomNavBar({
               style={[
                 styles.navIcon,
                 {
-                  tintColor:
-                    lastVisitedScreen === "HomeScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  tintColor: isDarkMode
+                    ? lastVisitedScreen === "HomeScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "HomeScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
               source={require("../assets/home-icon.png")}
@@ -43,10 +56,13 @@ export default function BottomNavBar({
               style={[
                 styles.imageTag,
                 {
-                  color:
-                    lastVisitedScreen === "HomeScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  color: isDarkMode
+                    ? lastVisitedScreen === "HomeScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "HomeScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
             >
@@ -71,32 +87,28 @@ export default function BottomNavBar({
               style={[
                 styles.navIcon,
                 {
-                  tintColor:
-                    lastVisitedScreen === "GamingNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  tintColor: isDarkMode
+                    ? lastVisitedScreen === "GamingNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "GamingNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
               source={require("../assets/gaming-icon.png")}
             />
-            {/* <Text
-              style={{
-                fontSize: 35,
-                textAlign: "center",
-                color:
-                  lastVisitedScreen === "GamingNewsScreen" ? "blue" : "black",
-              }}
-            >
-              &#128377;
-            </Text> */}
             <Text
               style={[
                 styles.imageTag,
                 {
-                  color:
-                    lastVisitedScreen === "GamingNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  color: isDarkMode
+                    ? lastVisitedScreen === "GamingNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "GamingNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
             >
@@ -120,10 +132,13 @@ export default function BottomNavBar({
               style={[
                 styles.navIcon,
                 {
-                  tintColor:
-                    lastVisitedScreen === "AudioNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  tintColor: isDarkMode
+                    ? lastVisitedScreen === "AudioNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "AudioNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
               source={require("../assets/audio-icon.png")}
@@ -132,10 +147,13 @@ export default function BottomNavBar({
               style={[
                 styles.imageTag,
                 {
-                  color:
-                    lastVisitedScreen === "AudioNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  color: isDarkMode
+                    ? lastVisitedScreen === "AudioNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "AudioNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
             >
@@ -160,10 +178,13 @@ export default function BottomNavBar({
               style={[
                 styles.navIcon,
                 {
-                  tintColor:
-                    lastVisitedScreen === "MobileNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  tintColor: isDarkMode
+                    ? lastVisitedScreen === "MobileNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "MobileNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
               source={require("../assets/mobile-icon.png")}
@@ -172,10 +193,13 @@ export default function BottomNavBar({
               style={[
                 styles.imageTag,
                 {
-                  color:
-                    lastVisitedScreen === "MobileNewsScreen"
-                      ? primaryColors.colors.primaryBlue
-                      : "black",
+                  color: isDarkMode
+                    ? lastVisitedScreen === "MobileNewsScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "MobileNewsScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
                 },
               ]}
             >
@@ -197,10 +221,28 @@ export default function BottomNavBar({
         >
           <View style={styles.buttonContainer}>
             <Image
-              style={styles.navIcon}
+              style={[
+                styles.navIcon,
+                {
+                  tintColor: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                },
+              ]}
               source={require("../assets/menu-icon.png")}
             />
-            <Text style={styles.imageTag}>Menu</Text>
+            <Text
+              style={[
+                styles.imageTag,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                },
+              ]}
+            >
+              Menu
+            </Text>
           </View>
         </Pressable>
       </View>

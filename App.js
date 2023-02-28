@@ -1,6 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated, Platform, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Platform,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
@@ -23,11 +30,11 @@ export default function App() {
   const [gamingNews, setGamingNews] = useState([]);
   const [audioNews, setAudioNews] = useState([]);
   const [mobileNews, setMobileNews] = useState([]);
-  const [fakeNews, setFakeNews] = useState([]);
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
   const [showNavBar, setShowNavBar] = useState(true);
-
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const Stack = createNativeStackNavigator();
 
@@ -88,15 +95,9 @@ export default function App() {
     return <Text>Loading...</Text>;
   }
 
-  // useEffect(function () {
-  //   (async function () {
-  //     setFakeNews([...articles]);
-  //   })();
-  // }, []);
-
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -135,6 +136,9 @@ export default function App() {
                 listViewRef={listViewRef}
                 isGeneralVisible={isGeneralVisible}
                 setIsGeneralVisible={setIsGeneralVisible}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                isDarkMode={isDarkMode}
               />
             )}
           </Stack.Screen>
@@ -160,6 +164,9 @@ export default function App() {
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
                 listViewGamingRef={listViewGamingRef}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                isDarkMode={isDarkMode}
               />
             )}
           </Stack.Screen>
@@ -185,6 +192,9 @@ export default function App() {
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
                 listViewAudioRef={listViewAudioRef}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                isDarkMode={isDarkMode}
               />
             )}
           </Stack.Screen>
@@ -210,6 +220,9 @@ export default function App() {
                 yOffset={yOffset}
                 headerOpacity={headerOpacity}
                 listViewMobileRef={listViewMobileRef}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                isDarkMode={isDarkMode}
               />
             )}
           </Stack.Screen>
@@ -223,6 +236,8 @@ export default function App() {
               <MenuScreen
                 lastVisitedScreen={lastVisitedScreen}
                 setShowNavBar={setShowNavBar}
+                isDarkMode={isDarkMode}
+                setIsDarkMode={setIsDarkMode}
               />
             )}
           </Stack.Screen>
@@ -236,6 +251,7 @@ export default function App() {
             scrollToTopGamingHandler={scrollToTopGamingHandler}
             scrollToTopAudioHandler={scrollToTopAudioHandler}
             scrollToTopMobileHandler={scrollToTopMobileHandler}
+            isDarkMode={isDarkMode}
           />
         ) : (
           <></>

@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
+import * as colors from "../assets/colors/primaryColors";
 
 export default function TechGridTile({
   data,
   lastVisitedScreen,
   isGeneralVisible,
+  isDarkMode,
 }) {
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
@@ -34,6 +36,7 @@ export default function TechGridTile({
                 ? "65%"
                 : "5%"
               : "5%",
+          backgroundColor: isDarkMode ? colors.colors.black : "white",
         },
       ]}
     >
@@ -46,7 +49,14 @@ export default function TechGridTile({
         ]}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{data.item.title}</Text>
+          <Text
+            style={[
+              styles.title,
+              { color: isDarkMode ? colors.colors.white : colors.colors.black },
+            ]}
+          >
+            {data.item.title}
+          </Text>
         </View>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: data.item.image }} />

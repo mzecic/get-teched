@@ -2,14 +2,15 @@ import {
   Animated,
   StyleSheet,
   View,
-  Text,
   Platform,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { useLayoutEffect, useState, useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
+import * as colors from "../assets/colors/primaryColors";
 
 import TechGridTile from "../components/TechGridTile";
 
@@ -18,6 +19,9 @@ export default function GamingNewsScreen({
   yOffset,
   setGamingNews,
   listViewGamingRef,
+  isLoading,
+  setIsLoading,
+  isDarkMode,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -31,74 +35,71 @@ export default function GamingNewsScreen({
     }, 500);
   }, []);
   function renderTechItem(itemData) {
-    return <TechGridTile data={itemData} />;
+    return <TechGridTile isDarkMode={isDarkMode} data={itemData} />;
   }
   const navigation = useNavigation();
 
   useEffect(function () {
     (async function () {
+      setIsLoading(true);
       const techNews = await news.getGamingNews();
       setGamingNews([...techNews.reverse()]);
+      setIsLoading(false);
     })();
   }, []);
 
-  // useLayoutEffect(() => {
-  //   if (Platform.OS === "ios") {
-  //     navigation.setOptions({
-  //       headerStyle: {
-  //         opacity: headerOpacity,
-  //       },
-  //       headerBackground: () => (
-  //         <>
-  //           <Animated.View
-  //             style={{
-  //               backgroundColor: "#E6E6E6",
-  //               ...StyleSheet.absoluteFillObject,
-  //               opacity: headerOpacity,
-  //             }}
-  //           >
-  //             <Text style={styles.headerTitle}>Gaming News</Text>
-  //           </Animated.View>
-  //         </>
-  //       ),
-  //       headerTransparent: true,
-  //     });
-  //   }
-  // }, [headerOpacity, navigation]);
-
   return (
-    <View style={styles.list}>
-      <Animated.FlatList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        onScroll={
-          Platform.OS === "ios"
-            ? Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: yOffset,
+    <>
+      {isLoading ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" color="#5500dc" />
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.list,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.backgroundDarkMode
+                : colors.colors.white,
+            },
+          ]}
+        >
+          <Animated.FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            onScroll={
+              Platform.OS === "ios"
+                ? Animated.event(
+                    [
+                      {
+                        nativeEvent: {
+                          contentOffset: {
+                            y: yOffset,
+                          },
+                        },
                       },
-                    },
-                  },
-                ],
-                { useNativeDriver: true }
-              )
-            : () => {
-                return;
-              }
-        }
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        data={techNews}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderTechItem}
-        ref={listViewGamingRef}
-      />
-    </View>
+                    ],
+                    { useNativeDriver: true }
+                  )
+                : () => {
+                    return;
+                  }
+            }
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={techNews}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderTechItem}
+            ref={listViewGamingRef}
+          />
+        </View>
+      )}
+    </>
   );
 }
 
