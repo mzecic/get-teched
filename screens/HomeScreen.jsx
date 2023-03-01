@@ -6,6 +6,8 @@ import {
   Platform,
   RefreshControl,
   ActivityIndicator,
+  Pressable,
+  Image,
 } from "react-native";
 import {
   useLayoutEffect,
@@ -122,6 +124,32 @@ export default function HomeScreen({
               >
                 GetTeched
               </Text>
+              <View
+                style={{
+                  zIndex: 100,
+                  position: "absolute",
+                }}
+              >
+                <Pressable
+                  onPress={() => {
+                    console.log("navigating");
+                    navigation.navigate("SearchScreen");
+                  }}
+                >
+                  <View>
+                    <Image
+                      style={{
+                        width: 30,
+                        height: 30,
+                        tintColor: isDarkMode
+                          ? colors.colors.white
+                          : colors.colors.black,
+                      }}
+                      source={require("../assets/search-icon.png")}
+                    />
+                  </View>
+                </Pressable>
+              </View>
             </Animated.View>
           </>
         ),

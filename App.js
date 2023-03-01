@@ -6,7 +6,6 @@ import {
   Platform,
   View,
   Text,
-  TextInput,
 } from "react-native";
 import {
   NavigationContainer,
@@ -22,6 +21,7 @@ import GamingNewsScreen from "./screens/GamingNewsScreen";
 import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import MenuScreen from "./screens/MenuScreen";
+import SearchScreen from "./screens/SearchScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 
@@ -36,6 +36,7 @@ export default function App() {
   const [gamingNews, setGamingNews] = useState([]);
   const [audioNews, setAudioNews] = useState([]);
   const [mobileNews, setMobileNews] = useState([]);
+  const [allNews, setAllNews] = useState([]);
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
   const [showNavBar, setShowNavBar] = useState(true);
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
@@ -268,6 +269,16 @@ export default function App() {
                 isDarkMode={isDarkMode}
                 setIsDarkMode={setIsDarkMode}
               />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="SearchScreen"
+          >
+            {(props) => (
+              <SearchScreen allNews={allNews} setAllNews={setAllNews} />
             )}
           </Stack.Screen>
         </Stack.Navigator>

@@ -211,6 +211,49 @@ export default function BottomNavBar({
       <View style={styles.pressableContainer}>
         <Pressable
           onPress={() => {
+            navigation.navigate("SearchScreen");
+            setLastVisitedScreen("SearchScreen");
+          }}
+          style={({ pressed }) => [styles.button]}
+        >
+          <View style={styles.buttonContainer}>
+            <Image
+              style={[
+                styles.navIcon,
+                {
+                  tintColor: isDarkMode
+                    ? lastVisitedScreen === "SearchScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "SearchScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
+                },
+              ]}
+              source={require("../assets/search-icon.png")}
+            />
+            <Text
+              style={[
+                styles.imageTag,
+                {
+                  color: isDarkMode
+                    ? lastVisitedScreen === "SearchScreen"
+                      ? primaryColors.colors.secondaryHighlight
+                      : "white"
+                    : lastVisitedScreen === "SearchScreen"
+                    ? primaryColors.colors.primaryHighlight
+                    : "black",
+                },
+              ]}
+            >
+              Search
+            </Text>
+          </View>
+        </Pressable>
+      </View>
+      <View style={styles.pressableContainer}>
+        <Pressable
+          onPress={() => {
             setShowNavBar(false);
             navigation.navigate("MenuScreen");
           }}
