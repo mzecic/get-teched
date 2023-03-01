@@ -6,9 +6,13 @@ import {
   Platform,
   View,
   Text,
-  ActivityIndicator,
+  TextInput,
 } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -19,7 +23,9 @@ import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import MenuScreen from "./screens/MenuScreen";
 import BottomNavBar from "./components/BottomNavBar";
+import primaryColors from "./assets/colors/primaryColors";
 
+import filter from "lodash.filter";
 import { articles } from "./dummy-data";
 
 SplashScreen.preventAutoHideAsync();
@@ -68,14 +74,11 @@ export default function App() {
   }
 
   const MyTheme = {
-    dark: true,
+    dark: isDarkMode ? true : false,
     colors: {
-      primary: "rgba(255, 255, 255, 0.8)",
-      background: "rgb(242, 242, 242)",
-      card: "rgb(255, 255, 255)",
-      text: "rgb(28, 28, 30)",
-      border: "rgb(199, 199, 204)",
-      notification: "rgb(255, 69, 58)",
+      background: isDarkMode
+        ? primaryColors.colors.black
+        : primaryColors.colors.white,
     },
   };
 
@@ -98,7 +101,15 @@ export default function App() {
   return (
     <>
       <StatusBar style={isDarkMode ? "light" : "dark"} />
-      <NavigationContainer>
+      <NavigationContainer
+        theme={isDarkMode ? DarkTheme : DefaultTheme}
+        style={{
+          flex: 1,
+          // backgroundColor: isDarkMode
+          //   ? primaryColors.colors.black
+          //   : primaryColors.colors.white,
+        }}
+      >
         <Stack.Navigator
           screenOptions={{
             headerLeft: () => {
@@ -108,10 +119,28 @@ export default function App() {
         >
           <Stack.Screen
             options={{
-              title: Platform.OS === "android" ? "GetTeched" : "",
+              headerTitle:
+                Platform.OS === "android"
+                  ? () => (
+                      <Text
+                        style={{
+                          fontFamily: "Audiowide",
+                          fontSize: 20,
+                          color: isDarkMode
+                            ? primaryColors.colors.white
+                            : primaryColors.colors.black,
+                        }}
+                      >
+                        GetTeched
+                      </Text>
+                    )
+                  : "",
               headerTitleAlign: "center",
               headerShown: true,
               headerStyle: {
+                backgroundColor: isDarkMode
+                  ? primaryColors.colors.black
+                  : primaryColors.colors.white,
                 zIndex: 100,
                 top: 0,
                 left: 0,

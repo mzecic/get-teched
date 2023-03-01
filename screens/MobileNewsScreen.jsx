@@ -44,7 +44,9 @@ export default function MobileNewsScreen({
       setIsLoading(true);
       const techNews = await news.getMobileNews();
       setMobileNews([...techNews.reverse()]);
-      setIsLoading(false);
+      setTimeout(function () {
+        setIsLoading(false);
+      }, 750);
     })();
   }, []);
 
@@ -52,9 +54,19 @@ export default function MobileNewsScreen({
     <>
       {isLoading ? (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkMode
+              ? colors.colors.black
+              : colors.colors.white,
+          }}
         >
-          <ActivityIndicator size="large" color="#5500dc" />
+          <ActivityIndicator
+            size="large"
+            color={isDarkMode ? colors.colors.white : colors.colors.black}
+          />
         </View>
       ) : (
         <View

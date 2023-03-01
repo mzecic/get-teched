@@ -211,13 +211,10 @@ export default function BottomNavBar({
       <View style={styles.pressableContainer}>
         <Pressable
           onPress={() => {
-            navigation.navigate("MenuScreen");
             setShowNavBar(false);
+            navigation.navigate("MenuScreen");
           }}
-          style={({ pressed }) => [
-            styles.button,
-            pressed ? styles.buttonPressed : null,
-          ]}
+          style={({ pressed }) => [styles.button]}
         >
           <View style={styles.buttonContainer}>
             <Image
@@ -252,18 +249,16 @@ export default function BottomNavBar({
 
 const styles = StyleSheet.create({
   navContainer: {
+    position: "absolute",
     height: "10%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: "#E6E6E6",
     border: "2px solid black",
     overflow: "hidden",
+    bottom: 0,
   },
-  // innerContainer: {
-  //   backgroundColor: "grey",
-  // },
   navIcon: {
     width: 30,
     height: 30,
@@ -271,7 +266,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   buttonContainer: {
-    // backgroundColor: "rgb(215, 215, 215)",
     width: "100%",
   },
   pressableContainer: {
@@ -285,7 +279,6 @@ const styles = StyleSheet.create({
   buttonPressed: {
     opacity: 0.5,
     borderRadius: 16,
-    backgroundColor: "#ccc",
   },
   imageTag: {
     // position: "absolute",

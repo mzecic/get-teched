@@ -8,15 +8,12 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splashscreen/SplashScreenAdhdpi.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#252525"
+      "resizeMode": "contain"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.getTeched"

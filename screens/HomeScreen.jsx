@@ -53,7 +53,7 @@ export default function HomeScreen({
         <>
           <View
             style={{
-              marginTop: "30%",
+              marginTop: Platform.OS === "ios" ? "30%" : "5%",
               justifyContent: "center",
             }}
           >
@@ -138,7 +138,9 @@ export default function HomeScreen({
       const generalNews = await news.getGeneralNews();
       let result = [...generalNews.reverse().splice(0, 4)];
       setGeneralNews([...result]);
-      setIsLoading(false);
+      setTimeout(function () {
+        setIsLoading(false);
+      }, 750);
       setTimeout(function () {
         SplashScreen.hideAsync();
       }, 1500);
@@ -149,9 +151,19 @@ export default function HomeScreen({
     <>
       {isLoading ? (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkMode
+              ? colors.colors.backgroundDarkMode
+              : colors.colors.white,
+          }}
         >
-          <ActivityIndicator size="large" color="#5500dc" />
+          <ActivityIndicator
+            size="large"
+            color={isDarkMode ? colors.colors.white : colors.colors.black}
+          />
         </View>
       ) : (
         <View
@@ -198,12 +210,9 @@ export default function HomeScreen({
 }
 
 const styles = StyleSheet.create({
-  listHeader: {
-    paddingTop: "25%",
-  },
   list: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? 16 : 0,
+    paddingTop: Platform.OS === "android" ? 0 : 0,
     justifyContent: "center",
   },
   headerTitle: {

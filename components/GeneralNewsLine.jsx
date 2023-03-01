@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   lineItemContainer: {
+    elevation: 4,
     shadowColor: "black",
     shadowOpacity: 0.5,
     shadowOffset: { width: 4, height: 4 },

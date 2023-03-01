@@ -33,7 +33,7 @@ export default function TechGridTile({
                 lastVisitedScreen !== "HomeScreen"
                 ? "15%"
                 : data.index === 0 && !isGeneralVisible
-                ? "65%"
+                ? "5%"
                 : "5%"
               : "5%",
           backgroundColor: isDarkMode ? colors.colors.black : "white",
