@@ -1,12 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Animated,
-  Platform,
-  View,
-  Text,
-} from "react-native";
+import { StyleSheet, Animated, Platform, View, Text } from "react-native";
 import {
   NavigationContainer,
   DarkTheme,
@@ -278,7 +272,12 @@ export default function App() {
             name="SearchScreen"
           >
             {(props) => (
-              <SearchScreen allNews={allNews} setAllNews={setAllNews} />
+              <SearchScreen
+                lastVisitedScreen={lastVisitedScreen}
+                isDarkMode={isDarkMode}
+                allNews={allNews}
+                setAllNews={setAllNews}
+              />
             )}
           </Stack.Screen>
         </Stack.Navigator>

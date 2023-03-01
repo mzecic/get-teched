@@ -27,10 +27,10 @@ export default function GeneralNewsLine({
             Platform.OS === "ios"
               ? data.index === 0 &&
                 Platform.OS === "ios" &&
-                lastVisitedScreen !== "HomeScreen"
+                lastVisitedScreen !== "HomeScreen" && lastVisitedScreen !== "SearchScreen"
                 ? "15%"
                 : data.index === 0
-                ? "2%"
+                ? "5%"
                 : "5%"
               : "5%",
         },
