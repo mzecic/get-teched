@@ -110,7 +110,6 @@ export default function AudioNewsScreen({
                         if (scrollingDirection === "up" || offset < 200) {
                           setShowNavBar(true);
                         }
-                        console.log(direction);
                       },
                       useNativeDriver: true,
                     }

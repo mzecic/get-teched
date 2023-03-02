@@ -108,7 +108,6 @@ export default function GamingNewsScreen({
                         if (scrollingDirection === "up" || offset < 200) {
                           setShowNavBar(true);
                         }
-                        console.log(direction);
                       },
                       useNativeDriver: true,
                     }

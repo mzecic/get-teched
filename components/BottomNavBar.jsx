@@ -1,16 +1,20 @@
 import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
+import { useEffect } from "react";
 
 export default function BottomNavBar({
   lastVisitedScreen,
   setLastVisitedScreen,
+  showNavBar,
   setShowNavBar,
   scrollToTopHandler,
   scrollToTopGamingHandler,
   scrollToTopAudioHandler,
   scrollToTopMobileHandler,
   isDarkMode,
+  isMenu,
+  setIsMenu,
 }) {
   const navigation = useNavigation();
 
@@ -22,6 +26,7 @@ export default function BottomNavBar({
           backgroundColor: isDarkMode
             ? primaryColors.colors.black
             : primaryColors.colors.white,
+          display: isMenu ? "none" : "absolute",
         },
       ]}
     >
@@ -254,8 +259,9 @@ export default function BottomNavBar({
       <View style={styles.pressableContainer}>
         <Pressable
           onPress={() => {
-            setShowNavBar(false);
             navigation.navigate("MenuScreen");
+            setIsMenu(true);
+            setShowNavBar(false);
           }}
           style={({ pressed }) => [styles.button]}
         >
@@ -303,9 +309,9 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   navIcon: {
-    width: 30,
-    height: 30,
-    padding: 16,
+    width: 25,
+    height: 25,
+    padding: 12,
     alignSelf: "center",
   },
   buttonContainer: {

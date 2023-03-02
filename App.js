@@ -40,6 +40,7 @@ export default function App() {
   const [allNews, setAllNews] = useState([]);
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
   const [showNavBar, setShowNavBar] = useState(true);
+  const [isMenu, setIsMenu] = useState(false);
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -64,16 +65,24 @@ export default function App() {
   let listViewMobileRef = useRef(null);
 
   function scrollToTopHandler() {
-    listViewRef.current.scrollToOffset({ offset: 0, animated: true });
+    if (!isLoading) {
+      listViewRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   }
   function scrollToTopGamingHandler() {
-    listViewGamingRef.current.scrollToOffset({ offset: 0, animated: true });
+    if (!isLoading) {
+      listViewGamingRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   }
   function scrollToTopAudioHandler() {
-    listViewAudioRef.current.scrollToOffset({ offset: 0, animated: true });
+    if (!isLoading) {
+      listViewAudioRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   }
   function scrollToTopMobileHandler() {
-    listViewMobileRef.current.scrollToOffset({ offset: 0, animated: true });
+    if (!isLoading) {
+      listViewMobileRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   }
 
   const MyTheme = {
@@ -267,6 +276,7 @@ export default function App() {
           >
             {(props) => (
               <MenuScreen
+                setIsMenu={setIsMenu}
                 lastVisitedScreen={lastVisitedScreen}
                 setShowNavBar={setShowNavBar}
                 isDarkMode={isDarkMode}
@@ -295,6 +305,9 @@ export default function App() {
         </Stack.Navigator>
         {showNavBar ? (
           <BottomNavBar
+            isMenu={isMenu}
+            setIsMenu={setIsMenu}
+            showNavBar={showNavBar}
             setShowNavBar={setShowNavBar}
             lastVisitedScreen={lastVisitedScreen}
             setLastVisitedScreen={setLastVisitedScreen}
