@@ -67,7 +67,7 @@ export default function SearchScreen({
     }
   }
   const DismissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       {" "}
       {children}
     </TouchableWithoutFeedback>
@@ -83,7 +83,7 @@ export default function SearchScreen({
           marginTop: "20%",
           borderRadius: 20,
           marginHorizontal: "5%",
-          marginVertical: "10%",
+          marginVertical: "5%",
           elevation: 4,
           shadowColor: "black",
           shadowOpacity: 0.5,
@@ -109,41 +109,70 @@ export default function SearchScreen({
           }}
         />
       </View>
-
-      <View
-        style={[
-          styles.mainContainer,
-          {
-            backgroundColor: isDarkMode
-              ? primaryColors.colors.backgroundDarkMode
-              : primaryColors.colors.white,
-          },
-        ]}
-      >
-        <View style={styles.list}>
-          {!filteredData.length ? (
-            <Text
-              style={{
-                color: isDarkMode
-                  ? primaryColors.colors.white
-                  : primaryColors.colors.black,
-              }}
-            >
-              Type something into the search bar
-            </Text>
-          ) : (
-            <FlatList
-              style={{ width: "100%" }}
-              //   ListHeaderComponent={renderHeader}
-              data={[...filteredData]}
-              renderItem={renderTechItem}
-              keyExtractor={(item, index) => index.toString()}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-            />
-          )}
+      {!query.length ? (
+        <View>
+          <Text
+            style={{
+              textAlign: "center",
+              margin: 8,
+              color: isDarkMode
+                ? primaryColors.colors.white
+                : primaryColors.colors.black,
+            }}
+          >
+            Type something into the search bar...
+          </Text>
         </View>
-      </View>
+      ) : (
+        <></>
+      )}
+
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        accessible={false}
+      >
+        <View
+          style={[
+            styles.mainContainer,
+            {
+              backgroundColor: isDarkMode
+                ? primaryColors.colors.backgroundDarkMode
+                : primaryColors.colors.white,
+            },
+          ]}
+        >
+          <View style={styles.list}>
+            {!filteredData.length ? (
+              <View style={styles.emptyInputView}>
+                <View style={styles.logoContainer}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "Audiowide",
+                      fontSize: 30,
+                      color: isDarkMode
+                        ? primaryColors.colors.secondaryHighlight
+                        : primaryColors.colors.primaryHighlight,
+                    }}
+                  >
+                    GetTeched
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <FlatList
+                style={{ width: "100%" }}
+                data={[...filteredData]}
+                renderItem={renderTechItem}
+                keyExtractor={(item, index) => index.toString()}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="always"
+              />
+            )}
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -152,12 +181,22 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     width: "100%",
-    justifyContent: "center",
+    justifyContent: "start",
     alignItems: "center",
   },
   mainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  emptyInputView: {
+    flex: 1,
+    justifyContent: "start",
+  },
+  logoContainer: {
+    marginTop: "60%",
+  },
+  logoText: {
+    fontSize: 30,
   },
 });
