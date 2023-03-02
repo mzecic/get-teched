@@ -39,8 +39,11 @@ export default function HomeScreen({
   isLoading,
   setIsLoading,
   isDarkMode,
+  setShowNavBar,
 }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [scrollingDirection, setScrollingDirection] = useState("");
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -107,7 +110,9 @@ export default function HomeScreen({
           <>
             <Animated.View
               style={{
-                backgroundColor: isDarkMode ? colors.colors.black : "#E6E6E6",
+                backgroundColor: isDarkMode
+                  ? colors.colors.black
+                  : colors.colors.white,
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
               }}
@@ -174,7 +179,7 @@ export default function HomeScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.backgroundDarkMode
-                : colors.colors.white,
+                : colors.colors.backgroundLightMode,
             },
           ]}
           onLayout={onLayoutRootView}
@@ -194,6 +199,19 @@ export default function HomeScreen({
                 },
               ],
               {
+                listener: (event) => {
+                  let currentOffset = event.nativeEvent.contentOffset.y;
+                  let direction = currentOffset > offset ? "down" : "up";
+                  setOffset(currentOffset);
+                  setScrollingDirection(direction);
+                  scrollingDirection === "down" && offset > 400
+                    ? setShowNavBar(false)
+                    : null;
+                  if (scrollingDirection === "up" || offset < 200) {
+                    setShowNavBar(true);
+                  }
+                  console.log(direction);
+                },
                 useNativeDriver: true,
               }
             )}

@@ -108,9 +108,6 @@ export default function App() {
         theme={isDarkMode ? DarkTheme : DefaultTheme}
         style={{
           flex: 1,
-          // backgroundColor: isDarkMode
-          //   ? primaryColors.colors.black
-          //   : primaryColors.colors.white,
         }}
       >
         <Stack.Navigator
@@ -171,6 +168,7 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
+                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -199,6 +197,7 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
+                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -227,6 +226,7 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
+                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -255,6 +255,7 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
+                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -287,6 +288,7 @@ export default function App() {
                 setAllNews={setAllNews}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>

@@ -14,6 +14,7 @@ export default function GeneralNewsLine({
   data,
   lastVisitedScreen,
   isDarkMode,
+  arrayLength,
 }) {
   async function onPressHandler() {
     let result = await WebBrowser.openBrowserAsync(data.item.url);
@@ -27,12 +28,17 @@ export default function GeneralNewsLine({
             Platform.OS === "ios"
               ? data.index === 0 &&
                 Platform.OS === "ios" &&
-                lastVisitedScreen !== "HomeScreen" && lastVisitedScreen !== "SearchScreen"
+                lastVisitedScreen !== "HomeScreen" &&
+                lastVisitedScreen !== "SearchScreen"
                 ? "15%"
                 : data.index === 0
                 ? "5%"
                 : "5%"
               : "5%",
+          paddingBottom:
+            lastVisitedScreen === "SearchScreen" && data.index === arrayLength - 1
+              ? "25%"
+              : 0,
         },
       ]}
     >

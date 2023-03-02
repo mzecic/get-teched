@@ -23,6 +23,7 @@ export default function SearchScreen({
   lastVisitedScreen,
   isLoading,
   setIsLoading,
+  setShowNavBar,
 }) {
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -59,6 +60,7 @@ export default function SearchScreen({
     if (filteredData.length !== 0) {
       return (
         <GeneralNewsLine
+          arrayLength={filteredData.length}
           isDarkMode={isDarkMode}
           lastVisitedScreen={lastVisitedScreen}
           data={itemData}
@@ -66,12 +68,6 @@ export default function SearchScreen({
       );
     }
   }
-  const DismissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      {" "}
-      {children}
-    </TouchableWithoutFeedback>
-  );
   return (
     <>
       <View
@@ -137,7 +133,7 @@ export default function SearchScreen({
             {
               backgroundColor: isDarkMode
                 ? primaryColors.colors.backgroundDarkMode
-                : primaryColors.colors.white,
+                : primaryColors.colors.backgroundLightMode,
             },
           ]}
         >

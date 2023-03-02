@@ -22,8 +22,11 @@ export default function AudioNewsScreen({
   isLoading,
   setIsLoading,
   isDarkMode,
+  setShowNavBar,
 }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [scrollingDirection, setScrollingDirection] = useState("");
   const [fontsLoaded] = useFonts({
     "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
   });
@@ -75,7 +78,7 @@ export default function AudioNewsScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.backgroundDarkMode
-                : colors.colors.white,
+                : colors.colors.backgroundLightMode,
             },
           ]}
         >
@@ -95,7 +98,22 @@ export default function AudioNewsScreen({
                         },
                       },
                     ],
-                    { useNativeDriver: true }
+                    {
+                      listener: (event) => {
+                        let currentOffset = event.nativeEvent.contentOffset.y;
+                        let direction = currentOffset > offset ? "down" : "up";
+                        setOffset(currentOffset);
+                        setScrollingDirection(direction);
+                        scrollingDirection === "down" && offset > 400
+                          ? setShowNavBar(false)
+                          : null;
+                        if (scrollingDirection === "up" || offset < 200) {
+                          setShowNavBar(true);
+                        }
+                        console.log(direction);
+                      },
+                      useNativeDriver: true,
+                    }
                   )
                 : () => {
                     return;
