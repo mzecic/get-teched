@@ -1,6 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated, Platform, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Platform,
+  View,
+  Text,
+  TextInput,
+} from "react-native";
 import {
   NavigationContainer,
   DarkTheme,
@@ -36,6 +43,7 @@ export default function App() {
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [text, setText] = useState("");
 
   const Stack = createNativeStackNavigator();
 
@@ -277,6 +285,8 @@ export default function App() {
                 isDarkMode={isDarkMode}
                 allNews={allNews}
                 setAllNews={setAllNews}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             )}
           </Stack.Screen>
