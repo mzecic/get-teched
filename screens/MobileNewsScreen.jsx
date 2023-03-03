@@ -42,16 +42,21 @@ export default function MobileNewsScreen({
   }
   const navigation = useNavigation();
 
-  useEffect(function () {
-    (async function () {
-      setIsLoading(true);
-      const techNews = await news.getMobileNews();
-      setMobileNews([...techNews.reverse()]);
-      setTimeout(function () {
-        setIsLoading(false);
-      }, 750);
-    })();
-  }, []);
+  useEffect(
+    function () {
+      (async function () {
+        if (!refreshing) {
+          setIsLoading(true);
+        }
+        const techNews = await news.getMobileNews();
+        setMobileNews([...techNews.reverse()]);
+        setTimeout(function () {
+          setIsLoading(false);
+        }, 750);
+      })();
+    },
+    [refreshing]
+  );
 
   return (
     <>
@@ -84,7 +89,13 @@ export default function MobileNewsScreen({
         >
           <Animated.FlatList
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl
+                tintColor={
+                  isDarkMode ? colors.colors.white : colors.colors.black
+                }
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
             }
             onScroll={
               Platform.OS === "ios"

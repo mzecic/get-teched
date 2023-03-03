@@ -25,7 +25,24 @@ export default function MenuScreen({
       ]}
     >
       <View style={styles.optionsContainer}>
-        <View style={styles.switchContainer}>
+        <View
+          style={[
+            styles.itemContainer,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
+            },
+          ]}
+        >
+          <Switch
+            style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+            trackColor={{ false: "#767577", true: "grey" }}
+            thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isDarkMode}
+          />
           <Text
             style={[
               styles.itemLabel,
@@ -37,13 +54,72 @@ export default function MenuScreen({
           >
             Dark mode
           </Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "grey" }}
-            thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isDarkMode}
-          />
+        </View>
+        <View
+          style={[
+            styles.itemContainer,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.itemLabel,
+              {
+                paddingHorizontal: 12,
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              },
+            ]}
+          >
+            Feedback
+          </Text>
+        </View>
+        <View
+          style={[
+            styles.itemContainer,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.itemLabel,
+              {
+                paddingHorizontal: 12,
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              },
+            ]}
+          >
+            Profile
+          </Text>
+        </View>
+        <View
+          style={[
+            styles.itemContainer,
+            {
+              backgroundColor: isDarkMode
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.itemLabel,
+              {
+                paddingHorizontal: 12,
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              },
+            ]}
+          >
+            Item 4
+          </Text>
         </View>
       </View>
       <View style={styles.closeMenuContainer}>
@@ -71,22 +147,28 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: "space-evenly",
+    alignItems: "center",
   },
   closeIconContainer: {
     justifySelf: "center",
     alignSelf: "center",
   },
   optionsContainer: {
+    width: "80%",
+    flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
   },
   itemLabel: {
-    fontSize: 20,
+    fontSize: 16,
   },
-  switchContainer: {
-    width: "70%",
-    flexDirection: "row",
-    justifyContent: "center",
+  itemContainer: {
+    width: "38%",
+    margin: 16,
+    height: 100,
+    justifyContent: "space-evenly",
     alignItems: "center",
+    borderRadius: 24,
   },
 });

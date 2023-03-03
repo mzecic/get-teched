@@ -137,22 +137,27 @@ export default function HomeScreen({
     }
   }, [headerOpacity, navigation]);
 
-  useEffect(function () {
-    (async function () {
-      setIsLoading(true);
-      const techNews = await news.getTechNews();
-      setTechNews([...techNews.reverse()]);
-      const generalNews = await news.getGeneralNews();
-      let result = [...generalNews.reverse().splice(0, 4)];
-      setGeneralNews([...result]);
-      setTimeout(function () {
-        setIsLoading(false);
-      }, 750);
-      setTimeout(function () {
-        SplashScreen.hideAsync();
-      }, 1500);
-    })();
-  }, []);
+  useEffect(
+    function () {
+      (async function () {
+        if (!refreshing) {
+          setIsLoading(true);
+        }
+        const techNews = await news.getTechNews();
+        setTechNews([...techNews.reverse()]);
+        const generalNews = await news.getGeneralNews();
+        let result = [...generalNews.reverse().splice(0, 4)];
+        setGeneralNews([...result]);
+        setTimeout(function () {
+          setIsLoading(false);
+        }, 750);
+        setTimeout(function () {
+          SplashScreen.hideAsync();
+        }, 1500);
+      })();
+    },
+    [refreshing]
+  );
 
   return (
     <>
@@ -186,7 +191,13 @@ export default function HomeScreen({
         >
           <Animated.FlatList
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl
+                tintColor={
+                  isDarkMode ? colors.colors.white : colors.colors.black
+                }
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
             }
             onScroll={Animated.event(
               [

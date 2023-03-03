@@ -44,14 +44,16 @@ export default function GamingNewsScreen({
 
   useEffect(function () {
     (async function () {
-      setIsLoading(true);
+      if (!refreshing) {
+        setIsLoading(true);
+      }
       const techNews = await news.getGamingNews();
       setGamingNews([...techNews.reverse()]);
       setTimeout(function () {
         setIsLoading(false);
       }, 750);
     })();
-  }, []);
+  }, [refreshing]);
 
   return (
     <>
@@ -82,7 +84,13 @@ export default function GamingNewsScreen({
         >
           <Animated.FlatList
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl
+                tintColor={
+                  isDarkMode ? colors.colors.white : colors.colors.black
+                }
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
             }
             onScroll={
               Platform.OS === "ios"
