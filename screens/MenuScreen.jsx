@@ -5,7 +5,6 @@ import * as colors from "../assets/colors/primaryColors";
 
 export default function MenuScreen({
   lastVisitedScreen,
-  setShowNavBar,
   isDarkMode,
   setIsDarkMode,
   setIsMenu,
@@ -127,7 +126,6 @@ export default function MenuScreen({
           onPress={() => {
             navigation.navigate(lastVisitedScreen);
             setIsMenu(false);
-            setShowNavBar(true);
           }}
         >
           <Image

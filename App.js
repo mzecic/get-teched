@@ -39,7 +39,6 @@ export default function App() {
   const [mobileNews, setMobileNews] = useState([]);
   const [allNews, setAllNews] = useState([]);
   const [lastVisitedScreen, setLastVisitedScreen] = useState("HomeScreen");
-  const [showNavBar, setShowNavBar] = useState(true);
   const [isMenu, setIsMenu] = useState(false);
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -182,7 +181,6 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
-                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -215,7 +213,6 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
-                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -248,7 +245,6 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
-                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -281,7 +277,6 @@ export default function App() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
-                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
@@ -295,7 +290,6 @@ export default function App() {
               <MenuScreen
                 setIsMenu={setIsMenu}
                 lastVisitedScreen={lastVisitedScreen}
-                setShowNavBar={setShowNavBar}
                 isDarkMode={isDarkMode}
                 setIsDarkMode={setIsDarkMode}
               />
@@ -315,30 +309,24 @@ export default function App() {
                 setAllNews={setAllNews}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-                setShowNavBar={setShowNavBar}
               />
             )}
           </Stack.Screen>
         </Stack.Navigator>
-        {showNavBar ? (
-          <BottomNavBar
-            offset={offset}
-            scrollingDirection={scrollingDirection}
-            isMenu={isMenu}
-            setIsMenu={setIsMenu}
-            showNavBar={showNavBar}
-            setShowNavBar={setShowNavBar}
-            lastVisitedScreen={lastVisitedScreen}
-            setLastVisitedScreen={setLastVisitedScreen}
-            scrollToTopHandler={scrollToTopHandler}
-            scrollToTopGamingHandler={scrollToTopGamingHandler}
-            scrollToTopAudioHandler={scrollToTopAudioHandler}
-            scrollToTopMobileHandler={scrollToTopMobileHandler}
-            isDarkMode={isDarkMode}
-          />
-        ) : (
-          <></>
-        )}
+
+        <BottomNavBar
+          offset={offset}
+          scrollingDirection={scrollingDirection}
+          isMenu={isMenu}
+          setIsMenu={setIsMenu}
+          lastVisitedScreen={lastVisitedScreen}
+          setLastVisitedScreen={setLastVisitedScreen}
+          scrollToTopHandler={scrollToTopHandler}
+          scrollToTopGamingHandler={scrollToTopGamingHandler}
+          scrollToTopAudioHandler={scrollToTopAudioHandler}
+          scrollToTopMobileHandler={scrollToTopMobileHandler}
+          isDarkMode={isDarkMode}
+        />
       </NavigationContainer>
     </>
   );
