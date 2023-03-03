@@ -146,7 +146,7 @@ export default function MenuScreen({
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     alignItems: "center",
   },
   closeIconContainer: {

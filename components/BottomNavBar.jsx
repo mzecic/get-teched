@@ -15,6 +15,8 @@ export default function BottomNavBar({
   isDarkMode,
   isMenu,
   setIsMenu,
+  scrollingDirection,
+  offset,
 }) {
   const navigation = useNavigation();
 
@@ -26,7 +28,14 @@ export default function BottomNavBar({
           backgroundColor: isDarkMode
             ? primaryColors.colors.black
             : primaryColors.colors.white,
-          display: isMenu ? "none" : "absolute",
+          transform: [
+            {
+              scaleY:
+                isMenu || (scrollingDirection === "down" && offset > 300)
+                  ? 0
+                  : 1,
+            },
+          ],
         },
       ]}
     >
@@ -261,7 +270,6 @@ export default function BottomNavBar({
           onPress={() => {
             navigation.navigate("MenuScreen");
             setIsMenu(true);
-            setShowNavBar(false);
           }}
           style={({ pressed }) => [styles.button]}
         >

@@ -45,7 +45,8 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [text, setText] = useState("");
-
+  const [offset, setOffset] = useState(0);
+  const [scrollingDirection, setScrollingDirection] = useState("");
   const Stack = createNativeStackNavigator();
 
   const yOffset = useRef(new Animated.Value(0)).current;
@@ -161,6 +162,10 @@ export default function App() {
           >
             {(props) => (
               <HomeScreen
+                offset={offset}
+                setOffset={setOffset}
+                scrollingDirection={scrollingDirection}
+                setScrollingDirection={setScrollingDirection}
                 yScroll={yScroll}
                 generalListOffset={generalListOffset}
                 onLayoutRootView={onLayoutRootView}
@@ -198,6 +203,10 @@ export default function App() {
           >
             {(props) => (
               <GamingNewsScreen
+                offset={offset}
+                setOffset={setOffset}
+                scrollingDirection={scrollingDirection}
+                setScrollingDirection={setScrollingDirection}
                 techNews={gamingNews}
                 setGamingNews={setGamingNews}
                 yOffset={yOffset}
@@ -227,6 +236,10 @@ export default function App() {
           >
             {(props) => (
               <AudioNewsScreen
+                offset={offset}
+                setOffset={setOffset}
+                scrollingDirection={scrollingDirection}
+                setScrollingDirection={setScrollingDirection}
                 techNews={audioNews}
                 setAudioNews={setAudioNews}
                 yOffset={yOffset}
@@ -256,6 +269,10 @@ export default function App() {
           >
             {(props) => (
               <MobileNewsScreen
+                offset={offset}
+                setOffset={setOffset}
+                scrollingDirection={scrollingDirection}
+                setScrollingDirection={setScrollingDirection}
                 techNews={mobileNews}
                 setMobileNews={setMobileNews}
                 yOffset={yOffset}
@@ -305,6 +322,8 @@ export default function App() {
         </Stack.Navigator>
         {showNavBar ? (
           <BottomNavBar
+            offset={offset}
+            scrollingDirection={scrollingDirection}
             isMenu={isMenu}
             setIsMenu={setIsMenu}
             showNavBar={showNavBar}

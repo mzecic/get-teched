@@ -50,7 +50,10 @@ export default function SearchScreen({
 
   const handleSearch = (text) => {
     const filteredArray = allNews.filter((article) => {
-      return article.title.toLowerCase().split(" ").includes(text);
+      return (
+        article.title.toLowerCase().split(" ").includes(text) ||
+        article.content.toLowerCase().split(" ").includes(text)
+      );
     });
     setQuery(text);
     setFilteredData(filteredArray);
