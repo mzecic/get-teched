@@ -86,7 +86,7 @@ export default function AudioNewsScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.backgroundDarkMode
-                : colors.colors.backgroundLightMode,
+                : colors.colors.white,
             },
           ]}
         >

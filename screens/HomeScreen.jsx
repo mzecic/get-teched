@@ -44,6 +44,7 @@ export default function HomeScreen({
   setOffset,
   scrollingDirection,
   setScrollingDirection,
+  user,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -72,7 +73,7 @@ export default function HomeScreen({
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
             >
-              Top Stories
+              Top Stories Hello
             </Text>
             <GeneralNewsLine
               isDarkMode={isDarkMode}
@@ -150,6 +151,7 @@ export default function HomeScreen({
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
+        console.log(user);
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
@@ -186,7 +188,7 @@ export default function HomeScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.backgroundDarkMode
-                : colors.colors.backgroundLightMode,
+                : colors.colors.white,
             },
           ]}
           onLayout={onLayoutRootView}
@@ -217,12 +219,6 @@ export default function HomeScreen({
                   let direction = currentOffset > offset ? "down" : "up";
                   setOffset(currentOffset);
                   setScrollingDirection(direction);
-                  // scrollingDirection === "down" && offset > 400
-                  //   ? setShowNavBar(false)
-                  //   : null;
-                  // if (scrollingDirection === "up" || offset < 200) {
-                  //   setShowNavBar(true);
-                  // }
                 },
                 useNativeDriver: true,
               }

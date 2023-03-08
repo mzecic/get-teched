@@ -1,13 +1,8 @@
+import "expo-dev-client";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Animated,
-  Platform,
-  View,
-  Text,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Animated, Platform, View, Text } from "react-native";
 import {
   NavigationContainer,
   DarkTheme,
@@ -32,6 +27,7 @@ import { articles } from "./dummy-data";
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [user, setUser] = useState(null);
   const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
   const [gamingNews, setGamingNews] = useState([]);
@@ -53,10 +49,10 @@ export default function App() {
     inputRange: [0, 200],
     outputRange: [1, 0],
   });
-  const yScroll = useRef(new Animated.Value(0)).current;
-  const generalListOffset = yScroll.interpolate({
+  const scaleY = useRef(new Animated.Value(0)).current;
+  const generalListOffset = scaleY.interpolate({
     inputRange: [0, 200],
-    outputRange: [0, -600],
+    outputRange: [1, 0],
   });
 
   let listViewRef = useRef(null);
@@ -97,6 +93,11 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
   });
+  useEffect(function () {
+    setTimeout(function () {
+      SplashScreen.hideAsync();
+    }, 2000);
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -112,222 +113,259 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style={isDarkMode ? "light" : "dark"} />
-      <NavigationContainer
-        theme={isDarkMode ? DarkTheme : DefaultTheme}
-        style={{
-          flex: 1,
-        }}
-      >
-        <Stack.Navigator
-          screenOptions={{
-            headerLeft: () => {
-              return <View style={{ marginLeft: 50 }}></View>;
-            },
-          }}
-        >
-          <Stack.Screen
-            options={{
-              headerTitle:
-                Platform.OS === "android"
-                  ? () => (
-                      <Text
-                        style={{
-                          fontFamily: "Audiowide",
-                          fontSize: 20,
-                          color: isDarkMode
-                            ? primaryColors.colors.white
-                            : primaryColors.colors.black,
-                        }}
-                      >
-                        GetTeched
-                      </Text>
-                    )
-                  : "",
-              headerTitleAlign: "center",
-              headerShown: true,
-              headerStyle: {
-                backgroundColor: isDarkMode
-                  ? primaryColors.colors.black
-                  : primaryColors.colors.white,
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              },
+      {!user ? (
+        <View style={styles.container}>
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={
+              AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+            }
+            buttonStyle={
+              AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+            }
+            cornerRadius={5}
+            style={styles.button}
+            onPress={async () => {
+              try {
+                const credential = await AppleAuthentication.signInAsync({
+                  requestedScopes: [
+                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                  ],
+                });
+                setUser(credential);
+                // signed in
+              } catch (e) {
+                console.log(e);
+                if (e.code === "ERR_REQUEST_CANCELED") {
+                  // handle that the user canceled the sign-in flow
+                  console.log(e);
+                } else {
+                  console.log("error");
+                  // handle other errors
+                }
+              }
             }}
-            name="HomeScreen"
-          >
-            {(props) => (
-              <HomeScreen
-                offset={offset}
-                setOffset={setOffset}
-                scrollingDirection={scrollingDirection}
-                setScrollingDirection={setScrollingDirection}
-                yScroll={yScroll}
-                generalListOffset={generalListOffset}
-                onLayoutRootView={onLayoutRootView}
-                generalNews={generalNews}
-                setGeneralNews={setGeneralNews}
-                techNews={techNews}
-                setTechNews={setTechNews}
-                yOffset={yOffset}
-                headerOpacity={headerOpacity}
-                lastVisitedScreen={lastVisitedScreen}
-                listViewRef={listViewRef}
-                isGeneralVisible={isGeneralVisible}
-                setIsGeneralVisible={setIsGeneralVisible}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                isDarkMode={isDarkMode}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              title: Platform.OS === "android" ? "Gaming News" : "",
-              headerTitleAlign: "center",
-              headerShown: false,
-              headerStyle: {
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              },
+          />
+        </View>
+      ) : (
+        <>
+          <StatusBar style={isDarkMode ? "light" : "dark"} />
+          <NavigationContainer
+            theme={isDarkMode ? DarkTheme : DefaultTheme}
+            style={{
+              flex: 1,
             }}
-            name="GamingNewsScreen"
           >
-            {(props) => (
-              <GamingNewsScreen
-                offset={offset}
-                setOffset={setOffset}
-                scrollingDirection={scrollingDirection}
-                setScrollingDirection={setScrollingDirection}
-                techNews={gamingNews}
-                setGamingNews={setGamingNews}
-                yOffset={yOffset}
-                headerOpacity={headerOpacity}
-                listViewGamingRef={listViewGamingRef}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                isDarkMode={isDarkMode}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              title: Platform.OS === "android" ? "Audio News" : "",
-              headerTitleAlign: "center",
-              headerShown: false,
-              headerStyle: {
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              },
-            }}
-            name="AudioNewsScreen"
-          >
-            {(props) => (
-              <AudioNewsScreen
-                offset={offset}
-                setOffset={setOffset}
-                scrollingDirection={scrollingDirection}
-                setScrollingDirection={setScrollingDirection}
-                techNews={audioNews}
-                setAudioNews={setAudioNews}
-                yOffset={yOffset}
-                headerOpacity={headerOpacity}
-                listViewAudioRef={listViewAudioRef}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                isDarkMode={isDarkMode}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              title: Platform.OS === "android" ? "Mobile News" : "",
-              headerTitleAlign: "center",
-              headerShown: false,
-              headerStyle: {
-                zIndex: 100,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-              },
-            }}
-            name="MobileNewsScreen"
-          >
-            {(props) => (
-              <MobileNewsScreen
-                offset={offset}
-                setOffset={setOffset}
-                scrollingDirection={scrollingDirection}
-                setScrollingDirection={setScrollingDirection}
-                techNews={mobileNews}
-                setMobileNews={setMobileNews}
-                yOffset={yOffset}
-                headerOpacity={headerOpacity}
-                listViewMobileRef={listViewMobileRef}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                isDarkMode={isDarkMode}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="MenuScreen"
-          >
-            {(props) => (
-              <MenuScreen
-                setIsMenu={setIsMenu}
-                lastVisitedScreen={lastVisitedScreen}
-                isDarkMode={isDarkMode}
-                setIsDarkMode={setIsDarkMode}
-              />
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="SearchScreen"
-          >
-            {(props) => (
-              <SearchScreen
-                lastVisitedScreen={lastVisitedScreen}
-                isDarkMode={isDarkMode}
-                allNews={allNews}
-                setAllNews={setAllNews}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
-            )}
-          </Stack.Screen>
-        </Stack.Navigator>
+            <Stack.Navigator
+              screenOptions={{
+                headerLeft: () => {
+                  return <View style={{ marginLeft: 50 }}></View>;
+                },
+              }}
+            >
+              <Stack.Screen
+                options={{
+                  headerTitle:
+                    Platform.OS === "android"
+                      ? () => (
+                          <Text
+                            style={{
+                              fontFamily: "Audiowide",
+                              fontSize: 20,
+                              color: isDarkMode
+                                ? primaryColors.colors.white
+                                : primaryColors.colors.black,
+                            }}
+                          >
+                            GetTeched
+                          </Text>
+                        )
+                      : "",
+                  headerTitleAlign: "center",
+                  headerShown: true,
+                  headerStyle: {
+                    backgroundColor: isDarkMode
+                      ? primaryColors.colors.black
+                      : primaryColors.colors.white,
+                    zIndex: 100,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  },
+                }}
+                name="HomeScreen"
+              >
+                {(props) => (
+                  <HomeScreen
+                    user={user}
+                    offset={offset}
+                    setOffset={setOffset}
+                    scrollingDirection={scrollingDirection}
+                    setScrollingDirection={setScrollingDirection}
+                    onLayoutRootView={onLayoutRootView}
+                    generalNews={generalNews}
+                    setGeneralNews={setGeneralNews}
+                    techNews={techNews}
+                    setTechNews={setTechNews}
+                    yOffset={yOffset}
+                    headerOpacity={headerOpacity}
+                    lastVisitedScreen={lastVisitedScreen}
+                    listViewRef={listViewRef}
+                    isGeneralVisible={isGeneralVisible}
+                    setIsGeneralVisible={setIsGeneralVisible}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    isDarkMode={isDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                options={{
+                  title: Platform.OS === "android" ? "Gaming News" : "",
+                  headerTitleAlign: "center",
+                  headerShown: false,
+                  headerStyle: {
+                    zIndex: 100,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  },
+                }}
+                name="GamingNewsScreen"
+              >
+                {(props) => (
+                  <GamingNewsScreen
+                    offset={offset}
+                    setOffset={setOffset}
+                    scrollingDirection={scrollingDirection}
+                    setScrollingDirection={setScrollingDirection}
+                    techNews={gamingNews}
+                    setGamingNews={setGamingNews}
+                    yOffset={yOffset}
+                    headerOpacity={headerOpacity}
+                    listViewGamingRef={listViewGamingRef}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    isDarkMode={isDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                options={{
+                  title: Platform.OS === "android" ? "Audio News" : "",
+                  headerTitleAlign: "center",
+                  headerShown: false,
+                  headerStyle: {
+                    zIndex: 100,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  },
+                }}
+                name="AudioNewsScreen"
+              >
+                {(props) => (
+                  <AudioNewsScreen
+                    offset={offset}
+                    setOffset={setOffset}
+                    scrollingDirection={scrollingDirection}
+                    setScrollingDirection={setScrollingDirection}
+                    techNews={audioNews}
+                    setAudioNews={setAudioNews}
+                    yOffset={yOffset}
+                    headerOpacity={headerOpacity}
+                    listViewAudioRef={listViewAudioRef}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    isDarkMode={isDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                options={{
+                  title: Platform.OS === "android" ? "Mobile News" : "",
+                  headerTitleAlign: "center",
+                  headerShown: false,
+                  headerStyle: {
+                    zIndex: 100,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                  },
+                }}
+                name="MobileNewsScreen"
+              >
+                {(props) => (
+                  <MobileNewsScreen
+                    offset={offset}
+                    setOffset={setOffset}
+                    scrollingDirection={scrollingDirection}
+                    setScrollingDirection={setScrollingDirection}
+                    techNews={mobileNews}
+                    setMobileNews={setMobileNews}
+                    yOffset={yOffset}
+                    headerOpacity={headerOpacity}
+                    listViewMobileRef={listViewMobileRef}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    isDarkMode={isDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                options={{
+                  headerShown: false,
+                }}
+                name="MenuScreen"
+              >
+                {(props) => (
+                  <MenuScreen
+                    setIsMenu={setIsMenu}
+                    lastVisitedScreen={lastVisitedScreen}
+                    isDarkMode={isDarkMode}
+                    setIsDarkMode={setIsDarkMode}
+                  />
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                options={{
+                  headerShown: false,
+                }}
+                name="SearchScreen"
+              >
+                {(props) => (
+                  <SearchScreen
+                    lastVisitedScreen={lastVisitedScreen}
+                    isDarkMode={isDarkMode}
+                    allNews={allNews}
+                    setAllNews={setAllNews}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
 
-        <BottomNavBar
-          offset={offset}
-          scrollingDirection={scrollingDirection}
-          isMenu={isMenu}
-          setIsMenu={setIsMenu}
-          lastVisitedScreen={lastVisitedScreen}
-          setLastVisitedScreen={setLastVisitedScreen}
-          scrollToTopHandler={scrollToTopHandler}
-          scrollToTopGamingHandler={scrollToTopGamingHandler}
-          scrollToTopAudioHandler={scrollToTopAudioHandler}
-          scrollToTopMobileHandler={scrollToTopMobileHandler}
-          isDarkMode={isDarkMode}
-        />
-      </NavigationContainer>
+            <BottomNavBar
+              offset={offset}
+              scrollingDirection={scrollingDirection}
+              isMenu={isMenu}
+              setIsMenu={setIsMenu}
+              lastVisitedScreen={lastVisitedScreen}
+              setLastVisitedScreen={setLastVisitedScreen}
+              scrollToTopHandler={scrollToTopHandler}
+              scrollToTopGamingHandler={scrollToTopGamingHandler}
+              scrollToTopAudioHandler={scrollToTopAudioHandler}
+              scrollToTopMobileHandler={scrollToTopMobileHandler}
+              isDarkMode={isDarkMode}
+            />
+          </NavigationContainer>
+        </>
+      )}
     </>
   );
 }
@@ -346,5 +384,14 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     alignItems: "center",
     justifyContent: "center",
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    width: 200,
+    height: 44,
   },
 });
