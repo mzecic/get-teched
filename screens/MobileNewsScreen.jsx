@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     marginTop: "15%",
     fontFamily: "Audiowide",
     fontSize: 20,
-    justifySelf: "center",
     alignSelf: "center",
   },
   backgroundImage: {

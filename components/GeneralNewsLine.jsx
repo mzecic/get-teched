@@ -36,7 +36,8 @@ export default function GeneralNewsLine({
                 : "5%"
               : "5%",
           paddingBottom:
-            lastVisitedScreen === "SearchScreen" && data.index === arrayLength - 1
+            lastVisitedScreen === "SearchScreen" &&
+            data.index === arrayLength - 1
               ? "25%"
               : 0,
         },
@@ -62,7 +63,10 @@ export default function GeneralNewsLine({
           <Text
             style={[
               styles.lineItem,
-              { color: isDarkMode ? colors.colors.white : colors.colors.black },
+              {
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+                fontWeight: 400,
+              },
             ]}
           >
             {data.item.title}
@@ -75,7 +79,6 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   lineItem: {
-    justifySelf: "center",
     alignSelf: "center",
     textAlign: "center",
     width: "80%",

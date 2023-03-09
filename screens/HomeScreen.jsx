@@ -73,7 +73,7 @@ export default function HomeScreen({
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
             >
-              Top Stories Hello
+              Top Stories
             </Text>
             <GeneralNewsLine
               isDarkMode={isDarkMode}
@@ -247,7 +247,6 @@ const styles = StyleSheet.create({
     marginTop: "15%",
     fontFamily: "Audiowide",
     fontSize: 20,
-    justifySelf: "center",
     alignSelf: "center",
   },
   backgroundImage: {

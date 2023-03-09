@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
   },
   closeIconContainer: {
     transform: [{ scale: 0.9 }],
-    justifySelf: "center",
     alignSelf: "center",
   },
   optionsContainer: {

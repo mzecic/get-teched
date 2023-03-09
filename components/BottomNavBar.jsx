@@ -348,7 +348,6 @@ const styles = StyleSheet.create({
   imageTag: {
     // position: "absolute",
     alignSelf: "center",
-    justifySelf: "flex-start",
     fontSize: 10,
   },
 });

@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 16,
+    borderBottomEndRadius: 16,
+    borderBottomStartRadius: 16,
+    overflow: "hidden",
   },
   image: {
     width: "100%",
     height: "100%",
-    borderBottomEndRadius: 16,
-    borderBottomStartRadius: 16,
   },
   button: {
     flex: 1,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontWeight: "bolder",
+    fontWeight: "400",
     textAlign: "center",
     fontSize: 16,
   },
