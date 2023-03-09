@@ -3445,7 +3445,7 @@ expo-web-browser@~12.1.0, expo-web-browser@~12.1.1:
     compare-urls "^2.0.0"
     url "^0.11.0"
 
-expo@*, expo@^48.0.0:
+expo@*, expo@~48.0.6:
   version "48.0.6"
   resolved "https://registry.npmjs.org/expo/-/expo-48.0.6.tgz"
   integrity sha512-ylm91v/xYjBBEqFHH+mpNyGijJgFXx4NwgKgHCIEfcAQyTZLXpGCL6teOVzAmHCCVF7EdalLl3If/+n09jOi4g==

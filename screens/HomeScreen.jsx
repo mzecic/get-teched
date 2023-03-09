@@ -154,6 +154,7 @@ export default function HomeScreen({
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
         console.log(user);
+        console.log(user.fullName.givenName)
         setTimeout(function () {
           setIsLoading(false);
         }, 750);

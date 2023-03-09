@@ -34,7 +34,7 @@ export default function BottomNavBar({
       if (scrollingDirection === "up") {
         Animated.timing(slideDown, {
           toValue: 0,
-          duration: 170,
+          duration: 150,
           useNativeDriver: true,
         }).start();
       } else if (scrollingDirection === "down" && offset > 300) {
