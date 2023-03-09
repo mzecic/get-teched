@@ -31,7 +31,7 @@ export default function BottomNavBar({
 
   useEffect(
     function () {
-      let slideDownNum = parseInt(JSON.stringify(slideDown))
+      let slideDownNum = parseInt(JSON.stringify(slideDown));
       // || (scrollingDirection === "down" && offset > 300)
       if (scrollingDirection === "up") {
         Animated.spring(slideDown, {
@@ -65,11 +65,14 @@ export default function BottomNavBar({
               : primaryColors.colors.backgroundLightMode,
             transform: [
               {
-                scaleY: isMenu ? 0 : 1,
+                scaleY:
+                  isMenu || (scrollingDirection === "down" && offset > 300)
+                    ? 0
+                    : 1,
               },
-              {
-                translateY: slideDown,
-              },
+              // {
+              //   translateY: slideDown,
+              // },
             ],
           },
         ]}
