@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -22,8 +22,33 @@ export default function BottomNavBar({
   setIsMenu,
   scrollingDirection,
   offset,
+  headerOpacity,
 }) {
   const navigation = useNavigation();
+
+  const slideDown = useRef(new Animated.Value(0)).current;
+
+  useEffect(
+    function () {
+      // || (scrollingDirection === "down" && offset > 300)
+      if (scrollingDirection === "up") {
+        console.log("scrolling up");
+        Animated.timing(slideDown, {
+          toValue: 0,
+          duration: 170,
+          useNativeDriver: true,
+        }).start();
+      } else if (scrollingDirection === "down" && offset > 300) {
+        console.log("scrolling down");
+        Animated.timing(slideDown, {
+          toValue: 500,
+          duration: 150,
+          useNativeDriver: true,
+        }).start();
+      }
+    },
+    [offset]
+  );
 
   return (
     <>
@@ -36,10 +61,10 @@ export default function BottomNavBar({
               : primaryColors.colors.backgroundLightMode,
             transform: [
               {
-                scaleY:
-                  isMenu || (scrollingDirection === "down" && offset > 300)
-                    ? 0
-                    : 1,
+                scaleY: isMenu ? 0 : 1,
+              },
+              {
+                translateY: slideDown,
               },
             ],
           },

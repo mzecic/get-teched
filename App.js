@@ -351,6 +351,7 @@ export default function App() {
             </Stack.Navigator>
 
             <BottomNavBar
+              headerOpacity={headerOpacity}
               offset={offset}
               scrollingDirection={scrollingDirection}
               isMenu={isMenu}
