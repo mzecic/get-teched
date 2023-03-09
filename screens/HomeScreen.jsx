@@ -115,9 +115,11 @@ export default function HomeScreen({
               style={{
                 backgroundColor: isDarkMode
                   ? colors.colors.black
-                  : colors.colors.white,
+                  : colors.colors.backgroundLightMode,
                 ...StyleSheet.absoluteFillObject,
                 opacity: headerOpacity,
+                borderBottomLeftRadius: 16,
+                borderBottomRightRadius: 16
               }}
             >
               <Text

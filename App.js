@@ -389,6 +389,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "rgb(30, 30, 30)",
   },
   button: {
     width: 200,

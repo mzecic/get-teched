@@ -10,7 +10,7 @@
     "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splashscreen/SplashScreenAdhdpi.png",
-      "resizeMode": "contain"
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,

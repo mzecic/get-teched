@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   lineItemContainer: {
     elevation: 4,
     shadowColor: "black",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 8,
     overflow: Platform.OS === "android" ? "hidden" : "visible",

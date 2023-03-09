@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     width: "100%",
-    justifyContent: "start",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   mainContainer: {
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   },
   emptyInputView: {
     flex: 1,
-    justifyContent: "start",
+    justifyContent: "flex-start",
   },
   logoContainer: {
     marginTop: "60%",

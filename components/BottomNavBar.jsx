@@ -33,7 +33,7 @@ export default function BottomNavBar({
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
-              : primaryColors.colors.white,
+              : primaryColors.colors.backgroundLightMode,
             transform: [
               {
                 scaleY:
@@ -61,28 +61,20 @@ export default function BottomNavBar({
                 style={[
                   styles.navIcon,
                   {
-                    tintColor: isDarkMode
-                      ? lastVisitedScreen === "HomeScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "HomeScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    tintColor: isDarkMode ? "white" : "black",
                   },
                 ]}
-                source={require("../assets/home-icon.png")}
+                source={
+                  lastVisitedScreen === "HomeScreen"
+                    ? require("../assets/home-fill.png")
+                    : require("../assets/home-icon.png")
+                }
               />
               <Text
                 style={[
                   styles.imageTag,
                   {
-                    color: isDarkMode
-                      ? lastVisitedScreen === "HomeScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "HomeScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    color: isDarkMode ? "white" : "black",
                   },
                 ]}
               >
@@ -107,28 +99,20 @@ export default function BottomNavBar({
                 style={[
                   styles.navIcon,
                   {
-                    tintColor: isDarkMode
-                      ? lastVisitedScreen === "GamingNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "GamingNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    tintColor: isDarkMode ? "white" : "black",
                   },
                 ]}
-                source={require("../assets/gaming-icon.png")}
+                source={
+                  lastVisitedScreen === "GamingNewsScreen"
+                    ? require("../assets/gaming-fill.png")
+                    : require("../assets/gaming-no-fill.png")
+                }
               />
               <Text
                 style={[
                   styles.imageTag,
                   {
-                    color: isDarkMode
-                      ? lastVisitedScreen === "GamingNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "GamingNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    color: isDarkMode ? "white" : "black",
                   },
                 ]}
               >
@@ -152,28 +136,20 @@ export default function BottomNavBar({
                 style={[
                   styles.navIcon,
                   {
-                    tintColor: isDarkMode
-                      ? lastVisitedScreen === "AudioNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "AudioNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    tintColor: isDarkMode ? "white" : "black",
                   },
                 ]}
-                source={require("../assets/audio-icon.png")}
+                source={
+                  lastVisitedScreen === "AudioNewsScreen"
+                    ? require("../assets/audio-fill.png")
+                    : require("../assets/audio-icon.png")
+                }
               />
               <Text
                 style={[
                   styles.imageTag,
                   {
-                    color: isDarkMode
-                      ? lastVisitedScreen === "AudioNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "AudioNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    color: isDarkMode ? "white" : "black",
                   },
                 ]}
               >
@@ -198,28 +174,20 @@ export default function BottomNavBar({
                 style={[
                   styles.navIcon,
                   {
-                    tintColor: isDarkMode
-                      ? lastVisitedScreen === "MobileNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "MobileNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    tintColor: isDarkMode ? "white" : "black",
                   },
                 ]}
-                source={require("../assets/mobile-icon.png")}
+                source={
+                  lastVisitedScreen === "MobileNewsScreen"
+                    ? require("../assets/mobile-fill.png")
+                    : require("../assets/mobile-icon.png")
+                }
               />
               <Text
                 style={[
                   styles.imageTag,
                   {
-                    color: isDarkMode
-                      ? lastVisitedScreen === "MobileNewsScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "MobileNewsScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    color: isDarkMode ? "white" : "black",
                   },
                 ]}
               >
@@ -241,28 +209,20 @@ export default function BottomNavBar({
                 style={[
                   styles.navIcon,
                   {
-                    tintColor: isDarkMode
-                      ? lastVisitedScreen === "SearchScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "SearchScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    tintColor: isDarkMode ? "white" : "black",
                   },
                 ]}
-                source={require("../assets/search-icon.png")}
+                source={
+                  lastVisitedScreen === "SearchScreen"
+                    ? require("../assets/search-fill.png")
+                    : require("../assets/search-no-fill.png")
+                }
               />
               <Text
                 style={[
                   styles.imageTag,
                   {
-                    color: isDarkMode
-                      ? lastVisitedScreen === "SearchScreen"
-                        ? primaryColors.colors.secondaryHighlight
-                        : "white"
-                      : lastVisitedScreen === "SearchScreen"
-                      ? primaryColors.colors.primaryHighlight
-                      : "black",
+                    color: isDarkMode ? "white" : "black",
                   },
                 ]}
               >
@@ -323,6 +283,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     bottom: 0,
     zIndex: 99,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
   },
   navIcon: {
     width: 25,
