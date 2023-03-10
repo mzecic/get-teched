@@ -27,6 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>getteched</string>
           <string>com.anonymous.getTeched</string>
         </array>
       </dict>

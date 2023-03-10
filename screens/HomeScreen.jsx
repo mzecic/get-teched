@@ -45,6 +45,7 @@ export default function HomeScreen({
   scrollingDirection,
   setScrollingDirection,
   user,
+  token,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -153,6 +154,7 @@ export default function HomeScreen({
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
+        console.log(token);
         console.log(user);
         setTimeout(function () {
           setIsLoading(false);

@@ -8,6 +8,7 @@ export default function MenuScreen({
   isDarkMode,
   setIsDarkMode,
   setIsMenu,
+  user,
 }) {
   const navigation = useNavigation();
   const toggleSwitch = () => setIsDarkMode((previousState) => !previousState);
@@ -117,7 +118,7 @@ export default function MenuScreen({
               },
             ]}
           >
-            Item 4
+            {user.given_name}
           </Text>
         </View>
       </View>

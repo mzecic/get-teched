@@ -9,8 +9,8 @@ import {
   Animated,
   Platform,
   View,
+  Pressable,
   Text,
-  Button,
   Image,
   ImageBackground,
 } from "react-native";
@@ -61,6 +61,9 @@ export default function App() {
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     iosClientId:
       "292437952156-7qb4rlcf7ovhe8o5poc04vpehkst1ie5.apps.googleusercontent.com",
+    extraParams: {
+      access_type: "offline",
+    },
   });
 
   useEffect(() => {
@@ -78,11 +81,11 @@ export default function App() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
       const user = await response.json();
       setUser(user);
     } catch (error) {
       // Add your own error handler here
+      console.log(error);
     }
   };
 
@@ -156,66 +159,74 @@ export default function App() {
   return (
     <>
       {!user ? (
-        <View style={styles.container}>
-          <ImageBackground
-            resizeMode="cover"
-            style={{
-              flex: 1,
-              width: "100%",
-              justifyContent: "flex-end",
-            }}
-            source={require("./assets/splashscreen/SplashScreenAdhdpi.png")}
-          >
-            <View style={styles.authContainer}>
-              <View style={styles.googleOAuthContainer}>
-                <Image
-                  style={styles.googleIcon}
-                  source={require("./assets/google-icon.png")}
-                />
-                <Button
-                  color="white"
-                  style={styles.googleButton}
-                  title="Sign in with Google"
-                  disabled={!request}
-                  onPress={() => {
-                    promptAsync();
+        <>
+          <StatusBar hidden="true" />
+          <View style={styles.container}>
+            <ImageBackground
+              resizeMode="cover"
+              style={{
+                flex: 1,
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+              source={require("./assets/splashscreen/SplashScreenAdhdpi.png")}
+            >
+              <View style={styles.authContainer}>
+                <View style={styles.googleOAuthContainer}>
+                  <Image
+                    style={styles.googleIcon}
+                    source={require("./assets/google-icon.png")}
+                  />
+                  <Pressable
+                    disabled={!request}
+                    onPress={() => {
+                      promptAsync();
+                    }}
+                    style={(pressed) => {
+                      {
+                        opacity: pressed ? 0.5 : 1;
+                      }
+                    }}
+                  >
+                    <Text style={styles.googleButton}>Sign in with Google</Text>
+                  </Pressable>
+                </View>
+                <AppleAuthentication.AppleAuthenticationButton
+                  buttonType={
+                    AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                  }
+                  buttonStyle={
+                    AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+                  }
+                  cornerRadius={5}
+                  style={styles.button}
+                  onPress={async () => {
+                    try {
+                      const credential = await AppleAuthentication.signInAsync({
+                        requestedScopes: [
+                          AppleAuthentication.AppleAuthenticationScope
+                            .FULL_NAME,
+                          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                        ],
+                      });
+                      setUser(credential);
+                      // signed in
+                    } catch (e) {
+                      console.log(e);
+                      if (e.code === "ERR_REQUEST_CANCELED") {
+                        // handle that the user canceled the sign-in flow
+                        console.log(e);
+                      } else {
+                        console.log("error");
+                        // handle other errors
+                      }
+                    }
                   }}
                 />
               </View>
-              <AppleAuthentication.AppleAuthenticationButton
-                buttonType={
-                  AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-                }
-                buttonStyle={
-                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-                }
-                cornerRadius={5}
-                style={styles.button}
-                onPress={async () => {
-                  try {
-                    const credential = await AppleAuthentication.signInAsync({
-                      requestedScopes: [
-                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                      ],
-                    });
-                    setUser(credential);
-                    // signed in
-                  } catch (e) {
-                    console.log(e);
-                    if (e.code === "ERR_REQUEST_CANCELED") {
-                      // handle that the user canceled the sign-in flow
-                      console.log(e);
-                    } else {
-                      console.log("error");
-                      // handle other errors
-                    }
-                  }
-                }}
-              />
-            </View>
-          </ImageBackground>
-        </View>
+            </ImageBackground>
+          </View>
+        </>
       ) : (
         <>
           <StatusBar style={isDarkMode ? "light" : "dark"} />
@@ -267,6 +278,7 @@ export default function App() {
               >
                 {(props) => (
                   <HomeScreen
+                    token={token}
                     user={user}
                     offset={offset}
                     setOffset={setOffset}
@@ -397,6 +409,7 @@ export default function App() {
                     lastVisitedScreen={lastVisitedScreen}
                     isDarkMode={isDarkMode}
                     setIsDarkMode={setIsDarkMode}
+                    user={user}
                   />
                 )}
               </Stack.Screen>
@@ -466,13 +479,17 @@ const styles = StyleSheet.create({
     width: 200,
     height: 44,
   },
-  googleButton: {},
+  googleButton: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: 500,
+    paddingHorizontal: 4,
+  },
   googleOAuthContainer: {
     width: 200,
     height: 42,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderRadius: 6,
+    paddingHorizontal: 8,
+    borderRadius: 4,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
