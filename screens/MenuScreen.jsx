@@ -9,6 +9,7 @@ export default function MenuScreen({
   setIsDarkMode,
   setIsMenu,
   user,
+  handleGoogleLogout,
 }) {
   const navigation = useNavigation();
   const toggleSwitch = () => setIsDarkMode((previousState) => !previousState);
@@ -118,9 +119,17 @@ export default function MenuScreen({
               },
             ]}
           >
-            {user.given_name}
+            Welcome
           </Text>
         </View>
+        <Pressable
+          onPress={() => {
+            console.log("logging out");
+            handleGoogleLogout();
+          }}
+        >
+          <Text>Logout</Text>
+        </Pressable>
       </View>
       <View style={styles.closeMenuContainer}>
         <Pressable
