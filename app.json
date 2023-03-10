@@ -12,6 +12,7 @@
       "image": "./assets/splashscreen/SplashScreenAdhdpi.png",
       "resizeMode": "cover"
     },
+    "scheme": "getTeched",
     "updates": {
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/d2ad32bd-30b3-49c6-bfa0-915477bad380"

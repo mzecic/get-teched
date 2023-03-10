@@ -1,8 +1,19 @@
 import "expo-dev-client";
 import * as AppleAuthentication from "expo-apple-authentication";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Animated, Platform, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Animated,
+  Platform,
+  View,
+  Text,
+  Button,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {
   NavigationContainer,
   DarkTheme,
@@ -25,9 +36,11 @@ import filter from "lodash.filter";
 import { articles } from "./dummy-data";
 
 SplashScreen.preventAutoHideAsync();
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState("");
   const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
   const [gamingNews, setGamingNews] = useState([]);
@@ -43,6 +56,35 @@ export default function App() {
   const [offset, setOffset] = useState(0);
   const [scrollingDirection, setScrollingDirection] = useState("");
   const Stack = createNativeStackNavigator();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
+    iosClientId:
+      "292437952156-7qb4rlcf7ovhe8o5poc04vpehkst1ie5.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      setToken(response.authentication.accessToken);
+      getUserInfo();
+    }
+  }, [response, token]);
+
+  const getUserInfo = async () => {
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const user = await response.json();
+      setUser(user);
+    } catch (error) {
+      // Add your own error handler here
+    }
+  };
 
   const yOffset = useRef(new Animated.Value(0)).current;
   const headerOpacity = yOffset.interpolate({
@@ -115,37 +157,64 @@ export default function App() {
     <>
       {!user ? (
         <View style={styles.container}>
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={
-              AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
-            }
-            buttonStyle={
-              AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-            }
-            cornerRadius={5}
-            style={styles.button}
-            onPress={async () => {
-              try {
-                const credential = await AppleAuthentication.signInAsync({
-                  requestedScopes: [
-                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                    AppleAuthentication.AppleAuthenticationScope.EMAIL,
-                  ],
-                });
-                setUser(credential);
-                // signed in
-              } catch (e) {
-                console.log(e);
-                if (e.code === "ERR_REQUEST_CANCELED") {
-                  // handle that the user canceled the sign-in flow
-                  console.log(e);
-                } else {
-                  console.log("error");
-                  // handle other errors
-                }
-              }
+          <ImageBackground
+            resizeMode="cover"
+            style={{
+              flex: 1,
+              width: "100%",
+              justifyContent: "flex-end",
             }}
-          />
+            source={require("./assets/splashscreen/SplashScreenAdhdpi.png")}
+          >
+            <View style={styles.authContainer}>
+              <View style={styles.googleOAuthContainer}>
+                <Image
+                  style={styles.googleIcon}
+                  source={require("./assets/google-icon.png")}
+                />
+                <Button
+                  color="white"
+                  style={styles.googleButton}
+                  title="Sign in with Google"
+                  disabled={!request}
+                  onPress={() => {
+                    promptAsync();
+                  }}
+                />
+              </View>
+              <AppleAuthentication.AppleAuthenticationButton
+                buttonType={
+                  AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN
+                }
+                buttonStyle={
+                  AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+                }
+                cornerRadius={5}
+                style={styles.button}
+                onPress={async () => {
+                  try {
+                    const credential = await AppleAuthentication.signInAsync({
+                      requestedScopes: [
+                        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                      ],
+                    });
+                    setUser(credential);
+                    // signed in
+                  } catch (e) {
+                    console.log(e);
+                    if (e.code === "ERR_REQUEST_CANCELED") {
+                      // handle that the user canceled the sign-in flow
+                      console.log(e);
+                    } else {
+                      console.log("error");
+                      // handle other errors
+                    }
+                  }
+                }}
+              />
+            </View>
+          </ImageBackground>
         </View>
       ) : (
         <>
@@ -388,12 +457,31 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgb(30, 30, 30)",
+  },
+  authContainer: {
+    paddingHorizontal: "25%",
+    bottom: "10%",
   },
   button: {
     width: 200,
     height: 44,
+  },
+  googleButton: {},
+  googleOAuthContainer: {
+    width: 200,
+    height: 42,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderRadius: 6,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#007AFF",
+    textAlign: "center",
+    marginVertical: 16,
+  },
+  googleIcon: {
+    width: 12,
+    height: 12,
   },
 });
