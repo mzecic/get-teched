@@ -239,6 +239,8 @@ export default function HomeScreen({
                   setScrollingDirection(direction);
                   if (scrollingDirection === "up") {
                     setLastOffset(offset);
+                  } else if (scrollingDirection === "down") {
+                    setLastOffset(0);
                   }
                   // setHidePoint(scrollingDirection === "up" ? 0 : )
                 },

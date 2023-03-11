@@ -79,6 +79,8 @@ export default function App() {
     if (response?.type === "success") {
       setToken(response.authentication.accessToken);
       getUserInfo();
+    } else if (response?.type === "error") {
+      console.log(response);
     }
   }, [response, token]);
 
