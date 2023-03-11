@@ -44,6 +44,10 @@ export default function HomeScreen({
   setOffset,
   scrollingDirection,
   setScrollingDirection,
+  hidePoint,
+  setHidePoint,
+  lastOffset,
+  setLastOffset,
   user,
   token,
   storedCredentials,
@@ -119,9 +123,17 @@ export default function HomeScreen({
                   ? colors.colors.black
                   : colors.colors.backgroundLightMode,
                 ...StyleSheet.absoluteFillObject,
-                opacity: headerOpacity,
+                // opacity: headerOpacity,
                 borderBottomLeftRadius: 16,
                 borderBottomRightRadius: 16,
+                transform: [
+                  {
+                    translateY:
+                      scrollingDirection === "down" && offset > 5
+                        ? headerOpacity
+                        : 0,
+                  },
+                ],
               }}
             >
               <Text
@@ -225,6 +237,10 @@ export default function HomeScreen({
                   let direction = currentOffset > offset ? "down" : "up";
                   setOffset(currentOffset);
                   setScrollingDirection(direction);
+                  if (scrollingDirection === "up") {
+                    setLastOffset(offset);
+                  }
+                  // setHidePoint(scrollingDirection === "up" ? 0 : )
                 },
                 useNativeDriver: true,
               }

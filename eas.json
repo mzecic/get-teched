@@ -13,14 +13,14 @@
         "buildConfiguration": "Debug",
         "resourceClass": "m1-medium"
       },
-      "channel": "development"
+      "channel": "main"
     },
     "preview": {
       "distribution": "internal",
       "ios": {
         "resourceClass": "m1-medium"
       },
-      "channel": "preview"
+      "channel": "main"
     },
     "production": {
       "ios": {

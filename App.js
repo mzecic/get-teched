@@ -32,11 +32,13 @@ import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import MenuScreen from "./screens/MenuScreen";
 import SearchScreen from "./screens/SearchScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 
 import filter from "lodash.filter";
 import { articles } from "./dummy-data";
+import { hide } from "expo-splash-screen";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -44,7 +46,7 @@ WebBrowser.maybeCompleteAuthSession();
 export default function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
-  const [appReady, setAppReady] = useState(false);
+  const [profile, setProfile] = useState(null);
   const [storedCredentials, setStoredCredentials] = useState(null);
   const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
@@ -60,6 +62,8 @@ export default function App() {
   const [text, setText] = useState("");
   const [offset, setOffset] = useState(0);
   const [scrollingDirection, setScrollingDirection] = useState("");
+  const [hidePoint, setHidePoint] = useState(null);
+  const [lastOffset, setLastOffset] = useState(0);
   const Stack = createNativeStackNavigator();
 
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -113,8 +117,8 @@ export default function App() {
 
   const yOffset = useRef(new Animated.Value(0)).current;
   const headerOpacity = yOffset.interpolate({
-    inputRange: [0, 200],
-    outputRange: [1, 0],
+    inputRange: [lastOffset, lastOffset + 2000],
+    outputRange: [0, -400],
   });
   const scaleY = useRef(new Animated.Value(0)).current;
   const generalListOffset = scaleY.interpolate({
@@ -334,6 +338,10 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              lastOffset={lastOffset}
+                              setLastOffset={setLastOffset}
+                              hidePoint={hidePoint}
+                              setHidePoint={setHidePoint}
                               storedCredentials={storedCredentials}
                               token={token}
                               user={user}
@@ -490,6 +498,9 @@ export default function App() {
                               setIsLoading={setIsLoading}
                             />
                           )}
+                        </Stack.Screen>
+                        <Stack.Screen name="ProfileScreen">
+                          {(props) => <ProfileScreen />}
                         </Stack.Screen>
                       </Stack.Navigator>
 
