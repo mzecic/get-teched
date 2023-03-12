@@ -25,6 +25,7 @@ import GeneralNewsLine from "../components/GeneralNewsLine";
 
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
+import { color } from "react-native-reanimated";
 
 export default function HomeScreen({
   techNews,
@@ -259,12 +260,30 @@ export default function HomeScreen({
                 zIndex: 200,
               }}
             >
-              <View>
-                <Image
-                  style={{ width: 35, height: 35, borderRadius: 50 }}
-                  source={{ uri: storedCredentials.picture }}
-                ></Image>
-              </View>
+              {storedCredentials ? (
+                <View>
+                  <Image
+                    style={{
+                      width: 35,
+                      height: 35,
+                      borderRadius: 50,
+                      borderColor: colors.colors.black,
+                      borderWidth: 0.3,
+                      tintColor:
+                        !storedCredentials.picture && isDarkMode
+                          ? colors.colors.white
+                          : "none",
+                    }}
+                    source={
+                      storedCredentials.picture
+                        ? { uri: storedCredentials.picture }
+                        : require("../assets/profile.png")
+                    }
+                  ></Image>
+                </View>
+              ) : (
+                <></>
+              )}
             </Pressable>
           </Animated.View>
           <Animated.FlatList

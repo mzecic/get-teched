@@ -9,40 +9,22 @@ import {
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
 
-export default function ProfileScreen({
+export default function ProfileCreateScreen({
   lastVisitedScreen,
   setIsMenu,
   storedCredentials,
   isDarkMode,
+  profile,
 }) {
   const navigation = useNavigation();
 
   return (
     <>
-      <SafeAreaView>
-        <Pressable
-          style={styles.backButton}
-          onPress={() => {
-            navigation.navigate(lastVisitedScreen);
-            setIsMenu(false);
-          }}
-        >
-          <View style={styles.backArrow}></View>
-          <Text style={styles.backButtonText}>Back</Text>
-        </Pressable>
-      </SafeAreaView>
+      <SafeAreaView></SafeAreaView>
       <View style={styles.mainContainer}>
         <View style={styles.photoContainer}>
           <Image
-            style={[
-              styles.photo,
-              {
-                tintColor:
-                  !storedCredentials.picture && isDarkMode
-                    ? primaryColors.colors.white
-                    : "none",
-              },
-            ]}
+            style={styles.photo}
             source={
               storedCredentials.picture
                 ? {

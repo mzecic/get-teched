@@ -34,8 +34,10 @@ import MobileNewsScreen from "./screens/MobileNewsScreen";
 import MenuScreen from "./screens/MenuScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ProfileCreateScreen from "./screens/ProfileCreateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
+import * as profiles from "./utils/users-api";
 
 import filter from "lodash.filter";
 import { articles } from "./dummy-data";
@@ -168,11 +170,23 @@ export default function App() {
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
   });
   useEffect(function () {
-    setTimeout(function () {
+    setTimeout(async function () {
       checkLoginCredentials();
-      console.log(storedCredentials);
+      console.log("stored credentials", storedCredentials);
       SplashScreen.hideAsync();
     }, 2000);
+  }, []);
+
+  useEffect(function () {
+    (async function () {
+      const getProfile = await profiles.getProfile(storedCredentials.email);
+      setProfile(getProfile);
+      setIsDarkMode(getProfile.darkMode);
+      console.log(getProfile);
+      if (!getProfile) {
+        setIsMenu(false);
+      }
+    })();
   }, []);
 
   async function persistLogin(credentials) {
@@ -188,6 +202,12 @@ export default function App() {
     const result = await AsyncStorage.getItem("loginCredentials");
     if (result !== null) {
       setStoredCredentials(JSON.parse(result));
+      const getProfile = await profiles.getProfile(result.email);
+      setProfile(getProfile);
+      console.log(getProfile);
+      if (!getProfile) {
+        setIsMenu(false);
+      }
     } else {
       setStoredCredentials(null);
     }
@@ -273,6 +293,7 @@ export default function App() {
                                   });
                                 setUser(credential);
                                 persistLogin({ ...credential });
+                                console.log(credential);
                                 // signed in
                               } catch (e) {
                                 console.log(e);
@@ -299,6 +320,7 @@ export default function App() {
                         flex: 1,
                       }}
                     >
+                      {/* {profile ? <></> : <></>} */}
                       <Stack.Navigator
                         screenOptions={{
                           headerLeft: () => {
@@ -306,71 +328,85 @@ export default function App() {
                           },
                         }}
                       >
-                        <Stack.Screen
-                          options={{
-                            headerTitle:
-                              Platform.OS === "android"
-                                ? () => (
-                                    <Text
-                                      style={{
-                                        fontFamily: "Audiowide",
-                                        fontSize: 20,
-                                        color: isDarkMode
-                                          ? primaryColors.colors.white
-                                          : primaryColors.colors.black,
-                                      }}
-                                    >
-                                      GetTeched
-                                    </Text>
-                                  )
-                                : "",
-                            headerTitleAlign: "center",
-                            headerShown:
-                              Platform.OS === "android" ? true : false,
-                            headerStyle: {
-                              backgroundColor: isDarkMode
-                                ? primaryColors.colors.black
-                                : primaryColors.colors.white,
-                              zIndex: 100,
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                            },
-                          }}
-                          name="HomeScreen"
-                        >
-                          {(props) => (
-                            <HomeScreen
-                              setIsMenu={setIsMenu}
-                              lastOffset={lastOffset}
-                              setLastOffset={setLastOffset}
-                              hidePoint={hidePoint}
-                              setHidePoint={setHidePoint}
-                              storedCredentials={storedCredentials}
-                              token={token}
-                              user={user}
-                              offset={offset}
-                              setOffset={setOffset}
-                              scrollingDirection={scrollingDirection}
-                              setScrollingDirection={setScrollingDirection}
-                              onLayoutRootView={onLayoutRootView}
-                              generalNews={generalNews}
-                              setGeneralNews={setGeneralNews}
-                              techNews={techNews}
-                              setTechNews={setTechNews}
-                              yOffset={yOffset}
-                              headerOpacity={headerOpacity}
-                              lastVisitedScreen={lastVisitedScreen}
-                              listViewRef={listViewRef}
-                              isGeneralVisible={isGeneralVisible}
-                              setIsGeneralVisible={setIsGeneralVisible}
-                              isLoading={isLoading}
-                              setIsLoading={setIsLoading}
-                              isDarkMode={isDarkMode}
-                            />
-                          )}
-                        </Stack.Screen>
+                        {profile ? (
+                          <Stack.Screen
+                            options={{
+                              headerTitle:
+                                Platform.OS === "android"
+                                  ? () => (
+                                      <Text
+                                        style={{
+                                          fontFamily: "Audiowide",
+                                          fontSize: 20,
+                                          color: isDarkMode
+                                            ? primaryColors.colors.white
+                                            : primaryColors.colors.black,
+                                        }}
+                                      >
+                                        GetTeched
+                                      </Text>
+                                    )
+                                  : "",
+                              headerTitleAlign: "center",
+                              headerShown:
+                                Platform.OS === "android" ? true : false,
+                              headerStyle: {
+                                backgroundColor: isDarkMode
+                                  ? primaryColors.colors.black
+                                  : primaryColors.colors.white,
+                                zIndex: 100,
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                              },
+                            }}
+                            name="HomeScreen"
+                          >
+                            {(props) => (
+                              <HomeScreen
+                                setIsMenu={setIsMenu}
+                                lastOffset={lastOffset}
+                                setLastOffset={setLastOffset}
+                                hidePoint={hidePoint}
+                                setHidePoint={setHidePoint}
+                                storedCredentials={storedCredentials}
+                                token={token}
+                                user={user}
+                                offset={offset}
+                                setOffset={setOffset}
+                                scrollingDirection={scrollingDirection}
+                                setScrollingDirection={setScrollingDirection}
+                                onLayoutRootView={onLayoutRootView}
+                                generalNews={generalNews}
+                                setGeneralNews={setGeneralNews}
+                                techNews={techNews}
+                                setTechNews={setTechNews}
+                                yOffset={yOffset}
+                                headerOpacity={headerOpacity}
+                                lastVisitedScreen={lastVisitedScreen}
+                                listViewRef={listViewRef}
+                                isGeneralVisible={isGeneralVisible}
+                                setIsGeneralVisible={setIsGeneralVisible}
+                                isLoading={isLoading}
+                                setIsLoading={setIsLoading}
+                                isDarkMode={isDarkMode}
+                              />
+                            )}
+                          </Stack.Screen>
+                        ) : (
+                          <Stack.Screen name="ProfileCreateScreen">
+                            {(props) => (
+                              <ProfileCreateScreen
+                                profile={profile}
+                                isDarkMode={isDarkMode}
+                                storedCredentials={storedCredentials}
+                                setIsMenu={setIsMenu}
+                                lastVisitedScreen={lastVisitedScreen}
+                              />
+                            )}
+                          </Stack.Screen>
+                        )}
                         <Stack.Screen
                           options={{
                             title:
@@ -512,6 +548,7 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              isDarkMode={isDarkMode}
                               storedCredentials={storedCredentials}
                               setIsMenu={setIsMenu}
                               lastVisitedScreen={lastVisitedScreen}
