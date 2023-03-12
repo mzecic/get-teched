@@ -16,6 +16,7 @@ import {
   Text,
   Image,
   ImageBackground,
+  Button,
 } from "react-native";
 import {
   NavigationContainer,
@@ -119,7 +120,7 @@ export default function App() {
 
   const yOffset = useRef(new Animated.Value(0)).current;
   const headerOpacity = yOffset.interpolate({
-    inputRange: [lastOffset, lastOffset + 2000],
+    inputRange: [lastOffset + 2, lastOffset + 1000],
     outputRange: [0, -400],
   });
   const scaleY = useRef(new Animated.Value(0)).current;
@@ -324,7 +325,8 @@ export default function App() {
                                   )
                                 : "",
                             headerTitleAlign: "center",
-                            headerShown: true,
+                            headerShown:
+                              Platform.OS === "android" ? true : false,
                             headerStyle: {
                               backgroundColor: isDarkMode
                                 ? primaryColors.colors.black
@@ -340,6 +342,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              setIsMenu={setIsMenu}
                               lastOffset={lastOffset}
                               setLastOffset={setLastOffset}
                               hidePoint={hidePoint}
@@ -501,8 +504,18 @@ export default function App() {
                             />
                           )}
                         </Stack.Screen>
-                        <Stack.Screen name="ProfileScreen">
-                          {(props) => <ProfileScreen />}
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                          }}
+                          name="ProfileScreen"
+                        >
+                          {(props) => (
+                            <ProfileScreen
+                              setIsMenu={setIsMenu}
+                              lastVisitedScreen={lastVisitedScreen}
+                            />
+                          )}
                         </Stack.Screen>
                       </Stack.Navigator>
 

@@ -119,7 +119,7 @@ export default function MenuScreen({
               },
             ]}
           >
-            Welcome {user.given_name}
+            Welcome
           </Text>
         </View>
         <Pressable

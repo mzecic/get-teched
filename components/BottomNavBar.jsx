@@ -306,7 +306,7 @@ export default function BottomNavBar({
 const styles = StyleSheet.create({
   navContainer: {
     position: "absolute",
-    height: "10%",
+    height: "8%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-evenly",
