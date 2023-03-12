@@ -512,6 +512,7 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              storedCredentials={storedCredentials}
                               setIsMenu={setIsMenu}
                               lastVisitedScreen={lastVisitedScreen}
                             />

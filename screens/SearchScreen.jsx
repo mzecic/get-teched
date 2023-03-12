@@ -51,8 +51,8 @@ export default function SearchScreen({
   const handleSearch = (text) => {
     const filteredArray = allNews.filter((article) => {
       return (
-        article.title.toLowerCase().split(" ").includes(text) ||
-        article.content.toLowerCase().split(" ").includes(text)
+        article.title.toLowerCase().split(" ").includes(text.toLowerCase()) ||
+        article.content.toLowerCase().split(" ").includes(text.toLowerCase())
       );
     });
     setQuery(text);

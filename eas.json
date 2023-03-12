@@ -13,7 +13,7 @@
         "buildConfiguration": "Debug",
         "resourceClass": "m1-medium"
       },
-      "channel": "main"
+      "channel": "preview"
     },
     "preview": {
       "distribution": "internal",
