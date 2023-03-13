@@ -26,9 +26,9 @@ export default function ProfileCreateScreen({
           <Image
             style={styles.photo}
             source={
-              storedCredentials.picture
+              profile
                 ? {
-                    uri: storedCredentials.picture,
+                    uri: profile.picture,
                   }
                 : require("../assets/profile.png")
             }
@@ -61,9 +61,7 @@ export default function ProfileCreateScreen({
                 fontWeight: 500,
               },
             ]}
-          >
-            {storedCredentials.given_name} {storedCredentials.family_name}{" "}
-          </Text>
+          ></Text>
         </View>
       </View>
     </>

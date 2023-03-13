@@ -19,13 +19,13 @@ import {
 } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as news from "../utils/gnews";
+import * as profiles from "../utils/users-api";
 
 import TechGridTile from "../components/TechGridTile";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
-import { color } from "react-native-reanimated";
 
 export default function HomeScreen({
   techNews,
@@ -41,6 +41,7 @@ export default function HomeScreen({
   isLoading,
   setIsLoading,
   isDarkMode,
+  setIsDarkMode,
   setShowNavBar,
   offset,
   setOffset,
@@ -54,12 +55,15 @@ export default function HomeScreen({
   token,
   storedCredentials,
   setIsMenu,
+  profile,
+  setProfile,
+  loginType,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    setTimeout(() => {
+    setTimeout(async function () {
       setRefreshing(false);
     }, 500);
   }, []);
@@ -170,18 +174,18 @@ export default function HomeScreen({
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
-        // console.log(token);
-        // console.log(user);
-        console.log(storedCredentials);
+        const getTheme = await profiles.getProfile(storedCredentials.email);
+        console.log("dark mode loading", getTheme[0].darkMode);
+        setIsDarkMode(getTheme[0].darkMode);
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
-        setTimeout(function () {
-          SplashScreen.hideAsync();
-        }, 1500);
+        // setTimeout(function () {
+        //   SplashScreen.hideAsync();
+        // }, 1500);
       })();
     },
-    [refreshing]
+    [refreshing, storedCredentials]
   );
 
   return (
@@ -193,7 +197,7 @@ export default function HomeScreen({
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: isDarkMode
-              ? colors.colors.backgroundDarkMode
+              ? colors.colors.black
               : colors.colors.white,
           }}
         >
@@ -248,10 +252,24 @@ export default function HomeScreen({
               Get Teched
             </Text>
             <Pressable
-              onPress={() => {
-                console.log("Pressed");
+              onPress={async function () {
                 navigation.navigate("ProfileScreen");
                 setIsMenu(true);
+                const getProfile = await profiles.getProfile(
+                  storedCredentials.email
+                );
+                console.log("this is profile", getProfile.length);
+                if (getProfile.length === 0 && loginType === "google") {
+                  const createdProfile = await profiles.createProfile({
+                    givenName: storedCredentials.given_name,
+                    familyName: storedCredentials.family_name,
+                    token: storedCredentials.token,
+                    darkMode: isDarkMode,
+                    email: storedCredentials.email,
+                    picture: storedCredentials.picture,
+                  });
+                  console.log(createdProfile);
+                }
               }}
               style={{
                 position: "absolute",
@@ -272,7 +290,7 @@ export default function HomeScreen({
                       tintColor:
                         !storedCredentials.picture && isDarkMode
                           ? colors.colors.white
-                          : "none",
+                          : null,
                     }}
                     source={
                       storedCredentials.picture
@@ -315,7 +333,6 @@ export default function HomeScreen({
                   if (scrollingDirection === "up") {
                     setLastOffset(offset);
                   } else if (scrollingDirection === "down") {
-                    console.log(lastOffset);
                   }
 
                   // setHidePoint(scrollingDirection === "up" ? 0 : )

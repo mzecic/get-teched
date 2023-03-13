@@ -1,16 +1,35 @@
 let url = `https://get-teched.herokuapp.com/profiles`;
+let localUrl = "localhost:3000/profiles";
 
 export async function getProfile(email) {
   console.log("getting profile is running");
-  return fetch(`${url}/show/${email}`).then(function (res) {
+  return fetch(`${url}/${email}`).then(function (res) {
     return res.json();
   });
 }
 
 export async function createProfile(profile) {
-  return fetch(`${url}/show/${email}/create`, "POST", profile).then(function (
-    res
-  ) {
+  return fetch(`${url}/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(profile),
+  }).then(function (res) {
+    console.log("create profile is running", profile);
+    return res.json();
+  });
+}
+
+export async function updateProfileTheme(isDarkMode, email) {
+  return fetch(`${url}/${email}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(isDarkMode),
+  }).then(function (res) {
+    console.log("put profile is running", isDarkMode);
     return res.json();
   });
 }

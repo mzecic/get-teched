@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -14,7 +15,9 @@ export default function ProfileScreen({
   setIsMenu,
   storedCredentials,
   isDarkMode,
+  profile,
 }) {
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
   return (
@@ -40,7 +43,7 @@ export default function ProfileScreen({
                 tintColor:
                   !storedCredentials.picture && isDarkMode
                     ? primaryColors.colors.white
-                    : "none",
+                    : null,
               },
             ]}
             source={
@@ -98,7 +101,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   backButton: {
-    margin: 16,
+    margin: 10,
+    marginLeft: 12,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",

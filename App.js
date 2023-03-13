@@ -39,10 +39,6 @@ import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
 
-import filter from "lodash.filter";
-import { articles } from "./dummy-data";
-import { hide } from "expo-splash-screen";
-
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
 
@@ -51,6 +47,7 @@ export default function App() {
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState(null);
   const [storedCredentials, setStoredCredentials] = useState(null);
+  const [loginType, setLoginType] = useState("");
   const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
   const [gamingNews, setGamingNews] = useState([]);
@@ -68,7 +65,6 @@ export default function App() {
   const [hidePoint, setHidePoint] = useState(null);
   const [lastOffset, setLastOffset] = useState(0);
   const Stack = createNativeStackNavigator();
-
   const [request, response, promptAsync] = Google.useAuthRequest({
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     iosClientId:
@@ -96,6 +92,7 @@ export default function App() {
         }
       );
       const user = await response.json();
+      setLoginType("google");
       setUser(user);
       persistLogin({ ...user, token });
     } catch (error) {
@@ -130,6 +127,13 @@ export default function App() {
     inputRange: [0, 200],
     outputRange: [1, 0],
   });
+  const toggleSwitch = async function () {
+    setIsDarkMode((previousState) => !previousState);
+    const result = await profiles.updateProfileTheme(
+      { isDarkMode: !isDarkMode },
+      storedCredentials.email
+    );
+  };
 
   let listViewRef = useRef(null);
   let listViewGamingRef = useRef(null);
@@ -172,21 +176,8 @@ export default function App() {
   useEffect(function () {
     setTimeout(async function () {
       checkLoginCredentials();
-      console.log("stored credentials", storedCredentials);
       SplashScreen.hideAsync();
     }, 2000);
-  }, []);
-
-  useEffect(function () {
-    (async function () {
-      const getProfile = await profiles.getProfile(storedCredentials.email);
-      setProfile(getProfile);
-      setIsDarkMode(getProfile.darkMode);
-      console.log(getProfile);
-      if (!getProfile) {
-        setIsMenu(false);
-      }
-    })();
   }, []);
 
   async function persistLogin(credentials) {
@@ -195,19 +186,12 @@ export default function App() {
       JSON.stringify(credentials)
     );
     setStoredCredentials(credentials);
-    console.log(credentials);
   }
 
   async function checkLoginCredentials() {
     const result = await AsyncStorage.getItem("loginCredentials");
     if (result !== null) {
       setStoredCredentials(JSON.parse(result));
-      const getProfile = await profiles.getProfile(result.email);
-      setProfile(getProfile);
-      console.log(getProfile);
-      if (!getProfile) {
-        setIsMenu(false);
-      }
     } else {
       setStoredCredentials(null);
     }
@@ -291,9 +275,9 @@ export default function App() {
                                         .AppleAuthenticationScope.EMAIL,
                                     ],
                                   });
+                                setLoginType("apple");
                                 setUser(credential);
                                 persistLogin({ ...credential });
-                                console.log(credential);
                                 // signed in
                               } catch (e) {
                                 console.log(e);
@@ -320,7 +304,6 @@ export default function App() {
                         flex: 1,
                       }}
                     >
-                      {/* {profile ? <></> : <></>} */}
                       <Stack.Navigator
                         screenOptions={{
                           headerLeft: () => {
@@ -328,85 +311,86 @@ export default function App() {
                           },
                         }}
                       >
-                        {profile ? (
-                          <Stack.Screen
-                            options={{
-                              headerTitle:
-                                Platform.OS === "android"
-                                  ? () => (
-                                      <Text
-                                        style={{
-                                          fontFamily: "Audiowide",
-                                          fontSize: 20,
-                                          color: isDarkMode
-                                            ? primaryColors.colors.white
-                                            : primaryColors.colors.black,
-                                        }}
-                                      >
-                                        GetTeched
-                                      </Text>
-                                    )
-                                  : "",
-                              headerTitleAlign: "center",
-                              headerShown:
-                                Platform.OS === "android" ? true : false,
-                              headerStyle: {
-                                backgroundColor: isDarkMode
-                                  ? primaryColors.colors.black
-                                  : primaryColors.colors.white,
-                                zIndex: 100,
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                              },
-                            }}
-                            name="HomeScreen"
-                          >
-                            {(props) => (
-                              <HomeScreen
-                                setIsMenu={setIsMenu}
-                                lastOffset={lastOffset}
-                                setLastOffset={setLastOffset}
-                                hidePoint={hidePoint}
-                                setHidePoint={setHidePoint}
-                                storedCredentials={storedCredentials}
-                                token={token}
-                                user={user}
-                                offset={offset}
-                                setOffset={setOffset}
-                                scrollingDirection={scrollingDirection}
-                                setScrollingDirection={setScrollingDirection}
-                                onLayoutRootView={onLayoutRootView}
-                                generalNews={generalNews}
-                                setGeneralNews={setGeneralNews}
-                                techNews={techNews}
-                                setTechNews={setTechNews}
-                                yOffset={yOffset}
-                                headerOpacity={headerOpacity}
-                                lastVisitedScreen={lastVisitedScreen}
-                                listViewRef={listViewRef}
-                                isGeneralVisible={isGeneralVisible}
-                                setIsGeneralVisible={setIsGeneralVisible}
-                                isLoading={isLoading}
-                                setIsLoading={setIsLoading}
-                                isDarkMode={isDarkMode}
-                              />
-                            )}
-                          </Stack.Screen>
-                        ) : (
-                          <Stack.Screen name="ProfileCreateScreen">
-                            {(props) => (
-                              <ProfileCreateScreen
-                                profile={profile}
-                                isDarkMode={isDarkMode}
-                                storedCredentials={storedCredentials}
-                                setIsMenu={setIsMenu}
-                                lastVisitedScreen={lastVisitedScreen}
-                              />
-                            )}
-                          </Stack.Screen>
-                        )}
+                        <Stack.Screen
+                          options={{
+                            headerTitle:
+                              Platform.OS === "android"
+                                ? () => (
+                                    <Text
+                                      style={{
+                                        fontFamily: "Audiowide",
+                                        fontSize: 20,
+                                        color: isDarkMode
+                                          ? primaryColors.colors.white
+                                          : primaryColors.colors.black,
+                                      }}
+                                    >
+                                      GetTeched
+                                    </Text>
+                                  )
+                                : "",
+                            headerTitleAlign: "center",
+                            headerShown:
+                              Platform.OS === "android" ? true : false,
+                            headerStyle: {
+                              backgroundColor: isDarkMode
+                                ? primaryColors.colors.black
+                                : primaryColors.colors.white,
+                              zIndex: 100,
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                            },
+                          }}
+                          name="HomeScreen"
+                        >
+                          {(props) => (
+                            <HomeScreen
+                              setIsDarkMode={setIsDarkMode}
+                              loginType={loginType}
+                              profile={profile}
+                              setProfile={setProfile}
+                              setIsMenu={setIsMenu}
+                              lastOffset={lastOffset}
+                              setLastOffset={setLastOffset}
+                              hidePoint={hidePoint}
+                              setHidePoint={setHidePoint}
+                              storedCredentials={storedCredentials}
+                              token={token}
+                              user={user}
+                              offset={offset}
+                              setOffset={setOffset}
+                              scrollingDirection={scrollingDirection}
+                              setScrollingDirection={setScrollingDirection}
+                              onLayoutRootView={onLayoutRootView}
+                              generalNews={generalNews}
+                              setGeneralNews={setGeneralNews}
+                              techNews={techNews}
+                              setTechNews={setTechNews}
+                              yOffset={yOffset}
+                              headerOpacity={headerOpacity}
+                              lastVisitedScreen={lastVisitedScreen}
+                              listViewRef={listViewRef}
+                              isGeneralVisible={isGeneralVisible}
+                              setIsGeneralVisible={setIsGeneralVisible}
+                              isLoading={isLoading}
+                              setIsLoading={setIsLoading}
+                              isDarkMode={isDarkMode}
+                            />
+                          )}
+                        </Stack.Screen>
+                        <Stack.Screen name="ProfileCreateScreen">
+                          {(props) => (
+                            <ProfileCreateScreen
+                              profile={profile}
+                              isDarkMode={isDarkMode}
+                              storedCredentials={storedCredentials}
+                              setIsMenu={setIsMenu}
+                              lastVisitedScreen={lastVisitedScreen}
+                            />
+                          )}
+                        </Stack.Screen>
                         <Stack.Screen
                           options={{
                             title:
@@ -514,6 +498,7 @@ export default function App() {
                         >
                           {(props) => (
                             <MenuScreen
+                              toggleSwitch={toggleSwitch}
                               handleGoogleLogout={handleGoogleLogout}
                               setIsMenu={setIsMenu}
                               lastVisitedScreen={lastVisitedScreen}
@@ -548,6 +533,7 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              profile={profile}
                               isDarkMode={isDarkMode}
                               storedCredentials={storedCredentials}
                               setIsMenu={setIsMenu}

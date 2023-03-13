@@ -10,9 +10,10 @@ export default function MenuScreen({
   setIsMenu,
   user,
   handleGoogleLogout,
+  toggleSwitch,
 }) {
   const navigation = useNavigation();
-  const toggleSwitch = () => setIsDarkMode((previousState) => !previousState);
+
 
   return (
     <View
