@@ -62,7 +62,7 @@ export default function BottomNavBar({
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
-              : primaryColors.colors.backgroundLightMode,
+              : primaryColors.colors.white,
             transform: [
               {
                 scaleY:
@@ -259,41 +259,6 @@ export default function BottomNavBar({
                 ]}
               >
                 Search
-              </Text>
-            </View>
-          </Pressable>
-        </View>
-        <View style={styles.pressableContainer}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("MenuScreen");
-              setIsMenu(true);
-            }}
-            style={({ pressed }) => [styles.button]}
-          >
-            <View style={styles.buttonContainer}>
-              <Image
-                style={[
-                  styles.navIcon,
-                  {
-                    tintColor: isDarkMode
-                      ? primaryColors.colors.white
-                      : primaryColors.colors.black,
-                  },
-                ]}
-                source={require("../assets/menu-icon.png")}
-              />
-              <Text
-                style={[
-                  styles.imageTag,
-                  {
-                    color: isDarkMode
-                      ? primaryColors.colors.white
-                      : primaryColors.colors.black,
-                  },
-                ]}
-              >
-                Menu
               </Text>
             </View>
           </Pressable>

@@ -31,7 +31,6 @@ import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
 import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
-import MenuScreen from "./screens/MenuScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ProfileCreateScreen from "./screens/ProfileCreateScreen";
@@ -101,7 +100,7 @@ export default function App() {
     }
   };
 
-  async function handleGoogleLogout() {
+  async function handleLogout() {
     const token = storedCredentials.token;
 
     try {
@@ -494,24 +493,6 @@ export default function App() {
                           options={{
                             headerShown: false,
                           }}
-                          name="MenuScreen"
-                        >
-                          {(props) => (
-                            <MenuScreen
-                              toggleSwitch={toggleSwitch}
-                              handleGoogleLogout={handleGoogleLogout}
-                              setIsMenu={setIsMenu}
-                              lastVisitedScreen={lastVisitedScreen}
-                              isDarkMode={isDarkMode}
-                              setIsDarkMode={setIsDarkMode}
-                              user={user}
-                            />
-                          )}
-                        </Stack.Screen>
-                        <Stack.Screen
-                          options={{
-                            headerShown: false,
-                          }}
                           name="SearchScreen"
                         >
                           {(props) => (
@@ -533,6 +514,8 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              handleLogout={handleLogout}
+                              toggleSwitch={toggleSwitch}
                               profile={profile}
                               isDarkMode={isDarkMode}
                               storedCredentials={storedCredentials}

@@ -213,7 +213,7 @@ export default function HomeScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.backgroundDarkMode
-                : colors.colors.white,
+                : colors.colors.backgroundLightMode,
             },
           ]}
           onLayout={onLayoutRootView}
@@ -228,9 +228,11 @@ export default function HomeScreen({
               top: 0,
               alignItems: "center",
               justifyContent: "center",
+              borderBottomLeftRadius: 16,
+              borderBottomRightRadius: 16,
               backgroundColor: isDarkMode
                 ? colors.colors.black
-                : colors.colors.backgroundLightMode,
+                : colors.colors.white,
               transform: [
                 {
                   translateY:
