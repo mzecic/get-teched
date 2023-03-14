@@ -169,7 +169,9 @@ export default function App() {
   useEffect(function () {
     setTimeout(async function () {
       checkLoginCredentials();
-      // SplashScreen.hideAsync();
+      if (!storedCredentials) {
+        SplashScreen.hideAsync();
+      }
     }, 2000);
   }, []);
 
