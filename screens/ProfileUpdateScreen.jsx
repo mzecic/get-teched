@@ -24,11 +24,18 @@ export default function ProfileCreateScreen({
   storedCredentials,
 }) {
   const navigation = useNavigation();
-  const [givenNameText, setGivenNameText] = useState(profile.givenName);
-  const [familyNameText, setFamilyNameText] = useState(profile.familyName);
-  const [emailText, setEmailText] = useState(profile.email);
+  const [showWarningMessage, setShowWarningMessage] = useState(false);
+  const [givenNameText, setGivenNameText] = useState(
+    profile ? profile.givenName : ""
+  );
+  const [familyNameText, setFamilyNameText] = useState(
+    profile ? profile.familyName : ""
+  );
+  const [emailText, setEmailText] = useState(profile ? profile.email : "");
 
   async function handleSubmit() {
+    const existingProfile = await profiles.getProfile(emailText);
+    if (existingProfile) setShowWarningMessage(true);
     const result = await profiles.updateProfile(profile.email, {
       givenName: givenNameText,
       familyName: familyNameText,
@@ -72,6 +79,8 @@ export default function ProfileCreateScreen({
               First Name
             </Text>
             <TextInput
+              autoCorrect={false}
+              clearButtonMode="always"
               onChangeText={(newText) => {
                 setGivenNameText(newText);
                 console.log(storedCredentials);
@@ -110,6 +119,8 @@ export default function ProfileCreateScreen({
               Last Name
             </Text>
             <TextInput
+              autoCorrect={false}
+              clearButtonMode="always"
               onChangeText={(newText) => setFamilyNameText(newText)}
               placeholderTextColor={
                 isDarkMode
@@ -144,6 +155,9 @@ export default function ProfileCreateScreen({
               Email
             </Text>
             <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="always"
               editable={
                 loginType === "google" || loginType === "apple" ? false : true
               }
@@ -171,6 +185,15 @@ export default function ProfileCreateScreen({
               ]}
             />
           </View>
+          {showWarningMessage ? (
+            <View style={styles.warningMessageContainer}>
+              <Text style={styles.warningMessage}>
+                This email is already registered.
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
         <TouchableWithoutFeedback
           onPress={() => Keyboard.dismiss()}
@@ -200,7 +223,6 @@ const styles = StyleSheet.create({
     flex: 1 / 2,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "yellow",
   },
   backButton: {
     margin: 10,
@@ -246,5 +268,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 400,
     color: "#007AFF",
+  },
+  warningMessageContainer: {
+    width: "80%",
+  },
+  warningMessage: {
+    color: primaryColors.colors.appleRed,
+    alignSelf: "flex-start",
   },
 });

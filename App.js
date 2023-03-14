@@ -33,7 +33,7 @@ import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import ProfileCreateScreen from "./screens/ProfileCreateScreen";
+import ProfileCreateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
@@ -167,8 +167,9 @@ export default function App() {
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
   });
   useEffect(function () {
+    checkLoginCredentials();
+    console.log(storedCredentials);
     setTimeout(async function () {
-      checkLoginCredentials();
       if (!storedCredentials) {
         SplashScreen.hideAsync();
       }
@@ -524,6 +525,7 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              loginType={loginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               isLoading={isLoading}

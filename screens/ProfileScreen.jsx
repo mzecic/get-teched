@@ -26,6 +26,7 @@ export default function ProfileScreen({
   setIsLoading,
   refreshing,
   setRefreshing,
+  loginType,
 }) {
   const navigation = useNavigation();
 
@@ -136,7 +137,7 @@ export default function ProfileScreen({
                     },
                   ]}
                 >
-                  {profile.givenName}
+                  {profile ? profile.givenName : "firstName"}
                 </Text>
                 <Text
                   style={[
@@ -151,7 +152,7 @@ export default function ProfileScreen({
                   ]}
                 >
                   {" "}
-                  {profile.familyName}
+                  {profile ? profile.familyName : "lastName"}
                 </Text>
               </View>
               <View>
@@ -164,7 +165,7 @@ export default function ProfileScreen({
                     fontWeight: 500,
                   }}
                 >
-                  {profile.email}
+                  {profile ? profile.email : "email"}
                 </Text>
               </View>
             </View>

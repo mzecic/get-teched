@@ -125,8 +125,10 @@ export default function HomeScreen({
         const getProfile = await profiles.getProfile(storedCredentials.email);
         if (storedCredentials.given_name) setLoginType("google");
         if (storedCredentials.givenName) setLoginType("apple");
-        setIsDarkMode(getProfile[0].darkMode);
-        setProfile(getProfile[0]);
+        if (getProfile.length) {
+          setIsDarkMode(getProfile[0].darkMode);
+          setProfile(getProfile[0]);
+        }
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
@@ -211,7 +213,6 @@ export default function HomeScreen({
                 const getProfile = await profiles.getProfile(
                   storedCredentials.email
                 );
-                console.log("this is profile", getProfile.length);
                 if (getProfile.length === 0 && loginType === "google") {
                   const createdProfile = await profiles.createProfile({
                     givenName: storedCredentials.given_name,
