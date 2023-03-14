@@ -130,9 +130,9 @@ export default function HomeScreen({
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
-        // setTimeout(function () {
-        //   SplashScreen.hideAsync();
-        // }, 1500);
+        setTimeout(function () {
+          SplashScreen.hideAsync();
+        }, 1500);
       })();
     },
     [refreshing, storedCredentials]

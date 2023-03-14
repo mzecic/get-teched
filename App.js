@@ -169,7 +169,7 @@ export default function App() {
   useEffect(function () {
     setTimeout(async function () {
       checkLoginCredentials();
-      SplashScreen.hideAsync();
+      // SplashScreen.hideAsync();
     }, 2000);
   }, []);
 
@@ -290,7 +290,10 @@ export default function App() {
                   </>
                 ) : (
                   <>
-                    <StatusBar style={isDarkMode ? "light" : "dark"} />
+                    <StatusBar
+                      hidden={profile ? false : true}
+                      style={isDarkMode && profile ? "light" : "dark"}
+                    />
                     <NavigationContainer
                       theme={isDarkMode ? DarkTheme : DefaultTheme}
                       style={{
