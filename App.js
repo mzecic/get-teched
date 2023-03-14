@@ -128,10 +128,12 @@ export default function App() {
   });
   const toggleSwitch = async function () {
     setIsDarkMode((previousState) => !previousState);
-    const result = await profiles.updateProfileTheme(
-      { isDarkMode: !isDarkMode },
-      storedCredentials.email
-    );
+    const result = await profiles.updateProfile(storedCredentials.email, {
+      isDarkMode: !isDarkMode,
+      givenName: storedCredentials.given_name,
+      familyName: storedCredentials.family_name,
+      email: storedCredentials.email,
+    });
   };
 
   let listViewRef = useRef(null);

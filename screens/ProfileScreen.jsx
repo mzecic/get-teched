@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
-import * as profiles from "../utils/users-api";
 
 export default function ProfileScreen({
   lastVisitedScreen,
@@ -20,7 +19,6 @@ export default function ProfileScreen({
   storedCredentials,
   isDarkMode,
   profile,
-  setProfile,
   toggleSwitch,
   handleLogout,
   isLoading,
@@ -31,10 +29,7 @@ export default function ProfileScreen({
 
   useEffect(function () {
     (async function () {
-      console.log("profile check is running");
       setIsLoading(true);
-      //   const result = await profiles.getProfile(storedCredentials.email);
-      //   setProfile(result);
       if (profile) {
         console.log(profile.givenName);
         setTimeout(function () {

@@ -21,15 +21,15 @@ export async function createProfile(profile) {
   });
 }
 
-export async function updateProfileTheme(isDarkMode, email) {
+export async function updateProfile(email, profileUpdate) {
   return fetch(`${url}/${email}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(isDarkMode),
+    body: JSON.stringify(profileUpdate),
   }).then(function (res) {
-    console.log("put profile is running", isDarkMode);
+    console.log("put profile is running", profileUpdate);
     return res.json();
   });
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -7,8 +8,11 @@ import {
   SafeAreaView,
   Image,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
+import * as profiles from "../utils/users-api";
 
 export default function ProfileCreateScreen({
   lastVisitedScreen,
@@ -17,6 +21,18 @@ export default function ProfileCreateScreen({
   profile,
 }) {
   const navigation = useNavigation();
+  const [givenNameText, setGivenNameText] = useState(profile.givenName);
+  const [familyNameText, setFamilyNameText] = useState(profile.familyName);
+  const [emailText, setEmailText] = useState(profile.email);
+
+  async function handleSubmit() {
+    const result = await profiles.updateProfile(profile.email, {
+      givenName: givenNameText,
+      familyName: familyNameText,
+      email: emailText,
+      isDarkMode: isDarkMode,
+    });
+  }
 
   return (
     <>
@@ -51,12 +67,16 @@ export default function ProfileCreateScreen({
               First Name
             </Text>
             <TextInput
+              onChangeText={(newText) => {
+                setGivenNameText(newText);
+                console.log(typeof givenNameText);
+              }}
               placeholderTextColor={
                 isDarkMode
                   ? primaryColors.colors.white
                   : primaryColors.colors.black
               }
-              value={profile.givenName}
+              defaultValue={givenNameText}
               style={[
                 styles.inputField,
                 {
@@ -84,12 +104,13 @@ export default function ProfileCreateScreen({
               Last Name
             </Text>
             <TextInput
+              onChangeText={(newText) => setFamilyNameText(newText)}
               placeholderTextColor={
                 isDarkMode
                   ? primaryColors.colors.white
                   : primaryColors.colors.black
               }
-              value={profile.familyName}
+              value={familyNameText}
               style={[
                 styles.inputField,
                 {
@@ -117,12 +138,13 @@ export default function ProfileCreateScreen({
               Email
             </Text>
             <TextInput
+              onChangeText={(newText) => setEmailText(newText)}
               placeholderTextColor={
                 isDarkMode
                   ? primaryColors.colors.white
                   : primaryColors.colors.black
               }
-              value={profile.email}
+              defaultValue={emailText}
               style={[
                 styles.inputField,
                 {
@@ -137,6 +159,21 @@ export default function ProfileCreateScreen({
             />
           </View>
         </View>
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          accessible={false}
+        >
+          <View style={styles.submitButtonContainer}>
+            <Pressable
+              onPress={() => {
+                console.log("submit pressed");
+                handleSubmit();
+              }}
+            >
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </Pressable>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     </>
   );
@@ -179,11 +216,21 @@ const styles = StyleSheet.create({
   inputFielContainer: {
     width: "80%",
   },
-  inputFieldLabel: {},
   inputField: {
     height: 40,
     borderRadius: 8,
     marginVertical: 12,
     padding: 12,
+  },
+  submitButtonContainer: {
+    flex: 1 / 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  submitButton: {},
+  submitButtonText: {
+    fontSize: 20,
+    fontWeight: 400,
+    color: "#007AFF",
   },
 });

@@ -121,9 +121,9 @@ export default function HomeScreen({
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
-        const getTheme = await profiles.getProfile(storedCredentials.email);
-        setIsDarkMode(getTheme[0].darkMode);
-        setProfile(getTheme[0]);
+        const getProfile = await profiles.getProfile(storedCredentials.email);
+        setIsDarkMode(getProfile[0].darkMode);
+        setProfile(getProfile[0]);
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
