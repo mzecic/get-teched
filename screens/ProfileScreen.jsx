@@ -8,172 +8,239 @@ import {
   SafeAreaView,
   Image,
   Switch,
+  ActivityIndicator,
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
+import * as profiles from "../utils/users-api";
 
 export default function ProfileScreen({
   lastVisitedScreen,
+  setLastVisitedScreen,
   setIsMenu,
   storedCredentials,
   isDarkMode,
   profile,
+  setProfile,
   toggleSwitch,
   handleLogout,
+  isLoading,
+  setIsLoading,
 }) {
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
+  useEffect(function () {
+    (async function () {
+      console.log("profile check is running");
+      setIsLoading(true);
+      //   const result = await profiles.getProfile(storedCredentials.email);
+      //   setProfile(result);
+      if (profile) {
+        console.log(profile.givenName);
+        setTimeout(function () {
+          setIsLoading(false);
+        }, 500);
+      }
+    })();
+  }, []);
+
   return (
     <>
-      <SafeAreaView>
-        <Pressable
-          style={styles.backButton}
-          onPress={() => {
-            navigation.navigate(lastVisitedScreen);
-            setIsMenu(false);
+      {isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkMode
+              ? primaryColors.colors.black
+              : primaryColors.colors.white,
           }}
         >
-          <View style={styles.backArrow}></View>
-          <Text style={styles.backButtonText}>Back</Text>
-        </Pressable>
-      </SafeAreaView>
-      <View style={styles.mainContainer}>
-        <View style={styles.photoContainer}>
-          <Image
-            style={[
-              styles.photo,
-              {
-                tintColor:
-                  !storedCredentials.picture && isDarkMode
-                    ? primaryColors.colors.white
-                    : null,
-              },
-            ]}
-            source={
-              storedCredentials.picture
-                ? {
-                    uri: storedCredentials.picture,
-                  }
-                : require("../assets/profile.png")
+          <ActivityIndicator
+            size="large"
+            color={
+              isDarkMode
+                ? primaryColors.colors.white
+                : primaryColors.colors.black
             }
           />
-          <Pressable
-            onPress={() => {
-              console.log("edit pressed");
-            }}
-          >
-            <Image
-              style={[
-                styles.editIcon,
-                {
-                  tintColor: isDarkMode
-                    ? primaryColors.colors.white
-                    : primaryColors.colors.black,
-                },
-              ]}
-              source={require("../assets/edit-icon.png")}
-            />
-          </Pressable>
-          <Text
-            style={[
-              styles.name,
-              {
-                color: isDarkMode
-                  ? primaryColors.colors.white
-                  : primaryColors.colors.black,
-                fontSize: 24,
-                fontWeight: 500,
-              },
-            ]}
-          >
-            {storedCredentials.given_name} {storedCredentials.family_name}{" "}
-          </Text>
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.items}>
-            <View
-              style={[
-                styles.itemContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? primaryColors.colors.backgroundDarkMode
-                    : primaryColors.colors.backgroundLightMode,
-                },
+      ) : (
+        <>
+          <SafeAreaView>
+            <Pressable
+              style={({ pressed }) => [
+                styles.backButton,
+                pressed ? styles.itemPressed : null,
               ]}
+              onPress={() => {
+                navigation.navigate("HomeScreen");
+                setLastVisitedScreen("HomeScreen");
+                setIsMenu(false);
+              }}
             >
-              <Switch
-                style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-                trackColor={{ false: "#767577", true: "grey" }}
-                thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isDarkMode}
-              />
-              <Text
+              <View style={styles.backArrow}></View>
+              <Text style={styles.backButtonText}>Back</Text>
+            </Pressable>
+          </SafeAreaView>
+          <View style={styles.mainContainer}>
+            <View style={styles.photoContainer}>
+              <Image
                 style={[
-                  styles.itemLabel,
+                  styles.photo,
                   {
-                    paddingHorizontal: 12,
-                    color: isDarkMode
-                      ? primaryColors.colors.white
-                      : primaryColors.colors.black,
+                    tintColor:
+                      !storedCredentials.picture && isDarkMode
+                        ? primaryColors.colors.white
+                        : null,
                   },
                 ]}
-              >
-                Dark mode
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.itemContainer,
-                {
-                  backgroundColor: isDarkMode
-                    ? primaryColors.colors.backgroundDarkMode
-                    : primaryColors.colors.backgroundLightMode,
-                },
-              ]}
-            >
+                source={
+                  storedCredentials.picture
+                    ? {
+                        uri: storedCredentials.picture,
+                      }
+                    : require("../assets/profile.png")
+                }
+              />
               <Pressable
-                style={({ pressed }) => [
-                  styles.pressableContainer,
-                  pressed ? styles.itemPressed : null,
-                ]}
+                onPress={() => {
+                  console.log("edit pressed");
+                }}
               >
-                <Text
+                <Image
                   style={[
-                    styles.itemLabel,
+                    styles.editIcon,
                     {
-                      paddingHorizontal: 12,
-                      color: isDarkMode
+                      tintColor: isDarkMode
                         ? primaryColors.colors.white
                         : primaryColors.colors.black,
                     },
                   ]}
+                  source={require("../assets/edit-icon.png")}
+                />
+              </Pressable>
+              <View style={styles.nameContainer}>
+                <Text
+                  style={[
+                    styles.name,
+                    {
+                      color: isDarkMode
+                        ? primaryColors.colors.white
+                        : primaryColors.colors.black,
+                      fontSize: 24,
+                      fontWeight: 500,
+                    },
+                  ]}
                 >
-                  Edit Info
+                  {profile.givenName}
+                </Text>
+                <Text
+                  style={[
+                    styles.name,
+                    {
+                      color: isDarkMode
+                        ? primaryColors.colors.white
+                        : primaryColors.colors.black,
+                      fontSize: 24,
+                      fontWeight: 500,
+                    },
+                  ]}
+                >
+                  {" "}
+                  {profile.familyName}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.infoContainer}>
+              <View style={styles.items}>
+                <View
+                  style={[
+                    styles.itemContainer,
+                    {
+                      backgroundColor: isDarkMode
+                        ? primaryColors.colors.backgroundDarkMode
+                        : primaryColors.colors.backgroundLightMode,
+                    },
+                  ]}
+                >
+                  <Switch
+                    style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
+                    trackColor={{ false: "#767577", true: "grey" }}
+                    thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isDarkMode}
+                  />
+                  <Text
+                    style={[
+                      styles.itemLabel,
+                      {
+                        paddingHorizontal: 12,
+                        color: isDarkMode
+                          ? primaryColors.colors.white
+                          : primaryColors.colors.black,
+                      },
+                    ]}
+                  >
+                    Dark mode
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.itemContainer,
+                    {
+                      backgroundColor: isDarkMode
+                        ? primaryColors.colors.backgroundDarkMode
+                        : primaryColors.colors.backgroundLightMode,
+                    },
+                  ]}
+                >
+                  <Pressable
+                    onPress={() => navigation.navigate("ProfileCreateScreen")}
+                    style={({ pressed }) => [
+                      styles.pressableContainer,
+                      pressed ? styles.itemPressed : null,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.itemLabel,
+                        {
+                          paddingHorizontal: 12,
+                          color: isDarkMode
+                            ? primaryColors.colors.white
+                            : primaryColors.colors.black,
+                        },
+                      ]}
+                    >
+                      Edit Profile
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+              <Pressable
+                onPress={() => {
+                  handleLogout();
+                }}
+              >
+                <Text
+                  style={{
+                    color: isDarkMode
+                      ? primaryColors.colors.appleRed
+                      : primaryColors.colors.appleRed,
+                    textAlign: "center",
+                    fontSize: 20,
+                  }}
+                >
+                  Sign Out
                 </Text>
               </Pressable>
             </View>
           </View>
-          <Pressable
-            onPress={() => {
-              handleLogout();
-            }}
-          >
-            <Text
-              style={{
-                color: isDarkMode
-                  ? primaryColors.colors.appleRed
-                  : primaryColors.colors.appleRed,
-                textAlign: "center",
-                fontSize: 20,
-              }}
-            >
-              Sign Out
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+        </>
+      )}
     </>
   );
 }
@@ -223,6 +290,9 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     borderWidth: 1.5,
   },
+  nameContainer: {
+    flexDirection: "row",
+  },
   name: {
     fontSize: 18,
     marginVertical: 18,
@@ -240,13 +310,13 @@ const styles = StyleSheet.create({
   itemContainer: {
     width: "29%",
     margin: 8,
-    height: 100,
+    height: 80,
     justifyContent: "space-evenly",
     alignItems: "center",
     borderRadius: 24,
   },
   itemLabel: {
-    fontSize: 16,
+    fontSize: 14,
   },
   itemPressed: {
     opacity: 0.5,

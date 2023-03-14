@@ -13,6 +13,7 @@ import * as colors from "../assets/colors/primaryColors";
 export default function GeneralNewsLine({
   data,
   lastVisitedScreen,
+  setLastVisitedScreen,
   isDarkMode,
   arrayLength,
 }) {

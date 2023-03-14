@@ -118,7 +118,7 @@ export default function App() {
 
   const yOffset = useRef(new Animated.Value(0)).current;
   const headerOpacity = yOffset.interpolate({
-    inputRange: [lastOffset + 2, lastOffset + 1000],
+    inputRange: [lastOffset, lastOffset + 1000],
     outputRange: [0, -400],
   });
   const scaleY = useRef(new Animated.Value(0)).current;
@@ -346,18 +346,13 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              setProfile={setProfile}
                               setIsDarkMode={setIsDarkMode}
                               loginType={loginType}
-                              profile={profile}
-                              setProfile={setProfile}
                               setIsMenu={setIsMenu}
                               lastOffset={lastOffset}
                               setLastOffset={setLastOffset}
-                              hidePoint={hidePoint}
-                              setHidePoint={setHidePoint}
                               storedCredentials={storedCredentials}
-                              token={token}
-                              user={user}
                               offset={offset}
                               setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
@@ -370,6 +365,7 @@ export default function App() {
                               yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               lastVisitedScreen={lastVisitedScreen}
+                              setLastVisitedScreen={setLastVisitedScreen}
                               listViewRef={listViewRef}
                               isGeneralVisible={isGeneralVisible}
                               setIsGeneralVisible={setIsGeneralVisible}
@@ -379,7 +375,10 @@ export default function App() {
                             />
                           )}
                         </Stack.Screen>
-                        <Stack.Screen name="ProfileCreateScreen">
+                        <Stack.Screen
+                          options={{ headerShown: false }}
+                          name="ProfileCreateScreen"
+                        >
                           {(props) => (
                             <ProfileCreateScreen
                               profile={profile}
@@ -514,9 +513,13 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              isLoading={isLoading}
+                              setIsLoading={setIsLoading}
+                              setLastVisitedScreen={setLastVisitedScreen}
                               handleLogout={handleLogout}
                               toggleSwitch={toggleSwitch}
                               profile={profile}
+                              setProfile={setProfile}
                               isDarkMode={isDarkMode}
                               storedCredentials={storedCredentials}
                               setIsMenu={setIsMenu}

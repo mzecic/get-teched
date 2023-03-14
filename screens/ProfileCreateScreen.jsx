@@ -6,13 +6,13 @@ import {
   Pressable,
   SafeAreaView,
   Image,
+  TextInput,
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
 
 export default function ProfileCreateScreen({
   lastVisitedScreen,
   setIsMenu,
-  storedCredentials,
   isDarkMode,
   profile,
 }) {
@@ -20,48 +20,122 @@ export default function ProfileCreateScreen({
 
   return (
     <>
-      <SafeAreaView></SafeAreaView>
+      <SafeAreaView>
+        <Pressable
+          style={({ pressed }) => [
+            styles.backButton,
+            pressed ? styles.itemPressed : null,
+          ]}
+          onPress={() => {
+            navigation.navigate(lastVisitedScreen);
+            setIsMenu(true);
+          }}
+        >
+          <View style={styles.backArrow}></View>
+          <Text style={styles.backButtonText}>Back</Text>
+        </Pressable>
+      </SafeAreaView>
       <View style={styles.mainContainer}>
-        <View style={styles.photoContainer}>
-          <Image
-            style={styles.photo}
-            source={
-              profile
-                ? {
-                    uri: profile.picture,
-                  }
-                : require("../assets/profile.png")
-            }
-          />
-          <Pressable
-            onPress={() => {
-              console.log("edit pressed");
-            }}
-          >
-            <Image
+        <View style={styles.infoContainer}>
+          <View style={styles.inputFielContainer}>
+            <Text
               style={[
-                styles.editIcon,
+                styles.inputFieldLabel,
                 {
-                  tintColor: isDarkMode
+                  color: isDarkMode
                     ? primaryColors.colors.white
                     : primaryColors.colors.black,
                 },
               ]}
-              source={require("../assets/edit-icon.png")}
-            />
-          </Pressable>
-          <Text
-            style={[
-              styles.name,
-              {
-                color: isDarkMode
+            >
+              First Name
+            </Text>
+            <TextInput
+              placeholderTextColor={
+                isDarkMode
                   ? primaryColors.colors.white
-                  : primaryColors.colors.black,
-                fontSize: 24,
-                fontWeight: 500,
-              },
-            ]}
-          ></Text>
+                  : primaryColors.colors.black
+              }
+              value={profile.givenName}
+              style={[
+                styles.inputField,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                  backgroundColor: isDarkMode
+                    ? primaryColors.colors.backgroundDarkMode
+                    : primaryColors.colors.backgroundLightMode,
+                },
+              ]}
+            />
+          </View>
+          <View style={styles.inputFielContainer}>
+            <Text
+              style={[
+                styles.inputFieldLabel,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                },
+              ]}
+            >
+              Last Name
+            </Text>
+            <TextInput
+              placeholderTextColor={
+                isDarkMode
+                  ? primaryColors.colors.white
+                  : primaryColors.colors.black
+              }
+              value={profile.familyName}
+              style={[
+                styles.inputField,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                  backgroundColor: isDarkMode
+                    ? primaryColors.colors.backgroundDarkMode
+                    : primaryColors.colors.backgroundLightMode,
+                },
+              ]}
+            />
+          </View>
+          <View style={styles.inputFielContainer}>
+            <Text
+              style={[
+                styles.inputFieldLabel,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                },
+              ]}
+            >
+              Email
+            </Text>
+            <TextInput
+              placeholderTextColor={
+                isDarkMode
+                  ? primaryColors.colors.white
+                  : primaryColors.colors.black
+              }
+              value={profile.email}
+              style={[
+                styles.inputField,
+                {
+                  color: isDarkMode
+                    ? primaryColors.colors.white
+                    : primaryColors.colors.black,
+                  backgroundColor: isDarkMode
+                    ? primaryColors.colors.backgroundDarkMode
+                    : primaryColors.colors.backgroundLightMode,
+                },
+              ]}
+            />
+          </View>
         </View>
       </View>
     </>
@@ -72,10 +146,11 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
-  photoContainer: {
+  infoContainer: {
     flex: 1 / 2,
     justifyContent: "center",
     alignItems: "center",
+    // backgroundColor: "yellow",
   },
   backButton: {
     margin: 16,
@@ -98,22 +173,17 @@ const styles = StyleSheet.create({
     borderRightColor: "#007AFF",
     transform: [{ rotate: "225deg" }],
   },
-  editIcon: {
-    marginTop: 20,
-    width: 25,
-    height: 25,
-  },
-  editIconPressed: {
+  itemPressed: {
     opacity: 0.5,
   },
-  photo: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    borderWidth: 1.5,
+  inputFielContainer: {
+    width: "80%",
   },
-  name: {
-    fontSize: 18,
-    marginVertical: 18,
+  inputFieldLabel: {},
+  inputField: {
+    height: 40,
+    borderRadius: 8,
+    marginVertical: 12,
+    padding: 12,
   },
 });

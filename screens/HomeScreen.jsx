@@ -36,28 +36,22 @@ export default function HomeScreen({
   generalNews,
   onLayoutRootView,
   lastVisitedScreen,
+  setLastVisitedScreen,
   listViewRef,
   isGeneralVisible,
   isLoading,
   setIsLoading,
   isDarkMode,
   setIsDarkMode,
-  setShowNavBar,
   offset,
   setOffset,
   scrollingDirection,
   setScrollingDirection,
-  hidePoint,
-  setHidePoint,
-  lastOffset,
   setLastOffset,
-  user,
-  token,
   storedCredentials,
   setIsMenu,
-  profile,
-  setProfile,
   loginType,
+  setProfile,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -116,53 +110,6 @@ export default function HomeScreen({
 
   const navigation = useNavigation();
 
-  // useLayoutEffect(() => {
-  //   if (Platform.OS === "ios") {
-  //     navigation.setOptions({
-  //       headerBackground: () => (
-  //         <>
-  //           <TouchableOpacity onPress={() => console.log("Pressing")}>
-  //             <Animated.View
-  //               style={{
-  //                 height: 80,
-  //                 backgroundColor: isDarkMode
-  //                   ? colors.colors.black
-  //                   : colors.colors.backgroundLightMode,
-  //                 ...StyleSheet.absoluteFillObject,
-  //                 // opacity: headerOpacity,
-  //                 borderBottomLeftRadius: 16,
-  //                 borderBottomRightRadius: 16,
-  //                 transform: [
-  //                   {
-  //                     translateY:
-  //                       scrollingDirection === "down" && offset > 5
-  //                         ? headerOpacity
-  //                         : 0,
-  //                   },
-  //                 ],
-  //               }}
-  //             >
-  //               <Text
-  //                 style={[
-  //                   styles.headerTitle,
-  //                   {
-  //                     color: isDarkMode
-  //                       ? colors.colors.white
-  //                       : colors.colors.black,
-  //                   },
-  //                 ]}
-  //               >
-  //                 GetTeched
-  //               </Text>
-  //             </Animated.View>
-  //           </TouchableOpacity>
-  //         </>
-  //       ),
-  //       headerTransparent: true,
-  //     });
-  //   }
-  // }, [headerOpacity, navigation]);
-
   useEffect(
     function () {
       (async function () {
@@ -175,8 +122,8 @@ export default function HomeScreen({
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
         const getTheme = await profiles.getProfile(storedCredentials.email);
-        console.log("dark mode loading", getTheme[0].darkMode);
         setIsDarkMode(getTheme[0].darkMode);
+        setProfile(getTheme[0]);
         setTimeout(function () {
           setIsLoading(false);
         }, 750);
@@ -256,6 +203,7 @@ export default function HomeScreen({
             <Pressable
               onPress={async function () {
                 navigation.navigate("ProfileScreen");
+                setLastVisitedScreen("ProfileScreen");
                 setIsMenu(true);
                 const getProfile = await profiles.getProfile(
                   storedCredentials.email
