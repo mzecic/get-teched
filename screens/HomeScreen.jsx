@@ -223,6 +223,16 @@ export default function HomeScreen({
                     picture: storedCredentials.picture,
                   });
                   console.log(createdProfile);
+                } else if (getProfile.length === 0 && loginType === "apple") {
+                  const createdProfile = await profiles.createProfile({
+                    givenName: storedCredentials.fullName.givenName,
+                    familyName: storedCredentials.fullName.familyName,
+                    token: storedCredentials.identityToken,
+                    darkMode: isDarkMode,
+                    email: storedCredentials.email,
+                    picture: "",
+                  });
+                  console.log(createdProfile);
                 }
               }}
               style={{
