@@ -170,10 +170,10 @@ export default function HomeScreen({
         >
           <Animated.View
             style={{
-              paddingTop: 36,
+              paddingTop: 46,
               zIndex: 200,
               width: "100%",
-              height: 85,
+              height: 100,
               position: "absolute",
               top: 0,
               alignItems: "center",

@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
     // backgroundColor: "yellow",
   },
   backButton: {
-    margin: 16,
+    margin: 10,
+    marginLeft: 12,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
