@@ -19,6 +19,9 @@ export default function ProfileCreateScreen({
   setIsMenu,
   isDarkMode,
   profile,
+  setRefreshing,
+  loginType,
+  storedCredentials,
 }) {
   const navigation = useNavigation();
   const [givenNameText, setGivenNameText] = useState(profile.givenName);
@@ -32,6 +35,8 @@ export default function ProfileCreateScreen({
       email: emailText,
       isDarkMode: isDarkMode,
     });
+    navigation.navigate(lastVisitedScreen);
+    setRefreshing(true);
   }
 
   return (
@@ -69,7 +74,8 @@ export default function ProfileCreateScreen({
             <TextInput
               onChangeText={(newText) => {
                 setGivenNameText(newText);
-                console.log(typeof givenNameText);
+                console.log(storedCredentials);
+                console.log(loginType);
               }}
               placeholderTextColor={
                 isDarkMode
@@ -138,6 +144,9 @@ export default function ProfileCreateScreen({
               Email
             </Text>
             <TextInput
+              editable={
+                loginType === "google" || loginType === "apple" ? false : true
+              }
               onChangeText={(newText) => setEmailText(newText)}
               placeholderTextColor={
                 isDarkMode
@@ -148,9 +157,13 @@ export default function ProfileCreateScreen({
               style={[
                 styles.inputField,
                 {
-                  color: isDarkMode
-                    ? primaryColors.colors.white
-                    : primaryColors.colors.black,
+                  color:
+                    isDarkMode &&
+                    (loginType === "google" || loginType === "apple")
+                      ? primaryColors.colors.emailText
+                      : loginType === "google" || loginType === "apple"
+                      ? primaryColors.colors.secondaryHighlight
+                      : primaryColors.colors.black,
                   backgroundColor: isDarkMode
                     ? primaryColors.colors.backgroundDarkMode
                     : primaryColors.colors.backgroundLightMode,

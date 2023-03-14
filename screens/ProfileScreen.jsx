@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
+import * as profiles from "../utils/users-api";
 
 export default function ProfileScreen({
   lastVisitedScreen,
@@ -23,21 +24,27 @@ export default function ProfileScreen({
   handleLogout,
   isLoading,
   setIsLoading,
+  refreshing,
+  setRefreshing,
 }) {
-  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(function () {
-    (async function () {
-      setIsLoading(true);
-      if (profile) {
-        console.log(profile.givenName);
-        setTimeout(function () {
-          setIsLoading(false);
-        }, 500);
-      }
-    })();
-  }, []);
+  useEffect(
+    function () {
+      (async function () {
+        if (refreshing) setIsLoading(true);
+        const getProfile = await profiles.getProfile(storedCredentials.email);
+        if (profile) {
+          console.log(profile.givenName);
+          setTimeout(function () {
+            setRefreshing(false);
+            setIsLoading(false);
+          }, 500);
+        }
+      })();
+    },
+    [refreshing]
+  );
 
   return (
     <>
@@ -101,7 +108,7 @@ export default function ProfileScreen({
               />
               <Pressable
                 onPress={() => {
-                  console.log("edit pressed");
+                  console.log("edit profile picture pressed");
                 }}
               >
                 <Image
@@ -124,7 +131,7 @@ export default function ProfileScreen({
                       color: isDarkMode
                         ? primaryColors.colors.white
                         : primaryColors.colors.black,
-                      fontSize: 24,
+                      fontSize: 28,
                       fontWeight: 500,
                     },
                   ]}
@@ -138,13 +145,26 @@ export default function ProfileScreen({
                       color: isDarkMode
                         ? primaryColors.colors.white
                         : primaryColors.colors.black,
-                      fontSize: 24,
+                      fontSize: 28,
                       fontWeight: 500,
                     },
                   ]}
                 >
                   {" "}
                   {profile.familyName}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    color: isDarkMode
+                      ? primaryColors.colors.emailText
+                      : primaryColors.colors.secondaryHighlight,
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                >
+                  {profile.email}
                 </Text>
               </View>
             </View>

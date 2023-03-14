@@ -30,7 +30,8 @@ export default function GeneralNewsLine({
               ? data.index === 0 &&
                 Platform.OS === "ios" &&
                 lastVisitedScreen !== "HomeScreen" &&
-                lastVisitedScreen !== "SearchScreen"
+                lastVisitedScreen !== "SearchScreen" &&
+                lastVisitedScreen !== "ProfileScreen"
                 ? "15%"
                 : data.index === 0
                 ? "5%"

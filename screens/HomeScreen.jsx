@@ -51,10 +51,11 @@ export default function HomeScreen({
   storedCredentials,
   setIsMenu,
   loginType,
+  setLoginType,
   setProfile,
+  refreshing,
+  setRefreshing,
 }) {
-  const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(async function () {
@@ -122,6 +123,8 @@ export default function HomeScreen({
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
         const getProfile = await profiles.getProfile(storedCredentials.email);
+        if (storedCredentials.given_name) setLoginType("google");
+        if (storedCredentials.givenName) setLoginType("apple");
         setIsDarkMode(getProfile[0].darkMode);
         setProfile(getProfile[0]);
         setTimeout(function () {

@@ -46,6 +46,7 @@ export default function App() {
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState(null);
   const [storedCredentials, setStoredCredentials] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
   const [loginType, setLoginType] = useState("");
   const [generalNews, setGeneralNews] = useState([]);
   const [techNews, setTechNews] = useState([]);
@@ -162,15 +163,6 @@ export default function App() {
     }
   }
 
-  const MyTheme = {
-    dark: isDarkMode ? true : false,
-    colors: {
-      background: isDarkMode
-        ? primaryColors.colors.black
-        : primaryColors.colors.white,
-    },
-  };
-
   const [fontsLoaded] = useFonts({
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
   });
@@ -186,7 +178,7 @@ export default function App() {
       "loginCredentials",
       JSON.stringify(credentials)
     );
-    setStoredCredentials(credentials);
+    setStoredCredentials({ ...credentials });
   }
 
   async function checkLoginCredentials() {
@@ -348,6 +340,9 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              setLoginType={setLoginType}
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               setProfile={setProfile}
                               setIsDarkMode={setIsDarkMode}
                               loginType={loginType}
@@ -383,9 +378,12 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileCreateScreen
+                              storedCredentials={storedCredentials}
+                              loginType={loginType}
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               profile={profile}
                               isDarkMode={isDarkMode}
-                              storedCredentials={storedCredentials}
                               setIsMenu={setIsMenu}
                               lastVisitedScreen={lastVisitedScreen}
                             />
@@ -409,6 +407,8 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               offset={offset}
                               setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
@@ -442,6 +442,8 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               offset={offset}
                               setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
@@ -475,6 +477,8 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               offset={offset}
                               setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
@@ -515,6 +519,8 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              refreshing={refreshing}
+                              setRefreshing={setRefreshing}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
                               setLastVisitedScreen={setLastVisitedScreen}

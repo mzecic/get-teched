@@ -27,9 +27,9 @@ export default function AudioNewsScreen({
   setOffset,
   scrollingDirection,
   setScrollingDirection,
+  refreshing,
+  setRefreshing,
 }) {
-  const [refreshing, setRefreshing] = useState(false);
-
   const [fontsLoaded] = useFonts({
     "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
   });
