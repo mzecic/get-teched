@@ -59,6 +59,14 @@ export default function TechGridTile({
           >
             {data.item.title}
           </Text>
+          <Text
+            style={[
+              styles.articleSourceText,
+              { color: isDarkMode ? colors.colors.white : colors.colors.black },
+            ]}
+          >
+            {data.item.source.name}
+          </Text>
         </View>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: data.item.image }} />
@@ -101,13 +109,20 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   titleContainer: {
-    padding: 12,
+    padding: 20,
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    height: 100,
   },
   title: {
     fontFamily: "Display",
     textAlign: "left",
-    fontSize: 16,
+    fontSize: 17,
+  },
+  articleSourceText: {
+    fontFamily: "Display",
+    position: "absolute",
+    right: 12,
+    bottom: 12,
   },
 });
