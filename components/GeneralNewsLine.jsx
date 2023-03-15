@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     zIndex: 110,
     top: 0,
-    padding: 12,
+    padding: 18,
     height: 170,
   },
   headlineArticleSource: {
