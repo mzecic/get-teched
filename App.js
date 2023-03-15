@@ -44,7 +44,6 @@ SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
-  // var Sound = require("react-native-sound");
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState(null);
@@ -152,6 +151,7 @@ export default function App() {
     console.log(result.soundEffectsOn, soundEffectsOn);
   };
 
+  Sound.setCategory("Playback");
   var playSound = new Sound(pressSoundEffect, (error) => {
     if (error) {
       console.log("failed to load the sound", error);
@@ -385,6 +385,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              playSound={playSound}
                               soundEffectsOn={soundEffectsOn}
                               setSoundEffectsOn={setSoundEffectsOn}
                               setLoginType={setLoginType}

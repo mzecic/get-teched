@@ -57,6 +57,7 @@ export default function HomeScreen({
   setRefreshing,
   soundEffectsOn,
   setSoundEffectsOn,
+  playSound,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -210,6 +211,7 @@ export default function HomeScreen({
             </Text>
             <Pressable
               onPress={async function () {
+                playSound.play(() => {});
                 navigation.navigate("ProfileScreen");
                 setLastVisitedScreen("ProfileScreen");
                 setIsMenu(true);
