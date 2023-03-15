@@ -72,20 +72,10 @@ export default function HomeScreen({
         <>
           <View
             style={{
-              marginTop: Platform.OS === "ios" ? "30%" : "5%",
+              marginTop: Platform.OS === "ios" ? 80 : "5%",
               justifyContent: "center",
             }}
           >
-            <Text
-              style={{
-                paddingLeft: 24,
-                fontSize: 16,
-                fontWeight: "bold",
-                color: isDarkMode ? colors.colors.white : colors.colors.black,
-              }}
-            >
-              Top Stories
-            </Text>
             <GeneralNewsLine
               isDarkMode={isDarkMode}
               lastVisitedScreen={lastVisitedScreen}

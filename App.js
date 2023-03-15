@@ -205,6 +205,8 @@ export default function App() {
 
   const [fontsLoaded] = useFonts({
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
+    CaslonBold: require("./assets/fonts/LibreCaslonText-Bold.ttf"),
+    Caslon: require("./assets/fonts/LibreCaslonText-Regular.ttf"),
   });
   useEffect(function () {
     checkLoginCredentials();

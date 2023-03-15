@@ -6,7 +6,7 @@ const colors = {
   backgroundLightMode: "rgba(195, 195, 195, 0.2)",
   primaryHighlight: "rgb(150, 150, 150)",
   secondaryHighlight: "rgb(115, 115, 115)",
-  newsTile: "rgb(245, 245, 245)",
+  newsTile: "rgb(210, 210, 210)",
   appleRed: "rgb(255, 30, 30)",
   emailText: "rgb(85, 85, 85)",
 };
