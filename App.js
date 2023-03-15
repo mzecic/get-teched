@@ -34,11 +34,11 @@ import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import ProfileCreateScreen from "./screens/ProfileUpdateScreen";
+import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
-import pressSoundEffect from "./assets/pebbles-click.mp3";
+import pressSoundEffect from "./assets/organic-click.mp3";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -422,10 +422,10 @@ export default function App() {
                         </Stack.Screen>
                         <Stack.Screen
                           options={{ headerShown: false }}
-                          name="ProfileCreateScreen"
+                          name="ProfileUpdateScreen"
                         >
                           {(props) => (
-                            <ProfileCreateScreen
+                            <ProfileUpdateScreen
                               soundEffectsOn={soundEffectsOn}
                               storedCredentials={storedCredentials}
                               loginType={loginType}
@@ -570,6 +570,7 @@ export default function App() {
                             <ProfileScreen
                               soundsEffectsOn={soundEffectsOn}
                               toggleSoundEffects={toggleSoundEffects}
+                              playSound={playSound}
                               loginType={loginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}

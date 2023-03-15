@@ -211,7 +211,7 @@ export default function HomeScreen({
             </Text>
             <Pressable
               onPress={async function () {
-                playSound.play(() => {});
+                if(soundEffectsOn) playSound.play(() => {});
                 navigation.navigate("ProfileScreen");
                 setLastVisitedScreen("ProfileScreen");
                 setIsMenu(true);

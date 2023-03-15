@@ -29,6 +29,7 @@ export default function ProfileScreen({
   loginType,
   toggleSoundEffects,
   soundsEffectsOn,
+  playSound,
 }) {
   const navigation = useNavigation();
 
@@ -200,7 +201,10 @@ export default function ProfileScreen({
                     trackColor={{ false: "#767577", true: "grey" }}
                     thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
+                    onValueChange={() => {
+                      if (soundsEffectsOn) playSound.play(() => {});
+                      toggleSwitch();
+                    }}
                     value={isDarkMode}
                   />
                 </View>
@@ -231,7 +235,10 @@ export default function ProfileScreen({
                     trackColor={{ false: "#767577", true: "grey" }}
                     thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSoundEffects}
+                    onValueChange={() => {
+                      if (!soundsEffectsOn) playSound.play(() => {});
+                      toggleSoundEffects();
+                    }}
                     value={soundsEffectsOn}
                   />
                 </View>
@@ -246,7 +253,10 @@ export default function ProfileScreen({
                   ]}
                 >
                   <Pressable
-                    onPress={() => navigation.navigate("ProfileCreateScreen")}
+                    onPress={() => {
+                      if (soundsEffectsOn) playSound.play(() => {});
+                      navigation.navigate("ProfileUpdateScreen");
+                    }}
                     style={({ pressed }) => [
                       styles.pressableContainer,
                       pressed ? styles.itemPressed : null,
@@ -265,31 +275,19 @@ export default function ProfileScreen({
                     >
                       Edit Profile
                     </Text>
-                    <Pressable
-                      style={({ pressed }) => [
-                        styles.backButton,
-                        pressed ? styles.itemPressed : null,
+                    <View
+                      style={[
+                        styles.forwardArrow,
+                        {
+                          borderTopColor: isDarkMode
+                            ? primaryColors.colors.white
+                            : primaryColors.colors.black,
+                          borderRightColor: isDarkMode
+                            ? primaryColors.colors.white
+                            : primaryColors.colors.black,
+                        },
                       ]}
-                      onPress={() => {
-                        navigation.navigate("HomeScreen");
-                        setLastVisitedScreen("HomeScreen");
-                        setIsMenu(false);
-                      }}
-                    >
-                      <View
-                        style={[
-                          styles.forwardArrow,
-                          {
-                            borderTopColor: isDarkMode
-                              ? primaryColors.colors.white
-                              : primaryColors.colors.black,
-                            borderRightColor: isDarkMode
-                              ? primaryColors.colors.white
-                              : primaryColors.colors.black,
-                          },
-                        ]}
-                      ></View>
-                    </Pressable>
+                    ></View>
                   </Pressable>
                 </View>
               </View>
@@ -354,6 +352,7 @@ const styles = StyleSheet.create({
   forwardArrow: {
     width: 14,
     height: 14,
+    margin: 8,
     borderTopWidth: 2.5,
     borderRightWidth: 2.5,
     borderColor: "Black",
