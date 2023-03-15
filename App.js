@@ -208,6 +208,7 @@ export default function App() {
     CaslonBold: require("./assets/fonts/LibreCaslonText-Bold.ttf"),
     Caslon: require("./assets/fonts/LibreCaslonText-Regular.ttf"),
     Display: require("./assets/fonts/DMSerifDisplay-Regular.ttf"),
+    Alatsi: require("./assets/fonts/Alatsi-Regular.ttf"),
   });
   useEffect(function () {
     checkLoginCredentials();

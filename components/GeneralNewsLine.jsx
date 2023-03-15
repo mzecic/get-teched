@@ -86,7 +86,7 @@ export default function GeneralNewsLine({
                     isDarkMode && data.index === 0
                       ? colors.colors.white
                       : data.index === 0
-                      ? colors.colors.white
+                      ? colors.colors.black
                       : isDarkMode
                       ? colors.colors.white
                       : colors.colors.black,
@@ -106,7 +106,9 @@ export default function GeneralNewsLine({
                       ? colors.colors.secondaryHighlight
                       : data.index !== 0
                       ? colors.colors.secondaryHighlight
-                      : colors.colors.white,
+                      : isDarkMode
+                      ? colors.colors.secondaryHighlight
+                      : colors.colors.black,
                 },
               ]}
             >
@@ -114,7 +116,12 @@ export default function GeneralNewsLine({
             </Text>
             {data.index === 0 ? (
               <Image
-                style={data.index === 0 ? styles.headlineImage : styles.image}
+                style={[
+                  styles.headlineImage,
+                  {
+                    opacity: isDarkMode ? 0.35 : 1,
+                  },
+                ]}
                 source={{ uri: data.item.image }}
               />
             ) : (
@@ -122,10 +129,7 @@ export default function GeneralNewsLine({
             )}
           </View>
           {data.index !== 0 ? (
-            <Image
-              style={data.index === 0 ? styles.headlineImage : styles.image}
-              source={{ uri: data.item.image }}
-            />
+            <Image style={styles.image} source={{ uri: data.item.image }} />
           ) : (
             <></>
           )}
@@ -154,18 +158,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontFamily: "Display",
     zIndex: 110,
-    top: 12,
-    left: 12,
     fontSize: 30,
+    marginTop: 2,
+    top: 0,
+    padding: 12,
   },
   headlineArticleSource: {
     position: "absolute",
     fontFamily: "Display",
     zIndex: 110,
-    bottom: 12,
-    right: 12,
+    bottom: 4,
+    right: 8,
     fontSize: 20,
-    color: colors.colors.white,
+    color: colors.colors.secondaryHighlight,
   },
   headlineImage: {
     width: "100%",

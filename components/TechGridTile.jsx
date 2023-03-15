@@ -95,20 +95,19 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+    flexDirection: "column-reverse",
   },
   buttonPressed: {
     opacity: 0.5,
   },
   titleContainer: {
-    flex: 1 / 5,
-    padding: 16,
+    padding: 12,
+    alignItems: "flex-start",
     justifyContent: "flex-start",
-    alignItems: "center",
-    justifyContent: "center",
   },
   title: {
-    fontFamily: "Display",
-    textAlign: "center",
-    fontSize: 16,
+    fontFamily: "Alatsi",
+    textAlign: "left",
+    fontSize: 18,
   },
 });
