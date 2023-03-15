@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     height: 300,
     marginVertical: 16,
     marginHorizontal: 8,
-    // borderRadius: 18,
     elevation: 8,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowColor: "black",
@@ -88,8 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // borderBottomEndRadius: 16,
-    // borderBottomStartRadius: 16,
     overflow: "hidden",
   },
   image: {
@@ -105,13 +102,12 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1 / 5,
     padding: 16,
-    // borderRadius: 8,
     justifyContent: "flex-start",
     alignItems: "center",
     justifyContent: "center",
   },
   title: {
-    fontWeight: 500,
+    fontFamily: "Display",
     textAlign: "center",
     fontSize: 16,
   },

@@ -33,7 +33,7 @@ export default function BottomNavBar({
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
-              : primaryColors.colors.white,
+              : primaryColors.colors.backgroundLightMode,
             transform: [
               {
                 scaleY:

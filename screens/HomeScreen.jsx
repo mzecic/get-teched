@@ -178,7 +178,7 @@ export default function HomeScreen({
               borderBottomRightRadius: 16,
               backgroundColor: isDarkMode
                 ? colors.colors.black
-                : colors.colors.white,
+                : colors.colors.backgroundLightMode,
               transform: [
                 {
                   translateY:

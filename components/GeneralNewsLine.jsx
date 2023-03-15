@@ -104,6 +104,8 @@ export default function GeneralNewsLine({
                   color:
                     isDarkMode && data.index !== 0
                       ? colors.colors.secondaryHighlight
+                      : data.index !== 0
+                      ? colors.colors.secondaryHighlight
                       : colors.colors.white,
                 },
               ]}
@@ -134,30 +136,31 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   lineItem: {
-    fontFamily: "Caslon",
+    fontFamily: "Display",
     alignSelf: "flex-start",
     textAlign: "left",
     width: "100%",
     padding: 12,
-    fontSize: 17,
+    fontSize: 20,
   },
   titleContainer: {
     width: "50%",
+    justifyContent: "flex-start",
   },
   headlineTitleContainer: {
     flexDirection: "column-reverse",
   },
   headlineTitle: {
     position: "absolute",
-    fontFamily: "CaslonBold",
+    fontFamily: "Display",
     zIndex: 110,
-    margin: 12,
-    marginVertical: 52,
+    top: 12,
+    left: 12,
     fontSize: 30,
   },
   headlineArticleSource: {
     position: "absolute",
-    fontFamily: "CaslonBold",
+    fontFamily: "Display",
     zIndex: 110,
     bottom: 12,
     right: 12,
@@ -181,9 +184,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(235, 235, 235)",
   },
   articleSource: {
-    fontFamily: "CaslonBold",
+    fontFamily: "Display",
+    position: "absolute",
     fontSize: 14,
-    paddingHorizontal: 12,
+    bottom: 12,
+    right: 12,
     zIndex: 200,
   },
   image: {
