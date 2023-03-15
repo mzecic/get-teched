@@ -3,6 +3,7 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Sound from "react-native-sound";
 import { CredentialContext } from "./components/CredentialsContext";
 import * as Updates from "expo-updates";
 import { useEffect, useState, useRef, useCallback, useContext } from "react";
@@ -37,11 +38,13 @@ import ProfileCreateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
+import pressSoundEffect from "./assets/pebbles-click.mp3";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
+  // var Sound = require("react-native-sound");
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState(null);
@@ -60,7 +63,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [soundEffectsOn, setSoundEffectsOn] = useState(false);
-  const [text, setText] = useState("");
   const [offset, setOffset] = useState(0);
   const [scrollingDirection, setScrollingDirection] = useState("");
   const [hidePoint, setHidePoint] = useState(null);
@@ -142,13 +144,37 @@ export default function App() {
     setSoundEffectsOn((previousState) => !previousState);
     const result = await profiles.updateProfile(storedCredentials.email, {
       isDarkMode: isDarkMode,
-      soundEffectsOn: soundEffectsOn,
+      soundEffectsOn: !soundEffectsOn,
       givenName: storedCredentials.given_name,
       familyName: storedCredentials.family_name,
       email: storedCredentials.email,
     });
     console.log(result.soundEffectsOn, soundEffectsOn);
   };
+
+  var playSound = new Sound(pressSoundEffect, (error) => {
+    if (error) {
+      console.log("failed to load the sound", error);
+      return;
+    }
+    // if loaded successfully
+    console.log(
+      "duration in seconds: " +
+        playSound.getDuration() +
+        "number of channels: " +
+        playSound.getNumberOfChannels()
+    );
+  });
+
+  function soundHandler() {
+    playSound.play((success) => {
+      if (success) {
+        console.log("successfully finished playing");
+      } else {
+        console.log("playback failed due to audio decoding errors");
+      }
+    });
+  }
 
   let listViewRef = useRef(null);
   let listViewGamingRef = useRef(null);
@@ -360,6 +386,7 @@ export default function App() {
                           {(props) => (
                             <HomeScreen
                               soundEffectsOn={soundEffectsOn}
+                              setSoundEffectsOn={setSoundEffectsOn}
                               setLoginType={setLoginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
@@ -562,6 +589,8 @@ export default function App() {
                       </Stack.Navigator>
 
                       <BottomNavBar
+                        soundEffectsOn={soundEffectsOn}
+                        soundHandler={soundHandler}
                         headerOpacity={headerOpacity}
                         offset={offset}
                         scrollingDirection={scrollingDirection}

@@ -56,6 +56,7 @@ export default function HomeScreen({
   refreshing,
   setRefreshing,
   soundEffectsOn,
+  setSoundEffectsOn,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -128,6 +129,7 @@ export default function HomeScreen({
         if (storedCredentials.givenName) setLoginType("apple");
         if (getProfile.length) {
           setIsDarkMode(getProfile[0].darkMode);
+          setSoundEffectsOn(getProfile[0].soundEffectsOn);
           setProfile(getProfile[0]);
         }
         setTimeout(function () {

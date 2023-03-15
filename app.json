@@ -6,7 +6,16 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "plugins": ["expo-apple-authentication", "expo-updates"],
+    "plugins": [
+      "expo-apple-authentication",
+      "expo-updates",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ]
+    ],
     "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splashscreen/SplashScreenAdhdpi.png",

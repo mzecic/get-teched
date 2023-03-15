@@ -232,7 +232,7 @@ export default function ProfileScreen({
                     thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleSoundEffects}
-                    value={!soundsEffectsOn}
+                    value={soundsEffectsOn}
                   />
                 </View>
                 <View

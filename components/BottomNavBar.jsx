@@ -24,6 +24,8 @@ export default function BottomNavBar({
   scrollingDirection,
   offset,
   headerOpacity,
+  soundHandler,
+  soundEffectsOn,
 }) {
   const navigation = useNavigation();
 
@@ -80,6 +82,7 @@ export default function BottomNavBar({
         <View>
           <Pressable
             onPress={() => {
+              if (soundEffectsOn) soundHandler();
               navigation.navigate("HomeScreen");
               setLastVisitedScreen("HomeScreen");
               if (lastVisitedScreen === "HomeScreen") {
@@ -118,6 +121,7 @@ export default function BottomNavBar({
         <View>
           <Pressable
             onPress={() => {
+              if (soundEffectsOn) soundHandler();
               navigation.navigate("GamingNewsScreen");
               setLastVisitedScreen("GamingNewsScreen");
               if (lastVisitedScreen === "GamingNewsScreen") {
@@ -156,6 +160,7 @@ export default function BottomNavBar({
         <View style={[styles.pressableContainer]}>
           <Pressable
             onPress={() => {
+              if (soundEffectsOn) soundHandler();
               navigation.navigate("AudioNewsScreen");
               setLastVisitedScreen("AudioNewsScreen");
               if (lastVisitedScreen === "AudioNewsScreen") {
@@ -193,6 +198,7 @@ export default function BottomNavBar({
         <View style={styles.pressableContainer}>
           <Pressable
             onPress={() => {
+              if (soundEffectsOn) soundHandler();
               navigation.navigate("MobileNewsScreen");
               setLastVisitedScreen("MobileNewsScreen");
               if (lastVisitedScreen === "MobileNewsScreen") {
@@ -231,6 +237,7 @@ export default function BottomNavBar({
         <View style={styles.pressableContainer}>
           <Pressable
             onPress={() => {
+              if (soundEffectsOn) soundHandler();
               navigation.navigate("SearchScreen");
               setLastVisitedScreen("SearchScreen");
             }}
