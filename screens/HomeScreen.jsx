@@ -55,6 +55,7 @@ export default function HomeScreen({
   setProfile,
   refreshing,
   setRefreshing,
+  soundEffectsOn,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -219,6 +220,7 @@ export default function HomeScreen({
                     familyName: storedCredentials.family_name,
                     token: storedCredentials.token,
                     darkMode: isDarkMode,
+                    soundEffectsOn: soundEffectsOn,
                     email: storedCredentials.email,
                     picture: storedCredentials.picture,
                   });
@@ -229,6 +231,7 @@ export default function HomeScreen({
                     familyName: storedCredentials.fullName.familyName,
                     token: storedCredentials.identityToken,
                     darkMode: isDarkMode,
+                    soundEffectsOn: soundEffectsOn,
                     email: storedCredentials.email,
                     picture: "",
                   });
@@ -249,8 +252,6 @@ export default function HomeScreen({
                       width: 35,
                       height: 35,
                       borderRadius: 50,
-                      borderColor: colors.colors.black,
-                      borderWidth: 0.3,
                       tintColor:
                         !storedCredentials.picture && isDarkMode
                           ? colors.colors.white

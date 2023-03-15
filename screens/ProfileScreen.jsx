@@ -27,6 +27,8 @@ export default function ProfileScreen({
   refreshing,
   setRefreshing,
   loginType,
+  toggleSoundEffects,
+  soundsEffectsOn,
 }) {
   const navigation = useNavigation();
 
@@ -181,14 +183,6 @@ export default function ProfileScreen({
                     },
                   ]}
                 >
-                  <Switch
-                    style={{ transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }] }}
-                    trackColor={{ false: "#767577", true: "grey" }}
-                    thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isDarkMode}
-                  />
                   <Text
                     style={[
                       styles.itemLabel,
@@ -202,6 +196,44 @@ export default function ProfileScreen({
                   >
                     Dark mode
                   </Text>
+                  <Switch
+                    trackColor={{ false: "#767577", true: "grey" }}
+                    thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isDarkMode}
+                  />
+                </View>
+                <View
+                  style={[
+                    styles.itemContainer,
+                    {
+                      backgroundColor: isDarkMode
+                        ? primaryColors.colors.backgroundDarkMode
+                        : primaryColors.colors.backgroundLightMode,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.itemLabel,
+                      {
+                        paddingHorizontal: 12,
+                        color: isDarkMode
+                          ? primaryColors.colors.white
+                          : primaryColors.colors.black,
+                      },
+                    ]}
+                  >
+                    Sounds effects
+                  </Text>
+                  <Switch
+                    trackColor={{ false: "#767577", true: "grey" }}
+                    thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSoundEffects}
+                    value={!soundsEffectsOn}
+                  />
                 </View>
                 <View
                   style={[
@@ -233,26 +265,53 @@ export default function ProfileScreen({
                     >
                       Edit Profile
                     </Text>
+                    <Pressable
+                      style={({ pressed }) => [
+                        styles.backButton,
+                        pressed ? styles.itemPressed : null,
+                      ]}
+                      onPress={() => {
+                        navigation.navigate("HomeScreen");
+                        setLastVisitedScreen("HomeScreen");
+                        setIsMenu(false);
+                      }}
+                    >
+                      <View
+                        style={[
+                          styles.forwardArrow,
+                          {
+                            borderTopColor: isDarkMode
+                              ? primaryColors.colors.white
+                              : primaryColors.colors.black,
+                            borderRightColor: isDarkMode
+                              ? primaryColors.colors.white
+                              : primaryColors.colors.black,
+                          },
+                        ]}
+                      ></View>
+                    </Pressable>
                   </Pressable>
                 </View>
               </View>
-              <Pressable
-                onPress={() => {
-                  handleLogout();
-                }}
-              >
-                <Text
-                  style={{
-                    color: isDarkMode
-                      ? primaryColors.colors.appleRed
-                      : primaryColors.colors.appleRed,
-                    textAlign: "center",
-                    fontSize: 20,
+              <View style={styles.signoutButton}>
+                <Pressable
+                  onPress={() => {
+                    handleLogout();
                   }}
                 >
-                  Sign Out
-                </Text>
-              </Pressable>
+                  <Text
+                    style={{
+                      color: isDarkMode
+                        ? primaryColors.colors.appleRed
+                        : primaryColors.colors.appleRed,
+                      textAlign: "center",
+                      fontSize: 20,
+                    }}
+                  >
+                    Sign Out
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </>
@@ -292,6 +351,16 @@ const styles = StyleSheet.create({
     borderRightColor: "#007AFF",
     transform: [{ rotate: "225deg" }],
   },
+  forwardArrow: {
+    width: 14,
+    height: 14,
+    borderTopWidth: 2.5,
+    borderRightWidth: 2.5,
+    borderColor: "Black",
+    borderTopColor: "#007AFF",
+    borderRightColor: "#007AFF",
+    transform: [{ rotate: "45deg" }],
+  },
   editIcon: {
     marginTop: 20,
     width: 25,
@@ -304,7 +373,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    borderWidth: 1.5,
   },
   nameContainer: {
     flexDirection: "row",
@@ -315,30 +383,36 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1 / 2,
-    // backgroundColor: "yellow",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   items: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   itemContainer: {
-    width: "29%",
+    width: "80%",
     margin: 8,
-    height: 80,
-    justifyContent: "space-evenly",
+    height: 42,
+    padding: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 24,
+    borderRadius: 12,
   },
   itemLabel: {
-    fontSize: 14,
+    fontSize: 16,
   },
   itemPressed: {
     opacity: 0.5,
   },
   pressableContainer: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  signoutButton: {
+    marginBottom: "15%",
   },
 });

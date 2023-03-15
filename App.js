@@ -59,6 +59,7 @@ export default function App() {
   const [isGeneralVisible, setIsGeneralVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [soundEffectsOn, setSoundEffectsOn] = useState(false);
   const [text, setText] = useState("");
   const [offset, setOffset] = useState(0);
   const [scrollingDirection, setScrollingDirection] = useState("");
@@ -135,6 +136,18 @@ export default function App() {
       familyName: storedCredentials.family_name,
       email: storedCredentials.email,
     });
+  };
+
+  const toggleSoundEffects = async function () {
+    setSoundEffectsOn((previousState) => !previousState);
+    const result = await profiles.updateProfile(storedCredentials.email, {
+      isDarkMode: isDarkMode,
+      soundEffectsOn: soundEffectsOn,
+      givenName: storedCredentials.given_name,
+      familyName: storedCredentials.family_name,
+      email: storedCredentials.email,
+    });
+    console.log(result.soundEffectsOn, soundEffectsOn);
   };
 
   let listViewRef = useRef(null);
@@ -346,6 +359,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              soundEffectsOn={soundEffectsOn}
                               setLoginType={setLoginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
@@ -384,6 +398,7 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileCreateScreen
+                              soundEffectsOn={soundEffectsOn}
                               storedCredentials={storedCredentials}
                               loginType={loginType}
                               refreshing={refreshing}
@@ -525,6 +540,8 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              soundsEffectsOn={soundEffectsOn}
+                              toggleSoundEffects={toggleSoundEffects}
                               loginType={loginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}

@@ -22,6 +22,7 @@ export default function ProfileCreateScreen({
   setRefreshing,
   loginType,
   storedCredentials,
+  soundEffectsOn,
 }) {
   const navigation = useNavigation();
   const [showWarningMessage, setShowWarningMessage] = useState(false);
@@ -41,6 +42,7 @@ export default function ProfileCreateScreen({
       familyName: familyNameText,
       email: emailText,
       isDarkMode: isDarkMode,
+      soundEffectsOn: soundEffectsOn,
     });
     navigation.navigate(lastVisitedScreen);
     setRefreshing(true);
@@ -253,6 +255,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   inputField: {
+    fontSize: 16,
     height: 40,
     borderRadius: 8,
     marginVertical: 12,
@@ -260,11 +263,12 @@ const styles = StyleSheet.create({
   },
   submitButtonContainer: {
     flex: 1 / 2,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   submitButton: {},
   submitButtonText: {
+    marginBottom: "15%",
     fontSize: 20,
     fontWeight: 400,
     color: "#007AFF",
