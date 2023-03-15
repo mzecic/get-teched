@@ -25,6 +25,7 @@ export default function GeneralNewsLine({
   return (
     <View
       style={[
+        styles.outerContainer,
         {
           marginTop:
             Platform.OS === "ios"
@@ -56,11 +57,13 @@ export default function GeneralNewsLine({
         <View
           style={[
             data.index === 0 && Platform.OS === "ios"
-              ? styles.headlineContainer
+              ? null
               : styles.lineItemContainer,
             {
               backgroundColor: isDarkMode
                 ? colors.colors.black
+                : data.index !== 0
+                ? colors.colors.secondaryHighlight
                 : colors.colors.white,
               flexDirection:
                 data.index % 2 === 0 && data.index !== 0
@@ -78,50 +81,55 @@ export default function GeneralNewsLine({
                 : styles.titleContainer
             }
           >
-            <Text
-              style={[
-                data.index === 0 ? styles.headlineTitle : styles.lineItem,
-                {
-                  color:
-                    isDarkMode && data.index === 0
-                      ? colors.colors.white
-                      : data.index === 0
-                      ? colors.colors.black
-                      : isDarkMode
-                      ? colors.colors.white
-                      : colors.colors.black,
-                },
-              ]}
-            >
-              {data.item.title}
-            </Text>
-            <Text
-              style={[
+            <View
+              style={
                 data.index === 0
-                  ? styles.headlineArticleSource
-                  : styles.articleSource,
-                {
-                  color:
-                    isDarkMode && data.index !== 0
-                      ? colors.colors.secondaryHighlight
-                      : data.index !== 0
-                      ? colors.colors.secondaryHighlight
-                      : isDarkMode
-                      ? colors.colors.secondaryHighlight
-                      : colors.colors.black,
-                },
-              ]}
+                  ? styles.headlineTitleInnerContainer
+                  : styles.lineItem
+              }
             >
-              {data.item.source.name}
-            </Text>
-            {data.index === 0 ? (
-              <Image
+              <Text
                 style={[
-                  styles.headlineImage,
+                  data.index === 0 ? styles.headlineTitle : styles.title,
                   {
-                    opacity: isDarkMode ? 0.35 : 1,
+                    color:
+                      isDarkMode && data.index === 0
+                        ? colors.colors.white
+                        : data.index === 0
+                        ? colors.colors.black
+                        : isDarkMode
+                        ? colors.colors.white
+                        : colors.colors.white,
                   },
                 ]}
+              >
+                {data.item.title}
+              </Text>
+            </View>
+            <View style={styles.articleSourceContainer}>
+              <Text
+                style={[
+                  data.index === 0
+                    ? styles.headlineArticleSource
+                    : styles.articleSource,
+                  {
+                    color:
+                      isDarkMode && data.index !== 0
+                        ? colors.colors.secondaryHighlight
+                        : data.index !== 0
+                        ? colors.colors.white
+                        : isDarkMode
+                        ? colors.colors.secondaryHighlight
+                        : colors.colors.black,
+                  },
+                ]}
+              >
+                {data.item.source.name}
+              </Text>
+            </View>
+            {data.index === 0 ? (
+              <Image
+                style={[styles.headlineImage, {}]}
                 source={{ uri: data.item.image }}
               />
             ) : (
@@ -129,7 +137,10 @@ export default function GeneralNewsLine({
             )}
           </View>
           {data.index !== 0 ? (
-            <Image style={styles.image} source={{ uri: data.item.image }} />
+            <Image
+              style={[styles.image, {}]}
+              source={{ uri: data.item.image }}
+            />
           ) : (
             <></>
           )}
@@ -139,38 +150,45 @@ export default function GeneralNewsLine({
   );
 }
 const styles = StyleSheet.create({
+  outerContainer: {
+    margin: 12,
+  },
   lineItem: {
     fontFamily: "Display",
-    alignSelf: "flex-start",
     textAlign: "left",
-    width: "100%",
-    padding: 12,
     fontSize: 20,
   },
   titleContainer: {
-    width: "50%",
-    justifyContent: "flex-start",
+    position: "absolute",
+    width: "100%",
+    height: 130,
+    padding: 18,
+  },
+  title: {
+    fontFamily: "Display",
+    fontSize: 18,
+    zIndex: 200,
   },
   headlineTitleContainer: {
     flexDirection: "column-reverse",
   },
   headlineTitle: {
-    position: "absolute",
     fontFamily: "Display",
+    fontSize: 28,
+  },
+  headlineTitleInnerContainer: {
+    borderColor: "white",
     zIndex: 110,
-    fontSize: 30,
-    marginTop: 2,
     top: 0,
     padding: 12,
+    height: 170,
   },
   headlineArticleSource: {
-    position: "absolute",
     fontFamily: "Display",
     zIndex: 110,
     bottom: 4,
     right: 8,
-    fontSize: 20,
-    color: colors.colors.secondaryHighlight,
+    fontSize: 16,
   },
   headlineImage: {
     width: "100%",
@@ -184,23 +202,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 4,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    justifyContent: "space-between",
-    border: "2px solid black",
+    // justifyContent: "space-between",
     backgroundColor: "rgb(235, 235, 235)",
+  },
+  articleSourceContainer: {
+    position: "absolute",
+    bottom: 4,
+    right: 4,
   },
   articleSource: {
     fontFamily: "Display",
-    position: "absolute",
     fontSize: 14,
-    bottom: 12,
-    right: 12,
     zIndex: 200,
   },
   image: {
-    width: "50%",
-    height: 200,
-    // borderTopRightRadius: 16,
-    // borderBottomRightRadius: 16,
+    opacity: 0.65,
+    width: "100%",
+    height: 130,
+    zIndex: -1,
   },
   button: {
     flex: 1,

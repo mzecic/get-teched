@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   title: {
-    fontFamily: "Alatsi",
+    fontFamily: "Display",
     textAlign: "left",
-    fontSize: 18,
+    fontSize: 16,
   },
 });
