@@ -167,6 +167,7 @@ export default function App() {
   });
 
   function soundHandler() {
+    playSound.setVolume(0.5);
     playSound.play((success) => {
       if (success) {
         console.log("successfully finished playing");
@@ -385,7 +386,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
-                              playSound={playSound}
+                              soundHandler={soundHandler}
                               soundEffectsOn={soundEffectsOn}
                               setSoundEffectsOn={setSoundEffectsOn}
                               setLoginType={setLoginType}
@@ -570,7 +571,7 @@ export default function App() {
                             <ProfileScreen
                               soundsEffectsOn={soundEffectsOn}
                               toggleSoundEffects={toggleSoundEffects}
-                              playSound={playSound}
+                              soundHandler={soundHandler}
                               loginType={loginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}

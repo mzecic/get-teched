@@ -5,11 +5,9 @@ import {
   Image,
   Text,
   Animated,
-  Easing,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
-import { useEffect, useRef } from "react";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -20,41 +18,12 @@ export default function BottomNavBar({
   scrollToTopMobileHandler,
   isDarkMode,
   isMenu,
-  setIsMenu,
   scrollingDirection,
   offset,
-  headerOpacity,
   soundHandler,
   soundEffectsOn,
 }) {
   const navigation = useNavigation();
-
-  const slideDown = useRef(new Animated.Value(0)).current;
-
-  useEffect(
-    function () {
-      let slideDownNum = parseInt(JSON.stringify(slideDown));
-      // || (scrollingDirection === "down" && offset > 300)
-      if (scrollingDirection === "up") {
-        Animated.spring(slideDown, {
-          toValue: 0,
-          duration: 50,
-          useNativeDriver: true,
-        }).start();
-      } else if (
-        scrollingDirection === "down" &&
-        offset > 300 &&
-        slideDownNum < 500
-      ) {
-        Animated.timing(slideDown, {
-          toValue: 500,
-          duration: 150,
-          useNativeDriver: true,
-        }).start();
-      }
-    },
-    [offset]
-  );
 
   return (
     <>
@@ -72,9 +41,6 @@ export default function BottomNavBar({
                     ? 0
                     : 1,
               },
-              // {
-              //   translateY: slideDown,
-              // },
             ],
           },
         ]}

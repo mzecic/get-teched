@@ -60,7 +60,7 @@ export default function SearchScreen({
   };
 
   function renderTechItem(itemData) {
-    if (filteredData.length !== 0) {
+    if (filteredData.length) {
       return (
         <GeneralNewsLine
           arrayLength={filteredData.length}
@@ -134,9 +134,12 @@ export default function SearchScreen({
           style={[
             styles.mainContainer,
             {
-              backgroundColor: isDarkMode
-                ? primaryColors.colors.backgroundDarkMode
-                : primaryColors.colors.backgroundLightMode,
+              backgroundColor:
+                isDarkMode && filteredData.length
+                  ? primaryColors.colors.backgroundDarkMode
+                  : isDarkMode
+                  ? primaryColors.colors.black
+                  : primaryColors.colors.backgroundLightMode,
             },
           ]}
         >
