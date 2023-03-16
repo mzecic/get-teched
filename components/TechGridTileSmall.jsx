@@ -20,7 +20,6 @@ export default function TechGridTileSmall({
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
   }
-
   return (
     <View
       style={[
@@ -54,16 +53,33 @@ export default function TechGridTileSmall({
       >
         <View style={styles.titleContainer}>
           <View style={styles.titleInnerContainer}>
-            <Text
-              style={[
-                styles.title,
-                {
-                  color: isDarkMode ? colors.colors.white : colors.colors.black,
-                },
-              ]}
-            >
-              {data.item.title}
-            </Text>
+            {data.item.title.length > 80 ? (
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    color: isDarkMode
+                      ? colors.colors.white
+                      : colors.colors.black,
+                  },
+                ]}
+              >
+                {data.item.title.slice(0, 80)}...
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.title,
+                  {
+                    color: isDarkMode
+                      ? colors.colors.white
+                      : colors.colors.black,
+                  },
+                ]}
+              >
+                {data.item.title}
+              </Text>
+            )}
           </View>
           <View style={styles.articleSourceContainer}>
             <Text
@@ -119,13 +135,11 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   titleContainer: {
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
     height: 100,
   },
   titleInnerContainer: {
     height: 110,
-    padding: 6,
+    padding: 8,
     overflow: "hidden",
   },
   title: {
