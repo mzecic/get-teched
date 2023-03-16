@@ -15,8 +15,10 @@ export default function TechGridTileSmall({
   lastVisitedScreen,
   isGeneralVisible,
   isDarkMode,
+  soundHandler,
 }) {
   async function onPressHandler() {
+    soundHandler();
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
   }

@@ -29,6 +29,7 @@ export default function AudioNewsScreen({
   setScrollingDirection,
   refreshing,
   setRefreshing,
+  soundHandler,
 }) {
   const [fontsLoaded] = useFonts({
     "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
@@ -41,7 +42,13 @@ export default function AudioNewsScreen({
     }, 500);
   }, []);
   function renderTechItem(itemData) {
-    return <TechGridTile isDarkMode={isDarkMode} data={itemData} />;
+    return (
+      <TechGridTile
+        soundHandler={soundHandler}
+        isDarkMode={isDarkMode}
+        data={itemData}
+      />
+    );
   }
   const navigation = useNavigation();
 

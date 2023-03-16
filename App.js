@@ -389,6 +389,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              playSound={playSound}
                               soundHandler={soundHandler}
                               soundEffectsOn={soundEffectsOn}
                               setSoundEffectsOn={setSoundEffectsOn}
@@ -460,6 +461,7 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
+                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -495,6 +497,7 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
+                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -530,6 +533,7 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
+                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -555,6 +559,7 @@ export default function App() {
                         >
                           {(props) => (
                             <SearchScreen
+                              soundHandler={soundHandler}
                               lastVisitedScreen={lastVisitedScreen}
                               isDarkMode={isDarkMode}
                               allNews={allNews}

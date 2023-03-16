@@ -60,6 +60,7 @@ export default function HomeScreen({
   soundEffectsOn,
   setSoundEffectsOn,
   soundHandler,
+  playSound,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -73,6 +74,7 @@ export default function HomeScreen({
       if (itemData.index === 0) {
         return (
           <TechGridTileBig
+            soundHandler={soundHandler}
             isDarkMode={isDarkMode}
             isGeneralVisible={isGeneralVisible}
             data={itemData}
@@ -86,6 +88,7 @@ export default function HomeScreen({
       ) {
         return (
           <GeneralNewsLine
+            soundHandler={soundHandler}
             isDarkMode={isDarkMode}
             lastVisitedScreen={lastVisitedScreen}
             data={itemData}
@@ -94,6 +97,7 @@ export default function HomeScreen({
       } else {
         return (
           <TechGridTileSmall
+            soundHandler={soundHandler}
             isDarkMode={isDarkMode}
             isGeneralVisible={isGeneralVisible}
             data={itemData}
@@ -101,29 +105,6 @@ export default function HomeScreen({
           />
         );
       }
-
-      // return itemData.index === 0 ? (
-      //   <>
-      //     <View
-      //       style={{
-      //         marginTop: Platform.OS === "ios" ? 80 : "5%",
-      //         justifyContent: "center",
-      //       }}
-      //     >
-      //       <GeneralNewsLine
-      //         isDarkMode={isDarkMode}
-      //         lastVisitedScreen={lastVisitedScreen}
-      //         data={itemData}
-      //       />
-      //     </View>
-      //   </>
-      // ) : (
-      //   <GeneralNewsLine
-      //     isDarkMode={isDarkMode}
-      //     lastVisitedScreen={lastVisitedScreen}
-      //     data={itemData}
-      //   />
-      // );
     } else if (itemData.index >= 6 && itemData.index < 10) {
       if (itemData.index === 6) {
         return (
@@ -140,6 +121,7 @@ export default function HomeScreen({
               Top Stories
             </Text>
             <TechGridTile
+              soundHandler={soundHandler}
               isDarkMode={isDarkMode}
               isGeneralVisible={isGeneralVisible}
               data={itemData}
@@ -150,6 +132,7 @@ export default function HomeScreen({
       }
       return (
         <TechGridTile
+          soundHandler={soundHandler}
           isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
@@ -159,6 +142,7 @@ export default function HomeScreen({
     } else {
       return (
         <TechGridTileSmall
+          soundHandler={soundHandler}
           isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
@@ -265,7 +249,7 @@ export default function HomeScreen({
             </Text>
             <Pressable
               onPress={async function () {
-                if (soundEffectsOn) soundHandler();
+                if (soundEffectsOn) playSound.play(() => {});
                 navigation.navigate("ProfileScreen");
                 setLastVisitedScreen("ProfileScreen");
                 setIsMenu(true);
