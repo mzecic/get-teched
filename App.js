@@ -4,6 +4,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Sound from "react-native-sound";
+import { Audio } from "expo-av";
 import { CredentialContext } from "./components/CredentialsContext";
 import * as Updates from "expo-updates";
 import { useEffect, useState, useRef, useCallback, useContext } from "react";
@@ -45,6 +46,7 @@ WebBrowser.maybeCompleteAuthSession();
 Sound.setCategory("Playback");
 
 export default function App() {
+  const [sound, setSound] = useState();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState(null);
@@ -76,6 +78,18 @@ export default function App() {
       access_type: "offline",
     },
   });
+
+  async function playSound() {
+    console.log("Loading Sound");
+    const { sound } = await Audio.Sound.createAsync(
+      require("./assets/pebbles-click.mp3")
+    );
+    setSound(sound);
+    console.log(sound);
+
+    console.log("Playing Sound");
+    await sound.playAsync();
+  }
 
   useEffect(() => {
     if (response?.type === "success") {
@@ -151,33 +165,6 @@ export default function App() {
     });
     console.log(result.soundEffectsOn, soundEffectsOn);
   };
-
-  var playSound = useRef(
-    new Sound(pressSoundEffect, (error) => {
-      if (error) {
-        console.log("failed to load the sound", error);
-        return;
-      }
-      // if loaded successfully
-      console.log(
-        "duration in seconds: " +
-          playSound.current.getDuration() +
-          "number of channels: " +
-          playSound.current.getNumberOfChannels()
-      );
-    })
-  );
-
-  function soundHandler() {
-    playSound.current.setVolume(0.5);
-    playSound.current.play((success) => {
-      if (success) {
-        console.log("successfully finished playing");
-      } else {
-        console.log("playback failed due to audio decoding errors");
-      }
-    });
-  }
 
   let listViewRef = useRef(null);
   let listViewGamingRef = useRef(null);
@@ -393,7 +380,6 @@ export default function App() {
                           {(props) => (
                             <HomeScreen
                               playSound={playSound}
-                              soundHandler={soundHandler}
                               soundEffectsOn={soundEffectsOn}
                               setSoundEffectsOn={setSoundEffectsOn}
                               setLoginType={setLoginType}
@@ -464,7 +450,6 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
-                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -500,7 +485,6 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
-                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -536,7 +520,6 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
-                              soundHandler={soundHandler}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -562,7 +545,6 @@ export default function App() {
                         >
                           {(props) => (
                             <SearchScreen
-                              soundHandler={soundHandler}
                               lastVisitedScreen={lastVisitedScreen}
                               isDarkMode={isDarkMode}
                               allNews={allNews}
@@ -580,9 +562,9 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              playSound={playSound}
                               soundsEffectsOn={soundEffectsOn}
                               toggleSoundEffects={toggleSoundEffects}
-                              soundHandler={soundHandler}
                               loginType={loginType}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
@@ -603,8 +585,8 @@ export default function App() {
                       </Stack.Navigator>
 
                       <BottomNavBar
+                        playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
-                        soundHandler={soundHandler}
                         headerOpacity={headerOpacity}
                         offset={offset}
                         scrollingDirection={scrollingDirection}

@@ -29,7 +29,7 @@ export default function GamingNewsScreen({
   setScrollingDirection,
   refreshing,
   setRefreshing,
-  soundHandler,
+  playSound,
 }) {
   const [fontsLoaded] = useFonts({
     "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
@@ -44,7 +44,7 @@ export default function GamingNewsScreen({
   function renderTechItem(itemData) {
     return (
       <TechGridTile
-        soundHandler={soundHandler}
+        playSound={playSound}
         isDarkMode={isDarkMode}
         data={itemData}
       />

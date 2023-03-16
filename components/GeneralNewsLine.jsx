@@ -16,10 +16,10 @@ export default function GeneralNewsLine({
   setLastVisitedScreen,
   isDarkMode,
   arrayLength,
-  soundHandler,
+  playSound,
 }) {
   async function onPressHandler() {
-    soundHandler();
+    // playSound();
     let result = await WebBrowser.openBrowserAsync(data.item.url);
     return result;
   }

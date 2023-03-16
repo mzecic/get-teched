@@ -25,7 +25,7 @@ export default function SearchScreen({
   isLoading,
   setIsLoading,
   setShowNavBar,
-  soundHandler,
+  playSound,
 }) {
   const [query, setQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -66,7 +66,7 @@ export default function SearchScreen({
       if (itemData.index === 0) {
         return (
           <TechGridTileBig
-            soundHandler={soundHandler}
+            playSound={playSound}
             isDarkMode={isDarkMode}
             data={itemData}
             lastVisitedScreen={lastVisitedScreen}
@@ -75,7 +75,7 @@ export default function SearchScreen({
       } else {
         return (
           <GeneralNewsLine
-            soundHandler={soundHandler}
+            playSound={playSound}
             arrayLength={filteredData.length}
             isDarkMode={isDarkMode}
             lastVisitedScreen={lastVisitedScreen}

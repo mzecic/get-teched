@@ -29,7 +29,7 @@ export default function ProfileScreen({
   loginType,
   toggleSoundEffects,
   soundsEffectsOn,
-  soundHandler,
+  playSound,
 }) {
   const navigation = useNavigation();
 
@@ -202,7 +202,9 @@ export default function ProfileScreen({
                     thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => {
-                      if (soundsEffectsOn) soundHandler();
+                      if (soundsEffectsOn) {
+                        playSound();
+                      }
                       toggleSwitch();
                     }}
                     value={isDarkMode}
@@ -236,7 +238,9 @@ export default function ProfileScreen({
                     thumbColor={isDarkMode ? "rgb(190, 190, 190)" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => {
-                      if (!soundsEffectsOn) soundHandler();
+                      if (!soundsEffectsOn) {
+                        playSound();
+                      }
                       toggleSoundEffects();
                     }}
                     value={soundsEffectsOn}
@@ -254,7 +258,7 @@ export default function ProfileScreen({
                 >
                   <Pressable
                     onPress={() => {
-                      if (soundsEffectsOn) soundHandler();
+                      if (soundsEffectsOn) playSound();
                       navigation.navigate("ProfileUpdateScreen");
                     }}
                     style={({ pressed }) => [

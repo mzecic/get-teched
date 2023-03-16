@@ -10,16 +10,12 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import {
-  useLayoutEffect,
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-} from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { Audio } from "expo-av";
 import * as news from "../utils/gnews";
 import * as profiles from "../utils/users-api";
+import SoundEffect from "../assets/pebbles-click.wav";
 
 import TechGridTile from "../components/TechGridTile";
 import TechGridTileSmall from "../components/TechGridTileSmall";
@@ -74,7 +70,7 @@ export default function HomeScreen({
       if (itemData.index === 0) {
         return (
           <TechGridTileBig
-            soundHandler={soundHandler}
+            playSound={playSound}
             isDarkMode={isDarkMode}
             isGeneralVisible={isGeneralVisible}
             data={itemData}
@@ -88,7 +84,7 @@ export default function HomeScreen({
       ) {
         return (
           <GeneralNewsLine
-            soundHandler={soundHandler}
+            playSound={playSound}
             isDarkMode={isDarkMode}
             lastVisitedScreen={lastVisitedScreen}
             data={itemData}
@@ -97,7 +93,7 @@ export default function HomeScreen({
       } else {
         return (
           <TechGridTileSmall
-            soundHandler={soundHandler}
+            playSound={playSound}
             isDarkMode={isDarkMode}
             isGeneralVisible={isGeneralVisible}
             data={itemData}
@@ -121,7 +117,7 @@ export default function HomeScreen({
               Top Stories
             </Text>
             <TechGridTile
-              soundHandler={soundHandler}
+              playSound={playSound}
               isDarkMode={isDarkMode}
               isGeneralVisible={isGeneralVisible}
               data={itemData}
@@ -132,7 +128,7 @@ export default function HomeScreen({
       }
       return (
         <TechGridTile
-          soundHandler={soundHandler}
+          playSound={playSound}
           isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
@@ -142,7 +138,7 @@ export default function HomeScreen({
     } else {
       return (
         <TechGridTileSmall
-          soundHandler={soundHandler}
+          playSound={playSound}
           isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
@@ -249,7 +245,9 @@ export default function HomeScreen({
             </Text>
             <Pressable
               onPress={async function () {
-                if (soundEffectsOn) playSound.current.play(() => {});
+                if (soundEffectsOn) {
+                  playSound();
+                }
                 navigation.navigate("ProfileScreen");
                 setLastVisitedScreen("ProfileScreen");
                 setIsMenu(true);
