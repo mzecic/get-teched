@@ -22,6 +22,7 @@ import * as news from "../utils/gnews";
 import * as profiles from "../utils/users-api";
 
 import TechGridTile from "../components/TechGridTile";
+import TechGridTileSmall from "../components/TechGridTileSmall";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -67,32 +68,104 @@ export default function HomeScreen({
   }, []);
 
   function renderTechItem(itemData) {
-    if (itemData.index >= 0 && itemData.index < 4) {
-      return itemData.index === 0 ? (
-        <>
-          <View
-            style={{
-              marginTop: Platform.OS === "ios" ? 80 : "5%",
-              justifyContent: "center",
-            }}
-          >
-            <GeneralNewsLine
+    if (itemData.index >= 0 && itemData.index < 6) {
+      if (itemData.index === 0) {
+        return (
+          <>
+            <View
+              style={{
+                marginTop: Platform.OS === "ios" ? 92 : "5%",
+                justifyContent: "center",
+              }}
+            >
+              <GeneralNewsLine
+                isDarkMode={isDarkMode}
+                lastVisitedScreen={lastVisitedScreen}
+                data={itemData}
+              />
+            </View>
+          </>
+        );
+      } else if (
+        itemData.index === 1 ||
+        itemData.index === 4 ||
+        itemData.index === 5
+      ) {
+        return (
+          <GeneralNewsLine
+            isDarkMode={isDarkMode}
+            lastVisitedScreen={lastVisitedScreen}
+            data={itemData}
+          />
+        );
+      } else {
+        return (
+          <TechGridTileSmall
+            isDarkMode={isDarkMode}
+            isGeneralVisible={isGeneralVisible}
+            data={itemData}
+            lastVisitedScreen={lastVisitedScreen}
+          />
+        );
+      }
+
+      // return itemData.index === 0 ? (
+      //   <>
+      //     <View
+      //       style={{
+      //         marginTop: Platform.OS === "ios" ? 80 : "5%",
+      //         justifyContent: "center",
+      //       }}
+      //     >
+      //       <GeneralNewsLine
+      //         isDarkMode={isDarkMode}
+      //         lastVisitedScreen={lastVisitedScreen}
+      //         data={itemData}
+      //       />
+      //     </View>
+      //   </>
+      // ) : (
+      //   <GeneralNewsLine
+      //     isDarkMode={isDarkMode}
+      //     lastVisitedScreen={lastVisitedScreen}
+      //     data={itemData}
+      //   />
+      // );
+    } else if (itemData.index >= 6 && itemData.index < 10) {
+      if (itemData.index === 6) {
+        return (
+          <>
+            <Text
+              style={{
+                fontFamily: "CaslonBold",
+                fontSize: 30,
+                marginHorizontal: 12,
+                marginTop: 48,
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              }}
+            >
+              Top Stories
+            </Text>
+            <TechGridTile
               isDarkMode={isDarkMode}
-              lastVisitedScreen={lastVisitedScreen}
+              isGeneralVisible={isGeneralVisible}
               data={itemData}
+              lastVisitedScreen={lastVisitedScreen}
             />
-          </View>
-        </>
-      ) : (
-        <GeneralNewsLine
+          </>
+        );
+      }
+      return (
+        <TechGridTile
           isDarkMode={isDarkMode}
-          lastVisitedScreen={lastVisitedScreen}
+          isGeneralVisible={isGeneralVisible}
           data={itemData}
+          lastVisitedScreen={lastVisitedScreen}
         />
       );
     } else {
       return (
-        <TechGridTile
+        <TechGridTileSmall
           isDarkMode={isDarkMode}
           isGeneralVisible={isGeneralVisible}
           data={itemData}
@@ -158,7 +231,7 @@ export default function HomeScreen({
             styles.list,
             {
               backgroundColor: isDarkMode
-                ? colors.colors.backgroundDarkMode
+                ? colors.colors.black
                 : colors.colors.backgroundLightMode,
             },
           ]}
@@ -174,8 +247,6 @@ export default function HomeScreen({
               top: 0,
               alignItems: "center",
               justifyContent: "center",
-              borderBottomLeftRadius: 16,
-              borderBottomRightRadius: 16,
               backgroundColor: isDarkMode
                 ? colors.colors.black
                 : colors.colors.backgroundLightMode,
@@ -302,6 +373,8 @@ export default function HomeScreen({
             scrollEventThrottle={16}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
+            columnWrapperStyle={{ flexWrap: "wrap" }}
+            numColumns={2}
             data={[...generalNews, ...techNews]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderTechItem}
@@ -317,7 +390,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     paddingTop: Platform.OS === "android" ? 0 : 0,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   headerTitle: {
     fontFamily: "Audiowide",

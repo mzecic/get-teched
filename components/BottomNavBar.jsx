@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
 import Sound from "react-native-sound";
-import pressSound from "../assets/organic-click.mp3";
+import pressSound from "../assets/pebbles-click.wav";
 
 Sound.setCategory("Playback");
 var playSound = new Sound(pressSound, (error) => {
@@ -270,8 +270,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     bottom: 0,
     zIndex: 99,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
   },
   navIcon: {
     width: 25,
@@ -292,7 +290,6 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     opacity: 0.5,
-    borderRadius: 16,
   },
   imageTag: {
     // position: "absolute",

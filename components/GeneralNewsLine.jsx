@@ -44,6 +44,9 @@ export default function GeneralNewsLine({
             data.index === arrayLength - 1
               ? "25%"
               : 0,
+          borderBottomWidth:
+            isDarkMode && data.index === 0 ? 3 : data.index === 0 ? 3 : 0,
+          borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
         },
       ]}
     >
@@ -57,7 +60,7 @@ export default function GeneralNewsLine({
         <View
           style={[
             data.index === 0 && Platform.OS === "ios"
-              ? null
+              ? styles.headlineContainer
               : styles.lineItemContainer,
             {
               backgroundColor: isDarkMode
@@ -115,11 +118,11 @@ export default function GeneralNewsLine({
                   {
                     color:
                       isDarkMode && data.index !== 0
-                        ? colors.colors.secondaryHighlight
+                        ? colors.colors.white
                         : data.index !== 0
                         ? colors.colors.white
                         : isDarkMode
-                        ? colors.colors.secondaryHighlight
+                        ? colors.colors.white
                         : colors.colors.black,
                   },
                 ]}
@@ -151,7 +154,11 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   outerContainer: {
-    margin: 12,
+    marginHorizontal: 10,
+    marginVertical: 10,
+  },
+  headlineContainer: {
+    flex: 1,
   },
   lineItem: {
     fontFamily: "Display",
@@ -162,7 +169,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: 130,
-    padding: 18,
+    padding: 12,
   },
   title: {
     fontFamily: "Display",
@@ -180,8 +187,8 @@ const styles = StyleSheet.create({
     borderColor: "white",
     zIndex: 110,
     top: 0,
-    padding: 18,
-    height: 170,
+    padding: 12,
+    height: 160,
   },
   headlineArticleSource: {
     fontFamily: "Display",

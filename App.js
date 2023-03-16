@@ -38,10 +38,24 @@ import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
-import pressSoundEffect from "./assets/organic-click.mp3";
+import pressSoundEffect from "./assets/pebbles-click.wav";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
+Sound.setCategory("Playback");
+var playSound = new Sound(pressSoundEffect, (error) => {
+  if (error) {
+    console.log("failed to load the sound", error);
+    return;
+  }
+  // if loaded successfully
+  console.log(
+    "duration in seconds: " +
+      playSound.getDuration() +
+      "number of channels: " +
+      playSound.getNumberOfChannels()
+  );
+});
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -150,21 +164,6 @@ export default function App() {
     });
     console.log(result.soundEffectsOn, soundEffectsOn);
   };
-
-  Sound.setCategory("Playback");
-  var playSound = new Sound(pressSoundEffect, (error) => {
-    if (error) {
-      console.log("failed to load the sound", error);
-      return;
-    }
-    // if loaded successfully
-    console.log(
-      "duration in seconds: " +
-        playSound.getDuration() +
-        "number of channels: " +
-        playSound.getNumberOfChannels()
-    );
-  });
 
   function soundHandler() {
     playSound.setVolume(0.5);

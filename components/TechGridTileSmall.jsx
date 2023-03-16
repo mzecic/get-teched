@@ -10,7 +10,7 @@ import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as colors from "../assets/colors/primaryColors";
 
-export default function TechGridTile({
+export default function TechGridTileSmall({
   data,
   lastVisitedScreen,
   isGeneralVisible,
@@ -31,14 +31,11 @@ export default function TechGridTile({
               ? data.index === 0 &&
                 Platform.OS === "ios" &&
                 lastVisitedScreen !== "HomeScreen"
-                ? "15%"
+                ? 12
                 : data.index === 0 && !isGeneralVisible
                 ? 12
                 : 12
               : 12,
-          backgroundColor: isDarkMode
-            ? colors.colors.black
-            : colors.colors.white,
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.white,
@@ -56,22 +53,30 @@ export default function TechGridTile({
         ]}
       >
         <View style={styles.titleContainer}>
-          <Text
-            style={[
-              styles.title,
-              { color: isDarkMode ? colors.colors.white : colors.colors.black },
-            ]}
-          >
-            {data.item.title}
-          </Text>
-          <Text
-            style={[
-              styles.articleSourceText,
-              { color: isDarkMode ? colors.colors.white : colors.colors.black },
-            ]}
-          >
-            {data.item.source.name}
-          </Text>
+          <View style={styles.titleInnerContainer}>
+            <Text
+              style={[
+                styles.title,
+                {
+                  color: isDarkMode ? colors.colors.white : colors.colors.black,
+                },
+              ]}
+            >
+              {data.item.title}
+            </Text>
+          </View>
+          <View style={styles.articleSourceContainer}>
+            <Text
+              style={[
+                styles.articleSourceText,
+                {
+                  color: isDarkMode ? colors.colors.white : colors.colors.black,
+                },
+              ]}
+            >
+              {data.item.source.name}
+            </Text>
+          </View>
         </View>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: data.item.image }} />
@@ -83,10 +88,10 @@ export default function TechGridTile({
 
 const styles = StyleSheet.create({
   gridItem: {
-    height: 300,
-    width: "94.5%",
-    marginHorizontal: 11,
-    marginVertical: 8,
+    width: "44.5%",
+    height: 250,
+    marginVertical: 18,
+    marginHorizontal: 10,
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowColor: "black",
@@ -114,20 +119,29 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   titleContainer: {
-    padding: 12,
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    height: 90,
+    height: 100,
+  },
+  titleInnerContainer: {
+    height: 110,
+    padding: 6,
+    overflow: "hidden",
   },
   title: {
     fontFamily: "Display",
     textAlign: "left",
-    fontSize: 17,
+    fontSize: 14,
+  },
+  articleSourceContainer: {
+    width: "100%",
+    padding: 4,
+    position: "absolute",
+    bottom: 1,
   },
   articleSourceText: {
     fontFamily: "Display",
-    position: "absolute",
-    right: 12,
-    bottom: 12,
+    fontSize: 11,
+    textAlign: "right",
   },
 });
