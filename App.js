@@ -43,19 +43,6 @@ import pressSoundEffect from "./assets/pebbles-click.wav";
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
 Sound.setCategory("Playback");
-var playSound = new Sound(pressSoundEffect, (error) => {
-  if (error) {
-    console.log("failed to load the sound", error);
-    return;
-  }
-  // if loaded successfully
-  console.log(
-    "duration in seconds: " +
-      playSound.getDuration() +
-      "number of channels: " +
-      playSound.getNumberOfChannels()
-  );
-});
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -165,9 +152,25 @@ export default function App() {
     console.log(result.soundEffectsOn, soundEffectsOn);
   };
 
+  var playSound = useRef(
+    new Sound(pressSoundEffect, (error) => {
+      if (error) {
+        console.log("failed to load the sound", error);
+        return;
+      }
+      // if loaded successfully
+      console.log(
+        "duration in seconds: " +
+          playSound.current.getDuration() +
+          "number of channels: " +
+          playSound.current.getNumberOfChannels()
+      );
+    })
+  );
+
   function soundHandler() {
-    playSound.setVolume(0.5);
-    playSound.play((success) => {
+    playSound.current.setVolume(0.5);
+    playSound.current.play((success) => {
       if (success) {
         console.log("successfully finished playing");
       } else {
