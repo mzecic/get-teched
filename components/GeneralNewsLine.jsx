@@ -9,7 +9,6 @@ import {
 
 import * as WebBrowser from "expo-web-browser";
 import * as colors from "../assets/colors/primaryColors";
-import { color } from "react-native-reanimated";
 
 export default function GeneralNewsLine({
   data,
@@ -47,6 +46,7 @@ export default function GeneralNewsLine({
           borderBottomWidth:
             isDarkMode && data.index === 0 ? 3 : data.index === 0 ? 3 : 0,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
+          width: data.index === 0 ? "95%" : null,
         },
       ]}
     >
@@ -74,6 +74,9 @@ export default function GeneralNewsLine({
                   : data.index % 2 !== 0
                   ? "row"
                   : "column",
+              shadowColor: isDarkMode
+                ? colors.colors.white
+                : colors.colors.black,
             },
           ]}
         >
@@ -206,10 +209,9 @@ const styles = StyleSheet.create({
     elevation: 4,
     shadowColor: "black",
     shadowOpacity: 0.5,
-    shadowOffset: { width: 2, height: 2 },
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 8,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    // justifyContent: "space-between",
     backgroundColor: "rgb(235, 235, 235)",
   },
   articleSourceContainer: {

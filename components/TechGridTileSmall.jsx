@@ -40,6 +40,7 @@ export default function TechGridTileSmall({
             : colors.colors.white,
           borderBottomWidth: 3,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
+          shadowColor: isDarkMode ? colors.colors.white : colors.colors.black,
         },
       ]}
     >
@@ -53,7 +54,7 @@ export default function TechGridTileSmall({
       >
         <View style={styles.titleContainer}>
           <View style={styles.titleInnerContainer}>
-            {data.item.title.length > 80 ? (
+            {data.item.title.length > 90 ? (
               <Text
                 style={[
                   styles.title,
@@ -64,10 +65,11 @@ export default function TechGridTileSmall({
                   },
                 ]}
               >
-                {data.item.title.slice(0, 80)}...
+                {data.item.title.slice(0, 90)}...
               </Text>
             ) : (
               <Text
+                adjustsFontSizeToFit={true}
                 style={[
                   styles.title,
                   {
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
-    shadowColor: "black",
     shadowOpacity: 0.5,
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 6,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
-    flex: 1,
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   button: {
-    flex: 1,
+    height: "100%",
     flexDirection: "column-reverse",
   },
   buttonPressed: {
@@ -139,13 +140,12 @@ const styles = StyleSheet.create({
   },
   titleInnerContainer: {
     height: 110,
-    padding: 8,
+    padding: 6,
     overflow: "hidden",
   },
   title: {
     fontFamily: "Display",
-    textAlign: "left",
-    fontSize: 14,
+    fontSize: 13,
   },
   articleSourceContainer: {
     width: "100%",

@@ -10,7 +10,7 @@ import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as colors from "../assets/colors/primaryColors";
 
-export default function TechGridTile({
+export default function TechGridTileBig({
   data,
   lastVisitedScreen,
   isGeneralVisible,
@@ -27,15 +27,11 @@ export default function TechGridTile({
         styles.gridItem,
         {
           marginTop:
-            Platform.OS === "ios"
-              ? data.index === 0 &&
-                Platform.OS === "ios" &&
-                lastVisitedScreen !== "HomeScreen"
-                ? "15%"
-                : data.index === 0 && !isGeneralVisible
-                ? 12
-                : 12
-              : 12,
+            Platform.OS === "ios" &&
+            data.index === 0 &&
+            lastVisitedScreen === "HomeScreen"
+              ? 114
+              : 0,
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.white,
@@ -45,6 +41,10 @@ export default function TechGridTile({
           borderBottomWidth: 3,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
           shadowColor: isDarkMode ? colors.colors.white : colors.colors.black,
+          shadowOpacity: 0.4,
+          shadowOffset: { width: 2, height: 2 },
+          shadowRadius: 12,
+          overflow: Platform.OS === "android" ? "hidden" : "visible",
         },
       ]}
     >
@@ -58,6 +58,7 @@ export default function TechGridTile({
       >
         <View style={styles.titleContainer}>
           <Text
+            adjustsFontSizeToFit={true}
             style={[
               styles.title,
               { color: isDarkMode ? colors.colors.white : colors.colors.black },
@@ -84,16 +85,12 @@ export default function TechGridTile({
 
 const styles = StyleSheet.create({
   gridItem: {
-    height: 300,
+    flex: 1,
     width: "94.5%",
     marginHorizontal: 11,
-    marginVertical: 8,
+    marginVertical: 12,
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
-    shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
   imageContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -107,7 +104,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   button: {
-    flex: 1,
+    height: 500,
     flexDirection: "column-reverse",
   },
   buttonPressed: {
@@ -115,19 +112,14 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     padding: 12,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    height: 90,
   },
   title: {
     fontFamily: "Display",
     textAlign: "left",
-    fontSize: 17,
+    fontSize: 30,
   },
   articleSourceText: {
     fontFamily: "Display",
-    position: "absolute",
-    right: 12,
-    bottom: 12,
+    alignSelf: "flex-end",
   },
 });

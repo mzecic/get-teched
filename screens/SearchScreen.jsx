@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import * as news from "../utils/gnews";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 import primaryColors from "../assets/colors/primaryColors";
+import TechGridTileBig from "../components/TechGridTileBig";
 
 export default function SearchScreen({
   allNews,
@@ -61,14 +62,24 @@ export default function SearchScreen({
 
   function renderTechItem(itemData) {
     if (filteredData.length) {
-      return (
-        <GeneralNewsLine
-          arrayLength={filteredData.length}
-          isDarkMode={isDarkMode}
-          lastVisitedScreen={lastVisitedScreen}
-          data={itemData}
-        />
-      );
+      if (itemData.index === 0) {
+        return (
+          <TechGridTileBig
+            isDarkMode={isDarkMode}
+            data={itemData}
+            lastVisitedScreen={lastVisitedScreen}
+          />
+        );
+      } else {
+        return (
+          <GeneralNewsLine
+            arrayLength={filteredData.length}
+            isDarkMode={isDarkMode}
+            lastVisitedScreen={lastVisitedScreen}
+            data={itemData}
+          />
+        );
+      }
     }
   }
   return (

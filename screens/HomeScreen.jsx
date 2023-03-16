@@ -23,6 +23,7 @@ import * as profiles from "../utils/users-api";
 
 import TechGridTile from "../components/TechGridTile";
 import TechGridTileSmall from "../components/TechGridTileSmall";
+import TechGridTileBig from "../components/TechGridTileBig";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 
 import * as SplashScreen from "expo-splash-screen";
@@ -71,20 +72,12 @@ export default function HomeScreen({
     if (itemData.index >= 0 && itemData.index < 6) {
       if (itemData.index === 0) {
         return (
-          <>
-            <View
-              style={{
-                marginTop: Platform.OS === "ios" ? 92 : "5%",
-                justifyContent: "center",
-              }}
-            >
-              <GeneralNewsLine
-                isDarkMode={isDarkMode}
-                lastVisitedScreen={lastVisitedScreen}
-                data={itemData}
-              />
-            </View>
-          </>
+          <TechGridTileBig
+            isDarkMode={isDarkMode}
+            isGeneralVisible={isGeneralVisible}
+            data={itemData}
+            lastVisitedScreen={lastVisitedScreen}
+          />
         );
       } else if (
         itemData.index === 1 ||
@@ -232,7 +225,7 @@ export default function HomeScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.black
-                : colors.colors.backgroundLightMode,
+                : colors.colors.white,
             },
           ]}
           onLayout={onLayoutRootView}

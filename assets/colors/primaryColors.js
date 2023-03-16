@@ -3,7 +3,7 @@ const colors = {
   white: "white",
   black: "black",
   backgroundDarkMode: "rgb(20, 20, 20)",
-  backgroundLightMode: "rgba(220, 220, 230, 0.95)",
+  backgroundLightMode: "rgba(225, 225, 230, 0.95)",
   primaryHighlight: "rgb(150, 150, 150)",
   secondaryHighlight: "rgb(115, 115, 115)",
   newsTile: "rgb(210, 210, 210)",
