@@ -27,6 +27,9 @@ import * as colors from "../assets/colors/primaryColors";
 
 export default function HomeScreen({
   techNews,
+  gamingNews,
+  audioNews,
+  mobileNews,
   yOffset,
   headerOpacity,
   setTechNews,
@@ -122,28 +125,34 @@ export default function HomeScreen({
           />
         );
       }
-    } else if (itemData.index >= 6 && itemData.index < 10) {
-      if (itemData.index === 6) {
-        return (
-          <>
-            <TechGridTile
-              playSound={playSound}
-              isDarkMode={isDarkMode}
-              isGeneralVisible={isGeneralVisible}
-              data={itemData}
-              lastVisitedScreen={lastVisitedScreen}
-            />
-          </>
-        );
-      }
+    } else if (itemData.index >= 6 && itemData.index < 12) {
       return (
-        <TechGridTile
-          playSound={playSound}
-          isDarkMode={isDarkMode}
-          isGeneralVisible={isGeneralVisible}
-          data={itemData}
-          lastVisitedScreen={lastVisitedScreen}
-        />
+        <>
+          {itemData.index === 6 ? (
+            <Text
+              style={{
+                fontFamily: "Display",
+                fontSize: 30,
+                marginHorizontal: 12,
+                marginTop: 48,
+                width: "100%",
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              }}
+            >
+              General Technology
+            </Text>
+          ) : (
+            <></>
+          )}
+
+          <TechGridTile
+            playSound={playSound}
+            isDarkMode={isDarkMode}
+            isGeneralVisible={isGeneralVisible}
+            data={itemData}
+            lastVisitedScreen={lastVisitedScreen}
+          />
+        </>
       );
     } else {
       return (
@@ -215,7 +224,7 @@ export default function HomeScreen({
             {
               backgroundColor: isDarkMode
                 ? colors.colors.black
-                : colors.colors.white,
+                : colors.colors.backgroundLightMode,
             },
           ]}
           onLayout={onLayoutRootView}
@@ -358,7 +367,7 @@ export default function HomeScreen({
             showsVerticalScrollIndicator={false}
             columnWrapperStyle={{ flexWrap: "wrap" }}
             numColumns={2}
-            data={[...techNews]}
+            data={[...techNews.slice(0, 6), ...techNews.slice(6, 11)]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderTechItem}
             ref={listViewRef}

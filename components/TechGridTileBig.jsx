@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "94.5%",
     borderRadius: 12,
-    marginHorizontal: 11,
+    marginHorizontal: 16,
     marginVertical: 12,
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",

@@ -98,14 +98,9 @@ export default function GeneralNewsLine({
                 style={[
                   data.index === 0 ? styles.headlineTitle : styles.title,
                   {
-                    color:
-                      isDarkMode && data.index === 0
-                        ? colors.colors.white
-                        : data.index === 0
-                        ? colors.colors.black
-                        : isDarkMode
-                        ? colors.colors.white
-                        : colors.colors.white,
+                    color: isDarkMode
+                      ? colors.colors.white
+                      : colors.colors.white,
                   },
                 ]}
               >
@@ -157,8 +152,8 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   outerContainer: {
-    marginHorizontal: 10,
-    marginVertical: 10,
+    marginHorizontal: 16,
+    marginVertical: 12,
     borderRadius: 12,
   },
   headlineContainer: {

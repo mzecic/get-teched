@@ -400,6 +400,9 @@ export default function App() {
                               setGeneralNews={setGeneralNews}
                               techNews={techNews}
                               setTechNews={setTechNews}
+                              gamingNews={gamingNews}
+                              audioNews={audioNews}
+                              mobileNews={mobileNews}
                               yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               lastVisitedScreen={lastVisitedScreen}
