@@ -108,11 +108,11 @@ export default function TechGridTileSmall({
 
 const styles = StyleSheet.create({
   gridItem: {
-    width: "41.5%",
+    width: "42%",
     height: 250,
     borderRadius: 12,
     marginVertical: 18,
-    marginHorizontal: 16,
+    marginHorizontal: "4%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,
