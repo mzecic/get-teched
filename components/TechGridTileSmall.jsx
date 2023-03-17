@@ -40,7 +40,7 @@ export default function TechGridTileSmall({
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.white,
-          borderBottomWidth: 1.5,
+          // borderBottomWidth: 1.5,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
           shadowColor: isDarkMode ? colors.colors.white : colors.colors.black,
         },

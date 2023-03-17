@@ -45,8 +45,7 @@ export default function GeneralNewsLine({
             data.index === arrayLength - 1
               ? "25%"
               : 0,
-          borderBottomWidth:
-            isDarkMode && data.index === 0 ? 1.5 : data.index === 0 ? 1 : 1.5,
+          borderBottomWidth: 0,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
         },
       ]}
