@@ -82,10 +82,9 @@ export default function App() {
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
-      require("./assets/organic-click.mp3")
+      require("./assets/pebbles-click.mp3")
     );
     setSound(sound);
-    console.log(sound);
 
     console.log("Playing Sound");
     await sound.playAsync();

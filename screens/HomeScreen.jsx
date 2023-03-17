@@ -69,19 +69,40 @@ export default function HomeScreen({
     if (itemData.index >= 0 && itemData.index < 6) {
       if (itemData.index === 0) {
         return (
-          <TechGridTileBig
-            playSound={playSound}
-            isDarkMode={isDarkMode}
-            isGeneralVisible={isGeneralVisible}
-            data={itemData}
-            lastVisitedScreen={lastVisitedScreen}
-          />
+          <>
+            <Text
+              style={{
+                fontFamily: "Display",
+                fontSize: 30,
+                marginHorizontal: 12,
+                marginTop: 112,
+                width: "100%",
+                color: isDarkMode ? colors.colors.white : colors.colors.black,
+              }}
+            >
+              Top Stories
+            </Text>
+            <TechGridTileBig
+              playSound={playSound}
+              isDarkMode={isDarkMode}
+              isGeneralVisible={isGeneralVisible}
+              data={itemData}
+              lastVisitedScreen={lastVisitedScreen}
+            />
+          </>
         );
-      } else if (
-        itemData.index === 1 ||
-        itemData.index === 4 ||
-        itemData.index === 5
-      ) {
+      } else if (itemData.index === 1) {
+        return (
+          <>
+            <GeneralNewsLine
+              playSound={playSound}
+              isDarkMode={isDarkMode}
+              lastVisitedScreen={lastVisitedScreen}
+              data={itemData}
+            />
+          </>
+        );
+      } else if (itemData.index === 4 || itemData.index === 5) {
         return (
           <GeneralNewsLine
             playSound={playSound}
@@ -105,17 +126,6 @@ export default function HomeScreen({
       if (itemData.index === 6) {
         return (
           <>
-            <Text
-              style={{
-                fontFamily: "CaslonBold",
-                fontSize: 30,
-                marginHorizontal: 12,
-                marginTop: 48,
-                color: isDarkMode ? colors.colors.white : colors.colors.black,
-              }}
-            >
-              Top Stories
-            </Text>
             <TechGridTile
               playSound={playSound}
               isDarkMode={isDarkMode}
@@ -339,8 +349,6 @@ export default function HomeScreen({
                     setLastOffset(offset);
                   } else if (scrollingDirection === "down") {
                   }
-
-                  // setHidePoint(scrollingDirection === "up" ? 0 : )
                 },
                 useNativeDriver: true,
               }
@@ -350,7 +358,7 @@ export default function HomeScreen({
             showsVerticalScrollIndicator={false}
             columnWrapperStyle={{ flexWrap: "wrap" }}
             numColumns={2}
-            data={[...generalNews, ...techNews]}
+            data={[...techNews]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderTechItem}
             ref={listViewRef}

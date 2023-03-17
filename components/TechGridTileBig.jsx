@@ -32,7 +32,7 @@ export default function TechGridTileBig({
             Platform.OS === "ios" &&
             data.index === 0 &&
             lastVisitedScreen === "HomeScreen"
-              ? 114
+              ? 28
               : 0,
           backgroundColor: isDarkMode
             ? colors.colors.black
@@ -40,10 +40,10 @@ export default function TechGridTileBig({
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.white,
-          borderBottomWidth: 3,
+          borderBottomWidth: 1.5,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
           shadowColor: isDarkMode ? colors.colors.white : colors.colors.black,
-          shadowOpacity: 0.4,
+          shadowOpacity: 0.3,
           shadowOffset: { width: 2, height: 2 },
           shadowRadius: 12,
           overflow: Platform.OS === "android" ? "hidden" : "visible",
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     width: "94.5%",
+    borderRadius: 12,
     marginHorizontal: 11,
     marginVertical: 12,
     elevation: 4,
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     flex: 1,
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",

@@ -46,9 +46,8 @@ export default function GeneralNewsLine({
               ? "25%"
               : 0,
           borderBottomWidth:
-            isDarkMode && data.index === 0 ? 3 : data.index === 0 ? 3 : 0,
+            isDarkMode && data.index === 0 ? 1.5 : data.index === 0 ? 1 : 1.5,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
-          width: data.index === 0 ? "95%" : null,
         },
       ]}
     >
@@ -146,7 +145,7 @@ export default function GeneralNewsLine({
           </View>
           {data.index !== 0 ? (
             <Image
-              style={[styles.image, {}]}
+              style={[styles.image, { borderRadius: 12 }]}
               source={{ uri: data.item.image }}
             />
           ) : (
@@ -161,18 +160,19 @@ const styles = StyleSheet.create({
   outerContainer: {
     marginHorizontal: 10,
     marginVertical: 10,
+    borderRadius: 12,
   },
   headlineContainer: {
     flex: 1,
   },
   lineItem: {
     fontFamily: "Display",
-    textAlign: "left",
     fontSize: 20,
   },
   titleContainer: {
     position: "absolute",
     width: "100%",
+    borderRadius: 12,
     height: 130,
     padding: 12,
   },
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     fontFamily: "Display",
     fontSize: 18,
     zIndex: 200,
+    borderRadius: 12,
   },
   headlineTitleContainer: {
     flexDirection: "column-reverse",
@@ -209,10 +210,11 @@ const styles = StyleSheet.create({
   },
   lineItemContainer: {
     elevation: 4,
+    borderRadius: 12,
     shadowColor: "black",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 8,
+    shadowRadius: 4,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
     backgroundColor: "rgb(235, 235, 235)",
   },
@@ -220,11 +222,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 4,
     right: 4,
+    borderRadius: 12,
   },
   articleSource: {
     fontFamily: "Display",
     fontSize: 14,
     zIndex: 200,
+    borderRadius: 12,
   },
   image: {
     opacity: 0.65,

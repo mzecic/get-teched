@@ -44,7 +44,7 @@ export default function TechGridTile({
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.white,
-          borderBottomWidth: 3,
+          borderBottomWidth: 1.5,
           borderColor: isDarkMode ? colors.colors.white : colors.colors.black,
           shadowColor: isDarkMode ? colors.colors.white : colors.colors.black,
         },
@@ -88,11 +88,12 @@ const styles = StyleSheet.create({
   gridItem: {
     height: 300,
     width: "94.5%",
+    borderRadius: 12,
     marginHorizontal: 11,
     marginVertical: 8,
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     flex: 1,
+    borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
