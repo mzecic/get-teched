@@ -113,14 +113,14 @@ export default function CategoryCard({
                   },
                 ]}
               >
-                {article.title.length > 77
-                  ? article.title.slice(0, 78) + "..."
+                {article.title.length > 50
+                  ? article.title.slice(0, 51) + "..."
                   : article.title}
               </Text>
               <Image
                 style={{
-                  width: 90,
-                  height: 90,
+                  width: 65,
+                  height: 65,
                   borderRadius: 16,
                 }}
                 source={{ uri: article.image }}
@@ -156,10 +156,11 @@ const styles = StyleSheet.create({
   pressableContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    padding: 6,
   },
   titleContainer: {
     height: 90,
-    marginVertical: 12,
+    marginVertical: 6,
     borderBottomEndRadius: 16,
     borderBottomLeftRadius: 16,
   },
