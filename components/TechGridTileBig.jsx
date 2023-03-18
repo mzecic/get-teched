@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "94.5%",
     borderRadius: 12,
-    marginHorizontal: "4%",
-    marginVertical: "4%",
+    marginHorizontal: "2.5%",
+    marginVertical: "2.5%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
   },
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   title: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     textAlign: "left",
     fontSize: 30,
   },
   articleSourceText: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     alignSelf: "flex-end",
   },
 });

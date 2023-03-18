@@ -86,10 +86,10 @@ export default function TechGridTile({
 const styles = StyleSheet.create({
   gridItem: {
     height: 300,
-    width: "92.25%",
+    width: "94.7%",
     borderRadius: 12,
-    marginHorizontal: "4%",
-    marginVertical: "4%",
+    marginHorizontal: "2.5%",
+    marginVertical: "2.5%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,
@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
     height: 90,
   },
   title: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     textAlign: "left",
     fontSize: 17,
   },
   articleSourceText: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     position: "absolute",
     right: 12,
     bottom: 12,

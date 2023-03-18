@@ -147,15 +147,15 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   outerContainer: {
-    marginHorizontal: "4%",
-    marginVertical: "4%",
+    marginHorizontal: "2.5%",
+    marginVertical: "2.5%",
     borderRadius: 12,
   },
   headlineContainer: {
     flex: 1,
   },
   lineItem: {
-    fontFamily: "Display",
+    fontFamily: "OswaldBold",
     fontSize: 20,
   },
   titleContainer: {
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   title: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 18,
     zIndex: 200,
     borderRadius: 12,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     flexDirection: "column-reverse",
   },
   headlineTitle: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 28,
   },
   headlineTitleInnerContainer: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     height: 160,
   },
   headlineArticleSource: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     zIndex: 110,
     bottom: 4,
     right: 8,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   articleSource: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 14,
     zIndex: 200,
     borderRadius: 12,

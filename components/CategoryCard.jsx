@@ -26,7 +26,7 @@ export default function CategoryCard({
           shadowOffset: { width: 1, height: 0 },
           shadowRadius: 8,
           overflow: Platform.OS === "android" ? "hidden" : "visible",
-          marginTop: title === "Gaming" ? "12%" : "16%",
+          marginTop: title === "Gaming" ? "3.5%" : "6%",
         },
       ]}
     >
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: "white",
-    marginHorizontal: "4%",
+    marginHorizontal: "2.5%",
     borderRadius: 16,
   },
   cardTitleContainer: {
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 26,
-    fontFamily: "Display",
+    fontFamily: "OswaldBold",
   },
   pressableContainer: {
     flexDirection: "row",
@@ -158,10 +158,12 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     height: 90,
+    borderBottomEndRadius: 16,
+    borderBottomLeftRadius: 16,
   },
   titleText: {
     width: "70%",
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 15,
     zIndex: 200,
     padding: 12,

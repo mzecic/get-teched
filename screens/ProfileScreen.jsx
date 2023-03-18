@@ -87,7 +87,7 @@ export default function ProfileScreen({
               }}
             >
               <View style={styles.backArrow}></View>
-              <Text style={styles.backButtonText}>Back</Text>
+              <Text style={styles.backButtonText}>News</Text>
             </Pressable>
           </SafeAreaView>
           <View style={styles.mainContainer}>

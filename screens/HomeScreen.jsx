@@ -17,6 +17,7 @@ import * as news from "../utils/gnews";
 import * as profiles from "../utils/users-api";
 import SoundEffect from "../assets/pebbles-click.wav";
 
+import HeaderBar from "../components/HeaderBar";
 import TechGridTile from "../components/TechGridTile";
 import TechGridTileSmall from "../components/TechGridTileSmall";
 import TechGridTileBig from "../components/TechGridTileBig";
@@ -79,11 +80,11 @@ export default function HomeScreen({
           <>
             <Text
               style={{
-                fontFamily: "Display",
+                fontFamily: "OswaldBold",
                 fontSize: 30,
                 marginHorizontal: "4%",
                 marginTop: 112,
-                marginBottom: 28,
+                marginBottom: "4%",
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
@@ -136,11 +137,10 @@ export default function HomeScreen({
           <>
             <Text
               style={{
-                fontFamily: "Display",
+                fontFamily: "OswaldBold",
                 fontSize: 30,
                 marginHorizontal: "4%",
-                marginTop: 72,
-                marginBottom: 28,
+                marginTop: 42,
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
@@ -295,7 +295,7 @@ export default function HomeScreen({
           ]}
           onLayout={onLayoutRootView}
         >
-          <Animated.View
+          {/* <Animated.View
             style={{
               paddingTop: 46,
               zIndex: 200,
@@ -393,7 +393,20 @@ export default function HomeScreen({
                 <></>
               )}
             </Pressable>
-          </Animated.View>
+          </Animated.View> */}
+          <HeaderBar
+            headerTitle={"News"}
+            offset={offset}
+            headerOpacity={headerOpacity}
+            isDarkMode={isDarkMode}
+            soundEffectsOn={soundEffectsOn}
+            playSound={playSound}
+            navigation={navigation}
+            setLastVisitedScreen={setLastVisitedScreen}
+            setIsMenu={setIsMenu}
+            storedCredentials={storedCredentials}
+            scrollingDirection={scrollingDirection}
+          />
           <Animated.FlatList
             refreshControl={
               <RefreshControl

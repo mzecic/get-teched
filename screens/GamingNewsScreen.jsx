@@ -31,9 +31,6 @@ export default function GamingNewsScreen({
   setRefreshing,
   playSound,
 }) {
-  const [fontsLoaded] = useFonts({
-    "Barlow-Medium": require("../assets/fonts/Barlow-Medium.ttf"),
-  });
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);

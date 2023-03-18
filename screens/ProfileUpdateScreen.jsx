@@ -62,7 +62,7 @@ export default function ProfileCreateScreen({
           }}
         >
           <View style={styles.backArrow}></View>
-          <Text style={styles.backButtonText}>Back</Text>
+          <Text style={styles.backButtonText}>Profile</Text>
         </Pressable>
       </SafeAreaView>
       <View style={styles.mainContainer}>

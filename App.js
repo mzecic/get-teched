@@ -193,10 +193,11 @@ export default function App() {
 
   const [fontsLoaded] = useFonts({
     Audiowide: require("./assets/fonts/Audiowide-Regular.ttf"),
-    CaslonBold: require("./assets/fonts/LibreCaslonText-Bold.ttf"),
-    Caslon: require("./assets/fonts/LibreCaslonText-Regular.ttf"),
-    Display: require("./assets/fonts/DMSerifDisplay-Regular.ttf"),
-    Alatsi: require("./assets/fonts/Alatsi-Regular.ttf"),
+    Tinos: require("./assets/fonts/Tinos-Regular.ttf"),
+    TinosBold: require("./assets/fonts/Tinos-Bold.ttf"),
+    Oswald: require("./assets/fonts/Oswald-Regular.ttf"),
+    OswaldMedium: require("./assets/fonts/Oswald-Medium.ttf"),
+    OswaldBold: require("./assets/fonts/Oswald-Bold.ttf"),
   });
   useEffect(function () {
     checkLoginCredentials();

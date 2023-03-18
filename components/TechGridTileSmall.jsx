@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     flex: 1 / 2,
     height: 250,
     borderRadius: 12,
-    marginVertical: "4%",
-    marginHorizontal: "4%",
+    marginVertical: "2.5%",
+    marginHorizontal: "2.5%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
   },
   titleInnerContainer: {
     height: 110,
-    padding: 6,
+    padding: 12,
     overflow: "hidden",
   },
   title: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 13,
   },
   articleSourceContainer: {
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     bottom: 1,
   },
   articleSourceText: {
-    fontFamily: "Display",
+    fontFamily: "OswaldMedium",
     fontSize: 11,
     textAlign: "right",
   },
