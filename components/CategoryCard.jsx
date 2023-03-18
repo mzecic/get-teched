@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 65,
     padding: 12,
+    marginBottom: 6,
     borderBottomWidth: 1,
   },
   cardTitle: {
