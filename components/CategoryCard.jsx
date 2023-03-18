@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginHorizontal: "2.5%",
     borderRadius: 16,
-    padding: 18
+    padding: 18,
   },
   cardTitleContainer: {
     flexDirection: "row",
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     height: 90,
+    marginVertical: 12,
     borderBottomEndRadius: 16,
     borderBottomLeftRadius: 16,
   },
