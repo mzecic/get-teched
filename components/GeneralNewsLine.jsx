@@ -38,7 +38,7 @@ export default function GeneralNewsLine({
                 ? "15%"
                 : data.index === 0
                 ? "5%"
-                : "0%"
+                : 12
               : "0%",
           paddingBottom:
             lastVisitedScreen === "SearchScreen" &&
@@ -68,12 +68,7 @@ export default function GeneralNewsLine({
                 : data.index !== 0
                 ? colors.colors.secondaryHighlight
                 : colors.colors.white,
-              flexDirection:
-                data.index % 2 === 0 && data.index !== 0
-                  ? "row-reverse"
-                  : data.index % 2 !== 0
-                  ? "row"
-                  : "column",
+              flexDirection: "row-reverse",
               shadowColor: isDarkMode
                 ? colors.colors.white
                 : colors.colors.black,

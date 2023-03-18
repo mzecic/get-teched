@@ -32,7 +32,7 @@ export default function TechGridTileBig({
             Platform.OS === "ios" &&
             data.index === 0 &&
             lastVisitedScreen === "HomeScreen"
-              ? 28
+              ? 0
               : 0,
           backgroundColor: isDarkMode
             ? colors.colors.black

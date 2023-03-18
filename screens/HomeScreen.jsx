@@ -21,6 +21,7 @@ import TechGridTile from "../components/TechGridTile";
 import TechGridTileSmall from "../components/TechGridTileSmall";
 import TechGridTileBig from "../components/TechGridTileBig";
 import GeneralNewsLine from "../components/GeneralNewsLine";
+import CategoryCard from "../components/CategoryCard";
 
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
@@ -33,6 +34,7 @@ export default function HomeScreen({
   yOffset,
   headerOpacity,
   setTechNews,
+  setGamingNews,
   setGeneralNews,
   generalNews,
   onLayoutRootView,
@@ -77,8 +79,9 @@ export default function HomeScreen({
               style={{
                 fontFamily: "Display",
                 fontSize: 30,
-                marginHorizontal: 12,
+                marginHorizontal: 16,
                 marginTop: 112,
+                marginBottom: 40,
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
@@ -126,45 +129,74 @@ export default function HomeScreen({
         );
       }
     } else if (itemData.index >= 6 && itemData.index < 12) {
-      return (
-        <>
-          {itemData.index === 6 ? (
+      if (itemData.index === 6) {
+        return (
+          <>
             <Text
               style={{
                 fontFamily: "Display",
                 fontSize: 30,
-                marginHorizontal: 12,
+                marginHorizontal: 16,
                 marginTop: 48,
+                marginBottom: 24,
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
             >
               General Technology
             </Text>
-          ) : (
-            <></>
-          )}
-
-          <TechGridTile
+            <TechGridTile
+              playSound={playSound}
+              isDarkMode={isDarkMode}
+              isGeneralVisible={isGeneralVisible}
+              data={itemData}
+              lastVisitedScreen={lastVisitedScreen}
+            />
+          </>
+        );
+      } else if (itemData.index === 7) {
+        return (
+          <GeneralNewsLine
             playSound={playSound}
             isDarkMode={isDarkMode}
             isGeneralVisible={isGeneralVisible}
             data={itemData}
             lastVisitedScreen={lastVisitedScreen}
           />
-        </>
-      );
-    } else {
+        );
+      } else if (itemData.index > 7 < 11) {
+        return (
+          <TechGridTileSmall
+            playSound={playSound}
+            isDarkMode={isDarkMode}
+            isGeneralVisible={isGeneralVisible}
+            data={itemData}
+            lastVisitedScreen={lastVisitedScreen}
+          />
+        );
+      }
+    } else if (itemData.index === 12) {
       return (
-        <TechGridTileSmall
+        <CategoryCard
+          title="Gaming"
           playSound={playSound}
           isDarkMode={isDarkMode}
-          isGeneralVisible={isGeneralVisible}
-          data={itemData}
+          news={gamingNews}
           lastVisitedScreen={lastVisitedScreen}
         />
       );
     }
+    // else {
+    //   return (
+    //     <TechGridTileSmall
+    //       playSound={playSound}
+    //       isDarkMode={isDarkMode}
+    //       isGeneralVisible={isGeneralVisible}
+    //       data={itemData}
+    //       lastVisitedScreen={lastVisitedScreen}
+    //     />
+    //   );
+    // }
   }
 
   const navigation = useNavigation();
@@ -177,6 +209,8 @@ export default function HomeScreen({
         }
         const techNews = await news.getTechNews();
         setTechNews([...techNews.reverse()]);
+        const gamingNews = await news.getGamingNews();
+        setGamingNews([...gamingNews.reverse()]);
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
@@ -367,10 +401,15 @@ export default function HomeScreen({
             showsVerticalScrollIndicator={false}
             columnWrapperStyle={{ flexWrap: "wrap" }}
             numColumns={2}
-            data={[...techNews.slice(0, 6), ...techNews.slice(6, 11)]}
+            data={[
+              ...techNews.slice(0, 6),
+              ...techNews.slice(6, 12),
+              ...gamingNews,
+            ]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderTechItem}
             ref={listViewRef}
+            style={{}}
           />
         </View>
       )}
@@ -381,8 +420,7 @@ export default function HomeScreen({
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? 0 : 0,
-    // justifyContent: "center",
+    paddingHorizontal: "2.5%",
   },
   headerTitle: {
     fontFamily: "Audiowide",

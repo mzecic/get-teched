@@ -58,8 +58,8 @@ export default function GamingNewsScreen({
         if (!refreshing) {
           setIsLoading(true);
         }
-        const techNews = await news.getGamingNews();
-        setGamingNews([...techNews.reverse()]);
+        const gamingNews = await news.getGamingNews();
+        setGamingNews([...gamingNews.reverse()]);
         setTimeout(function () {
           setIsLoading(false);
         }, 750);

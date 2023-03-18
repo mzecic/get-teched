@@ -401,6 +401,7 @@ export default function App() {
                               techNews={techNews}
                               setTechNews={setTechNews}
                               gamingNews={gamingNews}
+                              setGamingNews={setGamingNews}
                               audioNews={audioNews}
                               mobileNews={mobileNews}
                               yOffset={yOffset}

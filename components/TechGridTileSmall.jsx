@@ -108,16 +108,16 @@ export default function TechGridTileSmall({
 
 const styles = StyleSheet.create({
   gridItem: {
-    width: "42%",
+    flex: 1 / 2,
     height: 250,
     borderRadius: 12,
     marginVertical: 18,
-    marginHorizontal: "4%",
+    marginHorizontal: "3.75%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,
-    shadowOffset: { width: 2, height: 2 },
-    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 4,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
   },
   imageContainer: {
