@@ -237,6 +237,37 @@ export default function BottomNavBar({
             </View>
           </Pressable>
         </View>
+        <View style={styles.pressableContainer}>
+          <Pressable
+            onPress={() => {
+              if (soundEffectsOn) playSound();
+              console.log("menu button pressed");
+            }}
+            style={({ pressed }) => [styles.button]}
+          >
+            <View style={styles.buttonContainer}>
+              <Image
+                style={[
+                  styles.navIcon,
+                  {
+                    tintColor: isDarkMode ? "white" : "black",
+                  },
+                ]}
+                source={require("../assets/menu-icon.png")}
+              />
+              <Text
+                style={[
+                  styles.imageTag,
+                  {
+                    color: isDarkMode ? "white" : "black",
+                  },
+                ]}
+              >
+                Menu
+              </Text>
+            </View>
+          </Pressable>
+        </View>
       </Animated.View>
     </>
   );
