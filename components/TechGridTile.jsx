@@ -6,7 +6,6 @@ import {
   Platform,
   Image,
 } from "react-native";
-import { useState, useCallback } from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as colors from "../assets/colors/primaryColors";
 
@@ -89,8 +88,8 @@ const styles = StyleSheet.create({
     height: 300,
     width: "92.25%",
     borderRadius: 12,
-    marginHorizontal: 16,
-    marginVertical: 8,
+    marginHorizontal: "4%",
+    marginVertical: "4%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,

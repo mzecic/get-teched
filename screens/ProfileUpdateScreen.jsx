@@ -102,7 +102,7 @@ export default function ProfileCreateScreen({
                     : primaryColors.colors.black,
                   backgroundColor: isDarkMode
                     ? primaryColors.colors.backgroundDarkMode
-                    : primaryColors.colors.backgroundLightMode,
+                    : primaryColors.colors.lighterGrey,
                 },
               ]}
             />
@@ -138,7 +138,7 @@ export default function ProfileCreateScreen({
                     : primaryColors.colors.black,
                   backgroundColor: isDarkMode
                     ? primaryColors.colors.backgroundDarkMode
-                    : primaryColors.colors.backgroundLightMode,
+                    : primaryColors.colors.lighterGrey,
                 },
               ]}
             />
@@ -182,7 +182,7 @@ export default function ProfileCreateScreen({
                       : primaryColors.colors.black,
                   backgroundColor: isDarkMode
                     ? primaryColors.colors.backgroundDarkMode
-                    : primaryColors.colors.backgroundLightMode,
+                    : primaryColors.colors.lighterGrey,
                 },
               ]}
             />

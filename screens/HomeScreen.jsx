@@ -35,6 +35,8 @@ export default function HomeScreen({
   headerOpacity,
   setTechNews,
   setGamingNews,
+  setAudioNews,
+  setMobileNews,
   setGeneralNews,
   generalNews,
   onLayoutRootView,
@@ -79,9 +81,9 @@ export default function HomeScreen({
               style={{
                 fontFamily: "Display",
                 fontSize: 30,
-                marginHorizontal: 16,
+                marginHorizontal: "4%",
                 marginTop: 112,
-                marginBottom: 40,
+                marginBottom: 28,
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
@@ -136,9 +138,9 @@ export default function HomeScreen({
               style={{
                 fontFamily: "Display",
                 fontSize: 30,
-                marginHorizontal: 16,
-                marginTop: 48,
-                marginBottom: 24,
+                marginHorizontal: "4%",
+                marginTop: 72,
+                marginBottom: 28,
                 width: "100%",
                 color: isDarkMode ? colors.colors.white : colors.colors.black,
               }}
@@ -178,10 +180,36 @@ export default function HomeScreen({
     } else if (itemData.index === 12) {
       return (
         <CategoryCard
+          setLastVisitedScreen={setLastVisitedScreen}
+          navigation={navigation}
           title="Gaming"
           playSound={playSound}
           isDarkMode={isDarkMode}
           news={gamingNews}
+          lastVisitedScreen={lastVisitedScreen}
+        />
+      );
+    } else if (itemData.index === 17) {
+      return (
+        <CategoryCard
+          setLastVisitedScreen={setLastVisitedScreen}
+          navigation={navigation}
+          title="Audio"
+          playSound={playSound}
+          isDarkMode={isDarkMode}
+          news={audioNews}
+          lastVisitedScreen={lastVisitedScreen}
+        />
+      );
+    } else if (itemData.index === 21) {
+      return (
+        <CategoryCard
+          setLastVisitedScreen={setLastVisitedScreen}
+          navigation={navigation}
+          title="Mobile"
+          playSound={playSound}
+          isDarkMode={isDarkMode}
+          news={mobileNews}
           lastVisitedScreen={lastVisitedScreen}
         />
       );
@@ -211,6 +239,10 @@ export default function HomeScreen({
         setTechNews([...techNews.reverse()]);
         const gamingNews = await news.getGamingNews();
         setGamingNews([...gamingNews.reverse()]);
+        const audioNews = await news.getAudioNews();
+        setAudioNews(audioNews);
+        const mobileNews = await news.getMobileNews();
+        setMobileNews(mobileNews);
         const generalNews = await news.getGeneralNews();
         let result = [...generalNews.reverse().splice(0, 4)];
         setGeneralNews([...result]);
@@ -404,7 +436,8 @@ export default function HomeScreen({
             data={[
               ...techNews.slice(0, 6),
               ...techNews.slice(6, 12),
-              ...gamingNews,
+              ...gamingNews.slice(12, 17),
+              ...audioNews.slice(17, 22),
             ]}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderTechItem}

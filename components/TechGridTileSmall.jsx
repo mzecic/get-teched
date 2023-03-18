@@ -56,7 +56,7 @@ export default function TechGridTileSmall({
       >
         <View style={styles.titleContainer}>
           <View style={styles.titleInnerContainer}>
-            {data.item.title.length > 90 ? (
+            {data.item.title.length > 70 ? (
               <Text
                 style={[
                   styles.title,
@@ -67,7 +67,7 @@ export default function TechGridTileSmall({
                   },
                 ]}
               >
-                {data.item.title.slice(0, 90)}...
+                {data.item.title.slice(0, 70)}...
               </Text>
             ) : (
               <Text
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     flex: 1 / 2,
     height: 250,
     borderRadius: 12,
-    marginVertical: 18,
-    marginHorizontal: "3.75%",
+    marginVertical: "4%",
+    marginHorizontal: "4%",
     elevation: 4,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowOpacity: 0.3,

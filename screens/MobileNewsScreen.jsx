@@ -92,8 +92,8 @@ export default function MobileNewsScreen({
             styles.list,
             {
               backgroundColor: isDarkMode
-                ? colors.colors.backgroundDarkMode
-                : colors.colors.white,
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
             },
           ]}
         >
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   list: {
     paddingTop: Platform.OS === "android" ? 16 : 0,
     justifyContent: "center",
+    padding: "2.5%",
   },
   headerTitle: {
     marginTop: "15%",

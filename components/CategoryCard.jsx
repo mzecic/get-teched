@@ -1,19 +1,15 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  ImageBackground,
-} from "react-native";
-import GeneralNewsLine from "./GeneralNewsLine";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
+import * as WebBrowser from "expo-web-browser";
 
 export default function CategoryCard({
   news,
   playSound,
   isDarkMode,
   lastVisitedScreen,
+  setLastVisitedScreen,
   title,
+  navigation,
 }) {
   return (
     <View
@@ -21,45 +17,63 @@ export default function CategoryCard({
         styles.mainContainer,
         {
           backgroundColor: isDarkMode
-            ? primaryColors.colors.backgroundDarkMode
-            : primaryColors.colors.backgroundLightMode,
+            ? primaryColors.colors.black
+            : primaryColors.colors.white,
+          shadowColor: isDarkMode
+            ? primaryColors.colors.white
+            : primaryColors.colors.black,
+          shadowOpacity: 0.25,
+          shadowOffset: { width: 1, height: 0 },
+          shadowRadius: 8,
+          overflow: Platform.OS === "android" ? "hidden" : "visible",
+          marginTop: title === "Gaming" ? "12%" : "16%",
         },
       ]}
     >
-      <View
-        style={[
-          styles.cardTitleContainer,
-          {
-            borderColor: isDarkMode ? primaryColors.colors.grey : "black",
-          },
-        ]}
+      <Pressable
+        style={({ pressed }) => [pressed ? styles.buttonPressed : null]}
+        onPress={() => {
+          navigation.navigate(`${title}NewsScreen`);
+          setLastVisitedScreen(`${title}NewsScreen`);
+        }}
       >
-        <Text
+        <View
           style={[
-            styles.cardTitle,
+            styles.cardTitleContainer,
             {
-              color: isDarkMode
-                ? primaryColors.colors.white
-                : primaryColors.colors.black,
+              borderColor: isDarkMode
+                ? primaryColors.colors.grey
+                : primaryColors.colors.lighterGrey,
             },
           ]}
         >
-          {title}
-        </Text>
-        <View
-          style={[
-            styles.forwardArrow,
-            {
-              borderTopColor: isDarkMode
-                ? primaryColors.colors.white
-                : primaryColors.colors.black,
-              borderRightColor: isDarkMode
-                ? primaryColors.colors.white
-                : primaryColors.colors.black,
-            },
-          ]}
-        ></View>
-      </View>
+          <Text
+            style={[
+              styles.cardTitle,
+              {
+                color: isDarkMode
+                  ? primaryColors.colors.white
+                  : primaryColors.colors.black,
+              },
+            ]}
+          >
+            {title}
+          </Text>
+          <View
+            style={[
+              styles.forwardArrow,
+              {
+                borderTopColor: isDarkMode
+                  ? primaryColors.colors.white
+                  : primaryColors.colors.black,
+                borderRightColor: isDarkMode
+                  ? primaryColors.colors.white
+                  : primaryColors.colors.black,
+              },
+            ]}
+          ></View>
+        </View>
+      </Pressable>
 
       {news.slice(0, 5).map((article, index) => {
         return (
@@ -68,32 +82,50 @@ export default function CategoryCard({
             style={[
               styles.titleContainer,
               {
-                borderColor: isDarkMode ? primaryColors.colors.grey : "black",
+                backgroundColor: isDarkMode
+                  ? primaryColors.colors.black
+                  : primaryColors.colors.white,
+                borderColor: isDarkMode
+                  ? primaryColors.colors.grey
+                  : primaryColors.colors.lighterGrey,
                 borderBottomWidth: index !== 4 ? 1 : 0,
               },
             ]}
           >
-            <Text
-              style={[
-                styles.titleText,
-                {
-                  color: isDarkMode
-                    ? primaryColors.colors.white
-                    : primaryColors.colors.black,
-                },
+            <Pressable
+              style={({ pressed }) => [
+                styles.pressableContainer,
+                pressed ? styles.buttonPressed : null,
               ]}
-            >
-              {article.title}
-            </Text>
-            <ImageBackground
-              style={{
-                height: "100%",
-                opacity: 0.3,
-                zIndex: -1,
-                borderRadius: index === 4 ? 16 : 0,
+              onPress={async function () {
+                console.log("Pressed");
+                let result = await WebBrowser.openBrowserAsync(article.url);
+                return result;
               }}
-              source={{ uri: article.image }}
-            ></ImageBackground>
+            >
+              <Text
+                style={[
+                  styles.titleText,
+                  {
+                    color: isDarkMode
+                      ? primaryColors.colors.white
+                      : primaryColors.colors.black,
+                  },
+                ]}
+              >
+                {article.title.length > 77
+                  ? article.title.slice(0, 78) + "..."
+                  : article.title}
+              </Text>
+              <Image
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 16,
+                }}
+                source={{ uri: article.image }}
+              />
+            </Pressable>
           </View>
         );
       })}
@@ -105,8 +137,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: "white",
-    marginVertical: 64,
-    marginHorizontal: "3.25%",
+    marginHorizontal: "4%",
     borderRadius: 16,
   },
   cardTitleContainer: {
@@ -118,18 +149,22 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   cardTitle: {
-    fontSize: 30,
+    fontSize: 26,
     fontFamily: "Display",
+  },
+  pressableContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   titleContainer: {
     height: 90,
   },
   titleText: {
+    width: "70%",
     fontFamily: "Display",
-    fontSize: 16,
+    fontSize: 15,
     zIndex: 200,
     padding: 12,
-    position: "absolute",
   },
   forwardArrow: {
     width: 14,
@@ -141,5 +176,8 @@ const styles = StyleSheet.create({
     borderTopColor: "#007AFF",
     borderRightColor: "#007AFF",
     transform: [{ rotate: "45deg" }],
+  },
+  buttonPressed: {
+    opacity: 0.5,
   },
 });

@@ -403,7 +403,9 @@ export default function App() {
                               gamingNews={gamingNews}
                               setGamingNews={setGamingNews}
                               audioNews={audioNews}
+                              setAudioNews={setAudioNews}
                               mobileNews={mobileNews}
+                              setMobileNews={setMobileNews}
                               yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               lastVisitedScreen={lastVisitedScreen}

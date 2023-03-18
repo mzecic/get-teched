@@ -180,7 +180,7 @@ export default function ProfileScreen({
                     {
                       backgroundColor: isDarkMode
                         ? primaryColors.colors.backgroundDarkMode
-                        : primaryColors.colors.backgroundLightMode,
+                        : primaryColors.colors.lighterGrey,
                     },
                   ]}
                 >
@@ -216,7 +216,7 @@ export default function ProfileScreen({
                     {
                       backgroundColor: isDarkMode
                         ? primaryColors.colors.backgroundDarkMode
-                        : primaryColors.colors.backgroundLightMode,
+                        : primaryColors.colors.lighterGrey,
                     },
                   ]}
                 >
@@ -252,7 +252,7 @@ export default function ProfileScreen({
                     {
                       backgroundColor: isDarkMode
                         ? primaryColors.colors.backgroundDarkMode
-                        : primaryColors.colors.backgroundLightMode,
+                        : primaryColors.colors.lighterGrey,
                     },
                   ]}
                 >

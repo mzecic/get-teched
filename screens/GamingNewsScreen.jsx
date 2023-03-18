@@ -76,7 +76,9 @@ export default function GamingNewsScreen({
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: isDarkMode ? colors.colors.black : "white",
+            backgroundColor: isDarkMode
+              ? colors.colors.black
+              : colors.colors.white,
           }}
         >
           <ActivityIndicator
@@ -90,8 +92,8 @@ export default function GamingNewsScreen({
             styles.list,
             {
               backgroundColor: isDarkMode
-                ? colors.colors.backgroundDarkMode
-                : colors.colors.white,
+                ? colors.colors.black
+                : colors.colors.backgroundLightMode,
             },
           ]}
         >
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
   list: {
     paddingTop: Platform.OS === "android" ? 16 : 0,
     justifyContent: "center",
+    padding: "2.5%",
   },
   headerTitle: {
     marginTop: "15%",

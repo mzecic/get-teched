@@ -147,8 +147,8 @@ export default function GeneralNewsLine({
 }
 const styles = StyleSheet.create({
   outerContainer: {
-    marginHorizontal: 16,
-    marginVertical: 12,
+    marginHorizontal: "4%",
+    marginVertical: "4%",
     borderRadius: 12,
   },
   headlineContainer: {
