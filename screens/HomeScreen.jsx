@@ -51,6 +51,8 @@ export default function HomeScreen({
   setIsDarkMode,
   offset,
   setOffset,
+  hidePoint,
+  setHidePoint,
   scrollingDirection,
   setScrollingDirection,
   setLastOffset,
@@ -338,7 +340,7 @@ export default function HomeScreen({
                     if (scrollingDirection === "up") {
                       setLastOffset(offset);
                     } else if (scrollingDirection === "down") {
-                      // setLastOffset(offset);
+                     setHidePoint(offset)
                     }
                   },
                   useNativeDriver: true,

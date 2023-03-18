@@ -40,6 +40,7 @@ import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
 import pressSoundEffect from "./assets/pebbles-click.wav";
+import { hide } from "expo-splash-screen/build";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -417,6 +418,8 @@ export default function App() {
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
                               isDarkMode={isDarkMode}
+                              hidePoint={hidePoint}
+                              setHidePoint={setHidePoint}
                             />
                           )}
                         </Stack.Screen>
