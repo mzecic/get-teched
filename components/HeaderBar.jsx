@@ -27,9 +27,11 @@ export default function HeaderBar({
       style={{
         paddingTop: 46,
         zIndex: 200,
-        width: "107%",
+        flex: 1,
+        width: "100%",
         height: 100,
         position: "absolute",
+        top: 0,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: isDarkMode
