@@ -113,8 +113,8 @@ export default function CategoryCard({
                   },
                 ]}
               >
-                {article.title.length > 50
-                  ? article.title.slice(0, 51) + "..."
+                {article.title.length > 100
+                  ? article.title.slice(0, 101) + "..."
                   : article.title}
               </Text>
               <Image
@@ -166,11 +166,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 16,
   },
   titleText: {
-    width: "70%",
+    width: "75%",
     fontFamily: "OswaldMedium",
-    fontSize: 15,
+    fontSize: 14,
     zIndex: 200,
-    padding: 12,
+    padding: 2,
   },
   forwardArrow: {
     width: 14,
