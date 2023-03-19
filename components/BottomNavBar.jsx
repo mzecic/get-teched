@@ -26,6 +26,7 @@ export default function BottomNavBar({
   openDrawerHandler,
   setIsMenu,
   closeDrawer,
+  openBlurAreaHandler,
 }) {
   const navigation = useNavigation();
 
@@ -245,6 +246,7 @@ export default function BottomNavBar({
             onPress={() => {
               if (soundEffectsOn) playSound();
               openDrawerHandler();
+              openBlurAreaHandler();
               console.log("menu button pressed");
               console.log(closeDrawer);
             }}

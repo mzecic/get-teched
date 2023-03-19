@@ -15,6 +15,7 @@ export default function AppDrawer({
   setIsMenu,
   closeDrawer,
   closeDrawerHandler,
+  closeBlurAreaHandler,
   windowWidth,
   blurPoint,
   isDarkMode,
@@ -54,8 +55,8 @@ export default function AppDrawer({
             <Pressable
               onPress={() => {
                 console.log("closing app drawer");
-
                 closeDrawerHandler();
+                closeBlurAreaHandler();
               }}
             >
               <Image

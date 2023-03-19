@@ -1,18 +1,35 @@
-import { StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated, Pressable } from "react-native";
 import { BlurView } from "expo-blur";
 
-export default function BlurAppDrawerArea({ closeDrawer, windowWidth }) {
+export default function BlurAppDrawerArea({
+  closeDrawer,
+  windowWidth,
+  isDarkMode,
+  blurAreaAnim,
+  blurIntensity,
+  closeDrawerHandler,
+  closeBlurAreaHandler,
+}) {
+  const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
   return (
-    <Animated.View
+    <AnimatedBlurView
+      intensity={blurIntensity}
       style={[
         styles.blurContainer,
         {
-          width: 0.4 * windowWidth,
+          width: windowWidth,
+          transform: [{ translateX: blurAreaAnim }],
         },
       ]}
     >
-      <BlurView></BlurView>
-    </Animated.View>
+      <Pressable
+        onPress={() => {
+          closeDrawerHandler();
+          closeBlurAreaHandler();
+        }}
+        style={{ flex: 1, height: "100%", width: "100%" }}
+      ></Pressable>
+    </AnimatedBlurView>
   );
 }
 
@@ -23,6 +40,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    zIndex: 500,
+    zIndex: 499,
+  },
+  blurArea: {
+    height: "100%",
   },
 });

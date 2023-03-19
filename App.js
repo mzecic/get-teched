@@ -148,11 +148,13 @@ export default function App() {
   const windowWidth = useRef(Dimensions.get("window").width).current;
   const blurPoint = useRef();
   blurPoint.current = 0.6 * windowWidth;
-  const closeDrawer = useRef(new Animated.Value(windowWidth)).current;
+  const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
+  const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
+  const blurIntensity = useRef(new Animated.Value(10)).current;
 
   function closeDrawerHandler() {
     Animated.timing(closeDrawer, {
-      toValue: windowWidth,
+      toValue: 0.6 * windowWidth,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -161,6 +163,26 @@ export default function App() {
   function openDrawerHandler() {
     Animated.timing(closeDrawer, {
       toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
+
+  function closeBlurAreaHandler() {
+    Animated.timing(blurAreaAnim, {
+      toValue: windowWidth,
+      duration: 50,
+      useNativeDriver: true,
+    }).start();
+  }
+  function openBlurAreaHandler() {
+    Animated.timing(blurAreaAnim, {
+      toValue: 0,
+      duration: 0,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(blurIntensity, {
+      toValue: 100,
       duration: 200,
       useNativeDriver: true,
     }).start();
@@ -616,6 +638,7 @@ export default function App() {
                       </Stack.Navigator>
                       <BottomNavBar
                         closeDrawer={closeDrawer}
+                        openBlurAreaHandler={openBlurAreaHandler}
                         openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
@@ -633,7 +656,7 @@ export default function App() {
                         isDarkMode={isDarkMode}
                       />
                       <AppDrawer
-                        blurPoint={blurPoint}
+                        closeBlurAreaHandler={closeBlurAreaHandler}
                         isDarkMode={isDarkMode}
                         closeDrawer={closeDrawer}
                         closeDrawerHandler={closeDrawerHandler}
@@ -641,7 +664,15 @@ export default function App() {
                         isMenu={isMenu}
                         setIsMenu={setIsMenu}
                       />
-                      <BlurAppDrawerArea closeDrawer={closeDrawer} />
+                      <BlurAppDrawerArea
+                        closeDrawerHandler={closeDrawerHandler}
+                        closeBlurAreaHandler={closeBlurAreaHandler}
+                        blurIntensity={blurIntensity}
+                        blurAreaAnim={blurAreaAnim}
+                        isDarkMode={isDarkMode}
+                        windowWidth={windowWidth}
+                        closeDrawer={closeDrawer}
+                      />
                     </NavigationContainer>
                   </>
                 )}
