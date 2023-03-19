@@ -158,6 +158,16 @@ export default function App() {
       duration: 200,
       useNativeDriver: true,
     }).start();
+    Animated.timing(blurAreaAnim, {
+      toValue: windowWidth,
+      duration: 0,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(blurIntensity, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
   }
 
   function openDrawerHandler() {
@@ -166,27 +176,20 @@ export default function App() {
       duration: 200,
       useNativeDriver: true,
     }).start();
-  }
-
-  function closeBlurAreaHandler() {
-    Animated.timing(blurAreaAnim, {
-      toValue: windowWidth,
-      duration: 50,
-      useNativeDriver: true,
-    }).start();
-  }
-  function openBlurAreaHandler() {
     Animated.timing(blurAreaAnim, {
       toValue: 0,
       duration: 0,
       useNativeDriver: true,
     }).start();
     Animated.timing(blurIntensity, {
-      toValue: 100,
+      toValue: 40,
       duration: 200,
       useNativeDriver: true,
     }).start();
   }
+
+  // function closeBlurAreaHandler() {}
+  // function openBlurAreaHandler() {}
 
   const toggleSwitch = async function () {
     setIsDarkMode((previousState) => !previousState);
@@ -243,6 +246,9 @@ export default function App() {
     Oswald: require("./assets/fonts/Oswald-Regular.ttf"),
     OswaldMedium: require("./assets/fonts/Oswald-Medium.ttf"),
     OswaldBold: require("./assets/fonts/Oswald-Bold.ttf"),
+    Arimo: require("./assets/fonts/Arimo-Regular.ttf"),
+    ArimoMedium: require("./assets/fonts/Arimo-Medium.ttf"),
+    ArimoBold: require("./assets/fonts/Arimo-Bold.ttf"),
   });
   useEffect(function () {
     checkLoginCredentials();
@@ -638,7 +644,6 @@ export default function App() {
                       </Stack.Navigator>
                       <BottomNavBar
                         closeDrawer={closeDrawer}
-                        openBlurAreaHandler={openBlurAreaHandler}
                         openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
@@ -656,7 +661,7 @@ export default function App() {
                         isDarkMode={isDarkMode}
                       />
                       <AppDrawer
-                        closeBlurAreaHandler={closeBlurAreaHandler}
+                        setLastVisitedScreen={setLastVisitedScreen}
                         isDarkMode={isDarkMode}
                         closeDrawer={closeDrawer}
                         closeDrawerHandler={closeDrawerHandler}
@@ -666,7 +671,6 @@ export default function App() {
                       />
                       <BlurAppDrawerArea
                         closeDrawerHandler={closeDrawerHandler}
-                        closeBlurAreaHandler={closeBlurAreaHandler}
                         blurIntensity={blurIntensity}
                         blurAreaAnim={blurAreaAnim}
                         isDarkMode={isDarkMode}

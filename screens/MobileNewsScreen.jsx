@@ -58,7 +58,7 @@ export default function MobileNewsScreen({
         setMobileNews([...techNews.reverse()]);
         setTimeout(function () {
           setIsLoading(false);
-        }, 750);
+        }, 500);
       })();
     },
     [refreshing]

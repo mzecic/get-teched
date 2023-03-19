@@ -125,7 +125,8 @@ export default function HeaderBar({
 const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: "OswaldMedium",
-    fontSize: 24,
+    fontSize: 22,
     textAlign: "center",
+    transform: [{ scaleX: 1.2 }],
   },
 });

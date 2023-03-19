@@ -9,17 +9,22 @@ import {
 } from "react-native";
 import { BlurView } from "expo-blur";
 import primaryColors from "../assets/colors/primaryColors";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AppDrawer({
-  isMenu,
   setIsMenu,
+  setLastVisitedScreen,
   closeDrawer,
   closeDrawerHandler,
-  closeBlurAreaHandler,
   windowWidth,
   blurPoint,
   isDarkMode,
 }) {
+  const navigation = useNavigation();
+  const fontColor = isDarkMode
+    ? primaryColors.colors.white
+    : primaryColors.colors.black;
+
   return (
     <>
       <Animated.View
@@ -41,14 +46,63 @@ export default function AppDrawer({
             },
           ]}
         >
-          <View style={[styles.itemsContainer, ,]}>
+          <View style={[styles.itemsContainer]}>
             <Pressable
               onPress={() => {
-                console.log(blurPoint.current);
-                console.log(closeDrawer);
+                console.log("app drawer item pressed");
+                navigation.navigate("HomeScreen");
+                setLastVisitedScreen("HomeScreen");
+                closeDrawerHandler();
               }}
             >
-              <Text>App Drawer</Text>
+              <Text style={[styles.itemText, { color: fontColor }]}>News</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                console.log("app drawer item pressed");
+                navigation.navigate("GamingNewsScreen");
+                setLastVisitedScreen("GamingNewsScreen");
+                closeDrawerHandler();
+              }}
+            >
+              <Text style={[styles.itemText, { color: fontColor }]}>
+                Gaming
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                console.log("app drawer item pressed");
+                navigation.navigate("AudioNewsScreen");
+                setLastVisitedScreen("AudioNewsScreen");
+                closeDrawerHandler();
+              }}
+            >
+              <Text style={[styles.itemText, { color: fontColor }]}>Audio</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                console.log("app drawer item pressed");
+                navigation.navigate("MobileNewsScreen");
+                setLastVisitedScreen("AudioNewsScreen");
+                closeDrawerHandler();
+              }}
+            >
+              <Text style={[styles.itemText, { color: fontColor }]}>
+                Mobile
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                console.log("app drawer item pressed");
+                navigation.navigate("ProfileScreen");
+                setLastVisitedScreen("ProfileScreen");
+                setIsMenu(true);
+                closeDrawerHandler();
+              }}
+            >
+              <Text style={[styles.itemText, { color: fontColor }]}>
+                Profile
+              </Text>
             </Pressable>
           </View>
           <View style={styles.exitButtonContainer}>
@@ -56,11 +110,17 @@ export default function AppDrawer({
               onPress={() => {
                 console.log("closing app drawer");
                 closeDrawerHandler();
-                closeBlurAreaHandler();
               }}
             >
               <Image
-                style={styles.closeIcon}
+                style={[
+                  styles.closeIcon,
+                  {
+                    tintColor: isDarkMode
+                      ? primaryColors.colors.white
+                      : primaryColors.colors.black,
+                  },
+                ]}
                 source={require("../assets/close-icon.png")}
               />
             </Pressable>
@@ -83,16 +143,22 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     width: "100%",
+    justifyContent: "center",
   },
   itemsContainer: {
-    marginTop: "30%",
+    marginHorizontal: "15%",
+  },
+  itemText: {
+    fontSize: 20,
+    fontFamily: "Oswald",
+    transform: [{ scaleX: 1.2 }],
   },
   exitButtonContainer: {
     position: "absolute",
-    bottom: "1.42%",
-    right: "8%",
+    bottom: "1.95%",
+    right: "8.5%",
   },
   closeIcon: {
-    transform: [{ scale: 0.75 }],
+    transform: [{ scale: 0.6 }],
   },
 });

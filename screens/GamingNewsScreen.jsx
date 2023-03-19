@@ -31,7 +31,6 @@ export default function GamingNewsScreen({
   setRefreshing,
   playSound,
 }) {
-
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -59,7 +58,7 @@ export default function GamingNewsScreen({
         setGamingNews([...gamingNews.reverse()]);
         setTimeout(function () {
           setIsLoading(false);
-        }, 750);
+        }, 500);
       })();
     },
     [refreshing]

@@ -8,7 +8,6 @@ export default function BlurAppDrawerArea({
   blurAreaAnim,
   blurIntensity,
   closeDrawerHandler,
-  closeBlurAreaHandler,
 }) {
   const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
   return (
@@ -25,7 +24,6 @@ export default function BlurAppDrawerArea({
       <Pressable
         onPress={() => {
           closeDrawerHandler();
-          closeBlurAreaHandler();
         }}
         style={{ flex: 1, height: "100%", width: "100%" }}
       ></Pressable>
