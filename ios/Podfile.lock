@@ -94,6 +94,8 @@ PODS:
     - expo-dev-menu/SafeAreaView
   - ExpoAppleAuthentication (6.0.1):
     - ExpoModulesCore
+  - ExpoBlur (12.2.2):
+    - ExpoModulesCore
   - ExpoCrypto (12.2.1):
     - ExpoModulesCore
   - ExpoKeepAwake (12.0.1):
@@ -538,6 +540,7 @@ DEPENDENCIES:
   - expo-dev-menu (from `../node_modules/expo-dev-menu`)
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoAppleAuthentication (from `../node_modules/expo-apple-authentication/ios`)
+  - ExpoBlur (from `../node_modules/expo-blur/ios`)
   - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
@@ -630,6 +633,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoAppleAuthentication:
     :path: "../node_modules/expo-apple-authentication/ios"
+  ExpoBlur:
+    :path: "../node_modules/expo-blur/ios"
   ExpoCrypto:
     :path: "../node_modules/expo-crypto/ios"
   ExpoKeepAwake:
@@ -749,6 +754,7 @@ SPEC CHECKSUMS:
   expo-dev-menu: d4369e74d8d21a0ccdee35f7c732e7118b0fee16
   expo-dev-menu-interface: 6c82ae323c4b8724dead4763ce3ff24a2108bdb1
   ExpoAppleAuthentication: 7bd5e4150d59e8df37aa80b425850ae88adf9e65
+  ExpoBlur: fac3c6318fdf409dd5740afd3313b2bd52a35bac
   ExpoCrypto: 477dfe89c81527b376f2c344ca1d2a01244b243c
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoModulesCore: 1667335d4f4c9b7801990930e6f0eea42c916a21

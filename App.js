@@ -18,7 +18,7 @@ import {
   Text,
   Image,
   ImageBackground,
-  Button,
+  Dimensions,
 } from "react-native";
 import {
   NavigationContainer,
@@ -40,6 +40,7 @@ import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
 import AppDrawer from "./components/AppDrawer";
+import BlurAppDrawerArea from "./components/BlurAppDrawerArea";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -143,6 +144,28 @@ export default function App() {
     inputRange: [0, 200],
     outputRange: [1, 0],
   });
+
+  const windowWidth = useRef(Dimensions.get("window").width).current;
+  const blurPoint = useRef();
+  blurPoint.current = 0.6 * windowWidth;
+  const closeDrawer = useRef(new Animated.Value(windowWidth)).current;
+
+  function closeDrawerHandler() {
+    Animated.timing(closeDrawer, {
+      toValue: windowWidth,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
+
+  function openDrawerHandler() {
+    Animated.timing(closeDrawer, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
+
   const toggleSwitch = async function () {
     setIsDarkMode((previousState) => !previousState);
     const result = await profiles.updateProfile(storedCredentials.email, {
@@ -592,6 +615,8 @@ export default function App() {
                         </Stack.Screen>
                       </Stack.Navigator>
                       <BottomNavBar
+                        closeDrawer={closeDrawer}
+                        openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
                         headerOpacity={headerOpacity}
@@ -607,7 +632,16 @@ export default function App() {
                         scrollToTopMobileHandler={scrollToTopMobileHandler}
                         isDarkMode={isDarkMode}
                       />
-                      <AppDrawer />
+                      <AppDrawer
+                        blurPoint={blurPoint}
+                        isDarkMode={isDarkMode}
+                        closeDrawer={closeDrawer}
+                        closeDrawerHandler={closeDrawerHandler}
+                        windowWidth={windowWidth}
+                        isMenu={isMenu}
+                        setIsMenu={setIsMenu}
+                      />
+                      <BlurAppDrawerArea closeDrawer={closeDrawer} />
                     </NavigationContainer>
                   </>
                 )}

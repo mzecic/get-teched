@@ -23,6 +23,9 @@ export default function BottomNavBar({
   // soundHandler,
   soundEffectsOn,
   playSound,
+  openDrawerHandler,
+  setIsMenu,
+  closeDrawer,
 }) {
   const navigation = useNavigation();
 
@@ -241,7 +244,9 @@ export default function BottomNavBar({
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
+              openDrawerHandler();
               console.log("menu button pressed");
+              console.log(closeDrawer);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -287,8 +292,8 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   navIcon: {
-    width: 25,
-    height: 25,
+    width: 15,
+    height: 15,
     padding: 12,
     alignSelf: "center",
   },
