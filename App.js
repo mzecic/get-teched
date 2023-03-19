@@ -39,8 +39,7 @@ import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
-import pressSoundEffect from "./assets/pebbles-click.wav";
-import { hide } from "expo-splash-screen/build";
+import AppDrawer from "./components/AppDrawer";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -592,7 +591,6 @@ export default function App() {
                           )}
                         </Stack.Screen>
                       </Stack.Navigator>
-
                       <BottomNavBar
                         playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
@@ -609,6 +607,7 @@ export default function App() {
                         scrollToTopMobileHandler={scrollToTopMobileHandler}
                         isDarkMode={isDarkMode}
                       />
+                      <AppDrawer />
                     </NavigationContainer>
                   </>
                 )}
