@@ -19,6 +19,7 @@ export default function AppDrawer({
   windowWidth,
   blurPoint,
   isDarkMode,
+  storedCredentials,
 }) {
   const navigation = useNavigation();
   const fontColor = isDarkMode
