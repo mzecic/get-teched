@@ -660,7 +660,7 @@ export default function App() {
                         scrollToTopMobileHandler={scrollToTopMobileHandler}
                         isDarkMode={isDarkMode}
                       />
-                      <AppDrawer
+                      {/* <AppDrawer
                         setLastVisitedScreen={setLastVisitedScreen}
                         isDarkMode={isDarkMode}
                         closeDrawer={closeDrawer}
@@ -676,7 +676,7 @@ export default function App() {
                         isDarkMode={isDarkMode}
                         windowWidth={windowWidth}
                         closeDrawer={closeDrawer}
-                      />
+                      /> */}
                     </NavigationContainer>
                   </>
                 )}
