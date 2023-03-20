@@ -28,7 +28,13 @@ export default function AppDrawer({
     : primaryColors.colors.black;
   const itemHighlight = isDarkMode
     ? primaryColors.colors.appDrawerHighlight
-    : primaryColors.colors.lighterGrey;
+    : primaryColors.colors.newsTile;
+  const dynamicTint = isDarkMode
+    ? primaryColors.colors.white
+    : primaryColors.colors.black;
+  const lineColor = isDarkMode
+    ? primaryColors.colors.appDrawerHighlight
+    : primaryColors.colors.black;
 
   return (
     <>
@@ -52,7 +58,9 @@ export default function AppDrawer({
           ]}
         >
           <View style={[styles.sectionContainer]}>
-            <View style={styles.sectionTitleContainer}>
+            <View
+              style={[styles.sectionTitleContainer, { borderColor: lineColor }]}
+            >
               <Text style={[styles.sectionTitle, { color: fontColor }]}>
                 News
               </Text>
@@ -67,15 +75,24 @@ export default function AppDrawer({
               ]}
             >
               <Pressable
+                style={styles.pressableItem}
                 onPress={() => {
                   navigation.navigate("HomeScreen");
                   setLastVisitedScreen("HomeScreen");
                   closeDrawerHandler();
                 }}
               >
-                <Text style={[styles.itemText, { color: fontColor }]}>
-                  Home
-                </Text>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={[styles.itemIcon, { tintColor: dynamicTint }]}
+                    source={require("../assets/home-icon.png")}
+                  />
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={[styles.itemText, { color: fontColor }]}>
+                    Home
+                  </Text>
+                </View>
               </Pressable>
             </View>
             <View
@@ -96,9 +113,17 @@ export default function AppDrawer({
                   closeDrawerHandler();
                 }}
               >
-                <Text style={[styles.itemText, { color: fontColor }]}>
-                  Gaming
-                </Text>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={[styles.itemIcon, { tintColor: dynamicTint }]}
+                    source={require("../assets/gaming-icon.png")}
+                  />
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={[styles.itemText, { color: fontColor }]}>
+                    Gaming
+                  </Text>
+                </View>
               </Pressable>
             </View>
             <View
@@ -119,9 +144,17 @@ export default function AppDrawer({
                   closeDrawerHandler();
                 }}
               >
-                <Text style={[styles.itemText, { color: fontColor }]}>
-                  Audio
-                </Text>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={[styles.itemIcon, { tintColor: dynamicTint }]}
+                    source={require("../assets/audio-icon.png")}
+                  />
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={[styles.itemText, { color: fontColor }]}>
+                    Audio
+                  </Text>
+                </View>
               </Pressable>
             </View>
             <View
@@ -142,16 +175,28 @@ export default function AppDrawer({
                   closeDrawerHandler();
                 }}
               >
-                <Text style={[styles.itemText, { color: fontColor }]}>
-                  Mobile
-                </Text>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={[styles.itemIcon, { tintColor: dynamicTint }]}
+                    source={require("../assets/mobile-icon.png")}
+                  />
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={[styles.itemText, { color: fontColor }]}>
+                    Mobile
+                  </Text>
+                </View>
               </Pressable>
             </View>
           </View>
           <View style={[styles.sectionContainer]}>
-            <Text style={[styles.sectionTitle, { color: fontColor }]}>
-              Marketplace
-            </Text>
+            <View
+              style={[styles.sectionTitleContainer, { borderColor: lineColor }]}
+            >
+              <Text style={[styles.sectionTitle, { color: fontColor }]}>
+                Marketplace
+              </Text>
+            </View>
             <View style={styles.pressableContainer}>
               <Pressable
                 onPress={() => {
@@ -223,9 +268,15 @@ const styles = StyleSheet.create({
     width: "90%",
     alignItems: "center",
   },
+  sectionTitleContainer: {
+    width: "80%",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    padding: 4,
+  },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: 500,
+    fontSize: 16,
+    fontWeight: 600,
   },
   pressableContainer: {
     borderRadius: 12,
@@ -233,14 +284,25 @@ const styles = StyleSheet.create({
     width: "95%",
     marginTop: 8,
   },
-  pressablePressed: {},
+  pressableItem: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconContainer: {
+    position: "absolute",
+    left: 0,
+  },
+  itemIcon: {
+    width: 20,
+    height: 20,
+  },
+  textContainer: {},
   itemText: {
     fontSize: 16,
     textAlign: "center",
   },
-  dealsContainer: {},
-
-  marketplaceContainer: {},
   exitButtonContainer: {
     position: "absolute",
     bottom: "7%",
