@@ -176,11 +176,14 @@ export default function App() {
       duration: 350,
       useNativeDriver: true,
     }).start();
-    Animated.timing(blurAreaAnim, {
-      toValue: 0,
-      duration: 0,
-      useNativeDriver: true,
-    }).start();
+    setTimeout(function () {
+      Animated.timing(blurAreaAnim, {
+        toValue: 0,
+        duration: 0,
+        useNativeDriver: true,
+      }).start();
+    }, 330);
+
     Animated.timing(blurIntensity, {
       toValue: 40,
       duration: 350,
