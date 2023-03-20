@@ -155,7 +155,7 @@ export default function App() {
   function closeDrawerHandler() {
     Animated.timing(closeDrawer, {
       toValue: 0.6 * windowWidth,
-      duration: 200,
+      duration: 350,
       useNativeDriver: true,
     }).start();
     Animated.timing(blurAreaAnim, {
@@ -165,7 +165,7 @@ export default function App() {
     }).start();
     Animated.timing(blurIntensity, {
       toValue: 0,
-      duration: 200,
+      duration: 350,
       useNativeDriver: true,
     }).start();
   }
@@ -173,7 +173,7 @@ export default function App() {
   function openDrawerHandler() {
     Animated.timing(closeDrawer, {
       toValue: 0,
-      duration: 200,
+      duration: 350,
       useNativeDriver: true,
     }).start();
     Animated.timing(blurAreaAnim, {
@@ -183,7 +183,7 @@ export default function App() {
     }).start();
     Animated.timing(blurIntensity, {
       toValue: 40,
-      duration: 200,
+      duration: 350,
       useNativeDriver: true,
     }).start();
   }
@@ -662,6 +662,7 @@ export default function App() {
                       />
                       <AppDrawer
                         storedCredentials={storedCredentials}
+                        lastVisitedScreen={lastVisitedScreen}
                         setLastVisitedScreen={setLastVisitedScreen}
                         isDarkMode={isDarkMode}
                         closeDrawer={closeDrawer}

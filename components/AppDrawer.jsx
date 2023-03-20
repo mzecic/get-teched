@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function AppDrawer({
   setIsMenu,
+  lastVisitedScreen,
   setLastVisitedScreen,
   closeDrawer,
   closeDrawerHandler,
@@ -25,6 +26,9 @@ export default function AppDrawer({
   const fontColor = isDarkMode
     ? primaryColors.colors.white
     : primaryColors.colors.black;
+  const itemHighlight = isDarkMode
+    ? primaryColors.colors.appDrawerHighlight
+    : primaryColors.colors.lighterGrey;
 
   return (
     <>
@@ -47,69 +51,137 @@ export default function AppDrawer({
             },
           ]}
         >
-          <View style={[styles.itemsContainer]}>
-            <Pressable
-              onPress={() => {
-                console.log("app drawer item pressed");
-                navigation.navigate("HomeScreen");
-                setLastVisitedScreen("HomeScreen");
-                closeDrawerHandler();
-              }}
-            >
-              <Text style={[styles.itemText, { color: fontColor }]}>News</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                console.log("app drawer item pressed");
-                navigation.navigate("GamingNewsScreen");
-                setLastVisitedScreen("GamingNewsScreen");
-                closeDrawerHandler();
-              }}
-            >
-              <Text style={[styles.itemText, { color: fontColor }]}>
-                Gaming
+          <View style={[styles.sectionContainer]}>
+            <View style={styles.sectionTitleContainer}>
+              <Text style={[styles.sectionTitle, { color: fontColor }]}>
+                News
               </Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                console.log("app drawer item pressed");
-                navigation.navigate("AudioNewsScreen");
-                setLastVisitedScreen("AudioNewsScreen");
-                closeDrawerHandler();
-              }}
+            </View>
+            <View
+              style={[
+                styles.pressableContainer,
+                {
+                  backgroundColor:
+                    lastVisitedScreen === "HomeScreen" ? itemHighlight : null,
+                },
+              ]}
             >
-              <Text style={[styles.itemText, { color: fontColor }]}>Audio</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                console.log("app drawer item pressed");
-                navigation.navigate("MobileNewsScreen");
-                setLastVisitedScreen("AudioNewsScreen");
-                closeDrawerHandler();
-              }}
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("HomeScreen");
+                  setLastVisitedScreen("HomeScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  Home
+                </Text>
+              </Pressable>
+            </View>
+            <View
+              style={[
+                styles.pressableContainer,
+                {
+                  backgroundColor:
+                    lastVisitedScreen === "GamingNewsScreen"
+                      ? itemHighlight
+                      : null,
+                },
+              ]}
             >
-              <Text style={[styles.itemText, { color: fontColor }]}>
-                Mobile
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                console.log("app drawer item pressed");
-                navigation.navigate("ProfileScreen");
-                setLastVisitedScreen("ProfileScreen");
-                setIsMenu(true);
-                closeDrawerHandler();
-              }}
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("GamingNewsScreen");
+                  setLastVisitedScreen("GamingNewsScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  Gaming
+                </Text>
+              </Pressable>
+            </View>
+            <View
+              style={[
+                styles.pressableContainer,
+                {
+                  backgroundColor:
+                    lastVisitedScreen === "AudioNewsScreen"
+                      ? itemHighlight
+                      : null,
+                },
+              ]}
             >
-              <Text style={[styles.itemText, { color: fontColor }]}>
-                Profile
-              </Text>
-            </Pressable>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("AudioNewsScreen");
+                  setLastVisitedScreen("AudioNewsScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  Audio
+                </Text>
+              </Pressable>
+            </View>
+            <View
+              style={[
+                styles.pressableContainer,
+                {
+                  backgroundColor:
+                    lastVisitedScreen === "MobileNewsScreen"
+                      ? itemHighlight
+                      : null,
+                },
+              ]}
+            >
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("MobileNewsScreen");
+                  setLastVisitedScreen("MobileNewsScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  Mobile
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={[styles.sectionContainer]}>
+            <Text style={[styles.sectionTitle, { color: fontColor }]}>
+              Marketplace
+            </Text>
+            <View style={styles.pressableContainer}>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("HomeScreen");
+                  setLastVisitedScreen("HomeScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  All Listing
+                </Text>
+              </Pressable>
+            </View>
+            <View style={styles.pressableContainer}>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("GamingNewsScreen");
+                  setLastVisitedScreen("GamingNewsScreen");
+                  closeDrawerHandler();
+                }}
+              >
+                <Text style={[styles.itemText, { color: fontColor }]}>
+                  My Listings
+                </Text>
+              </Pressable>
+            </View>
           </View>
           <View style={styles.exitButtonContainer}>
             <Pressable
               onPress={() => {
-                console.log("closing app drawer");
                 closeDrawerHandler();
               }}
             >
@@ -122,7 +194,7 @@ export default function AppDrawer({
                       : primaryColors.colors.black,
                   },
                 ]}
-                source={require("../assets/close-icon.png")}
+                source={require("../assets/arrow-right.png")}
               />
             </Pressable>
           </View>
@@ -144,22 +216,35 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     width: "100%",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
-  itemsContainer: {
-    marginHorizontal: "15%",
+  sectionContainer: {
+    width: "90%",
+    alignItems: "center",
   },
-  itemText: {
+  sectionTitle: {
     fontSize: 20,
-    fontFamily: "Oswald",
-    transform: [{ scaleX: 1.2 }],
+    fontWeight: 500,
   },
+  pressableContainer: {
+    borderRadius: 12,
+    padding: 8,
+    width: "95%",
+    marginTop: 8,
+  },
+  pressablePressed: {},
+  itemText: {
+    fontSize: 16,
+    textAlign: "center",
+  },
+  dealsContainer: {},
+
+  marketplaceContainer: {},
   exitButtonContainer: {
     position: "absolute",
-    bottom: "1.95%",
-    right: "8.5%",
-  },
-  closeIcon: {
-    transform: [{ scale: 0.6 }],
+    bottom: "7%",
+    left: "10%",
+    transform: [{ scale: 0.7 }],
   },
 });

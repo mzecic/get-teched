@@ -245,8 +245,6 @@ export default function BottomNavBar({
             onPress={() => {
               if (soundEffectsOn) playSound();
               openDrawerHandler();
-              console.log("menu button pressed");
-              console.log(closeDrawer);
             }}
             style={({ pressed }) => [styles.button]}
           >
