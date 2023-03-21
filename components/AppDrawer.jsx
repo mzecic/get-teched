@@ -4,12 +4,13 @@ import {
   StyleSheet,
   Dimensions,
   Pressable,
-  Animated,
+  //   Animated,
   Image,
 } from "react-native";
 import { BlurView } from "expo-blur";
 import primaryColors from "../assets/colors/primaryColors";
 import { useNavigation } from "@react-navigation/native";
+import Animated from "react-native-reanimated";
 
 export default function AppDrawer({
   setIsMenu,
@@ -21,6 +22,8 @@ export default function AppDrawer({
   blurPoint,
   isDarkMode,
   storedCredentials,
+  animatedStyles,
+  closeBlur,
 }) {
   const navigation = useNavigation();
   const fontColor = isDarkMode
@@ -41,9 +44,10 @@ export default function AppDrawer({
       <Animated.View
         style={[
           styles.mainContainer,
+          animatedStyles,
           {
             width: 0.6 * windowWidth,
-            transform: [{ translateX: closeDrawer }],
+            // transform: [{ translateX: closeDrawer }],
           },
         ]}
       >
@@ -228,6 +232,9 @@ export default function AppDrawer({
             <Pressable
               onPress={() => {
                 closeDrawerHandler();
+                setTimeout(function () {
+                  closeBlur();
+                }, 500);
               }}
             >
               <Image

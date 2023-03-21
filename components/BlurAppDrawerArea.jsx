@@ -1,5 +1,6 @@
-import { StyleSheet, Animated, Pressable } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { BlurView } from "expo-blur";
+import Animated, { createAnimatedComponent } from "react-native-reanimated";
 
 export default function BlurAppDrawerArea({
   closeDrawer,
@@ -8,16 +9,19 @@ export default function BlurAppDrawerArea({
   blurAreaAnim,
   blurIntensity,
   closeDrawerHandler,
+  animatedStyles,
+  closeBlur,
+  blurOffset,
 }) {
   const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
   return (
-    <AnimatedBlurView
-      intensity={blurIntensity}
+    <Animated.View
       style={[
         styles.blurContainer,
+        animatedStyles,
         {
           width: windowWidth,
-          transform: [{ translateX: blurAreaAnim }],
+          //   transform: [{ translateX: blurOffset }],
         },
       ]}
     >
@@ -27,7 +31,7 @@ export default function BlurAppDrawerArea({
         }}
         style={{ flex: 1, height: "100%", width: "100%" }}
       ></Pressable>
-    </AnimatedBlurView>
+    </Animated.View>
   );
 }
 

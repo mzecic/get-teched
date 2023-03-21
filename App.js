@@ -11,7 +11,6 @@ import { useEffect, useState, useRef, useCallback, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
-  Animated,
   Platform,
   View,
   Pressable,
@@ -19,6 +18,7 @@ import {
   Image,
   ImageBackground,
   Dimensions,
+  // Animated,
 } from "react-native";
 import {
   NavigationContainer,
@@ -41,6 +41,13 @@ import primaryColors from "./assets/colors/primaryColors";
 import * as profiles from "./utils/users-api";
 import AppDrawer from "./components/AppDrawer";
 import BlurAppDrawerArea from "./components/BlurAppDrawerArea";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -71,6 +78,90 @@ export default function App() {
   const [hidePoint, setHidePoint] = useState(null);
   const [lastOffset, setLastOffset] = useState(0);
   const Stack = createNativeStackNavigator();
+
+  const windowWidth = useRef(Dimensions.get("window").width).current;
+  const blurPoint = useRef();
+  blurPoint.current = 0.6 * windowWidth;
+  const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
+  const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
+  const blurIntensity = useSharedValue(0);
+
+  const offsetDrawer = useSharedValue(windowWidth);
+  const blurOffset = useSharedValue(windowWidth);
+
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: offsetDrawer.value }],
+    };
+  });
+
+  function closeDrawerHandler() {
+    offsetDrawer.value = withTiming(windowWidth, {
+      duration: 2500,
+      easing: Easing.out(Easing.exp),
+    });
+    blurIntensity.value = withTiming(0, {
+      duration: 500,
+      easing: Easing.out(Easing.exp),
+    });
+    // Animated.timing(closeDrawer, {
+    //   toValue: 0.6 * windowWidth,
+    //   duration: 350,
+    //   useNativeDriver: true,
+    // }).start();
+    // Animated.timing(blurAreaAnim, {
+    //   toValue: windowWidth,
+    //   duration: 0,
+    //   useNativeDriver: true,
+    // }).start();
+    // Animated.timing(blurIntensity, {
+    //   toValue: 0,
+    //   duration: 350,
+    //   useNativeDriver: true,
+    // }).start();
+  }
+
+  function openBlur() {
+    blurDrawer.value = withTiming(0, {
+      duration: 0,
+      easing: Easing.out(Easing.exp),
+    });
+  }
+  function closeBlur() {
+    blurOffset.value = withTiming(windowWidth, {
+      duration: 0,
+      easing: Easing.out(Easing.exp),
+    });
+  }
+  function openDrawerHandler() {
+    blurIntensity.value = withTiming(20, {
+      duration: 1000,
+      easing: Easing.out(Easing.exp),
+    });
+    offsetDrawer.value = withTiming(0, {
+      duration: 1000,
+      easing: Easing.out(Easing.exp),
+    });
+    // Animated.timing(closeDrawer, {
+    //   toValue: 0,
+    //   duration: 350,
+    //   useNativeDriver: true,
+    // }).start();
+    // setTimeout(function () {
+    //   Animated.timing(blurAreaAnim, {
+    //     toValue: 0,
+    //     duration: 0,
+    //     useNativeDriver: true,
+    //   }).start();
+    // }, 330);
+
+    // Animated.timing(blurIntensity, {
+    //   toValue: 40,
+    //   duration: 350,
+    //   useNativeDriver: true,
+    // }).start();
+  }
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
     iosClientId:
@@ -144,52 +235,6 @@ export default function App() {
     inputRange: [0, 200],
     outputRange: [1, 0],
   });
-
-  const windowWidth = useRef(Dimensions.get("window").width).current;
-  const blurPoint = useRef();
-  blurPoint.current = 0.6 * windowWidth;
-  const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
-  const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
-  const blurIntensity = useRef(new Animated.Value(10)).current;
-
-  function closeDrawerHandler() {
-    Animated.timing(closeDrawer, {
-      toValue: 0.6 * windowWidth,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(blurAreaAnim, {
-      toValue: windowWidth,
-      duration: 0,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(blurIntensity, {
-      toValue: 0,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-  }
-
-  function openDrawerHandler() {
-    Animated.timing(closeDrawer, {
-      toValue: 0,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-    setTimeout(function () {
-      Animated.timing(blurAreaAnim, {
-        toValue: 0,
-        duration: 0,
-        useNativeDriver: true,
-      }).start();
-    }, 330);
-
-    Animated.timing(blurIntensity, {
-      toValue: 40,
-      duration: 350,
-      useNativeDriver: true,
-    }).start();
-  }
 
   // function closeBlurAreaHandler() {}
   // function openBlurAreaHandler() {}
@@ -646,6 +691,7 @@ export default function App() {
                         </Stack.Screen>
                       </Stack.Navigator>
                       <BottomNavBar
+                        openBlur={openBlur}
                         closeDrawer={closeDrawer}
                         openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
@@ -664,6 +710,8 @@ export default function App() {
                         isDarkMode={isDarkMode}
                       />
                       <AppDrawer
+                        closeBlur={closeBlur}
+                        animatedStyles={animatedStyles}
                         storedCredentials={storedCredentials}
                         lastVisitedScreen={lastVisitedScreen}
                         setLastVisitedScreen={setLastVisitedScreen}
@@ -675,6 +723,9 @@ export default function App() {
                         setIsMenu={setIsMenu}
                       />
                       <BlurAppDrawerArea
+                        closeBlur={closeBlur}
+                        blurOffset={blurOffset}
+                        animatedStyles={animatedStyles}
                         closeDrawerHandler={closeDrawerHandler}
                         blurIntensity={blurIntensity}
                         blurAreaAnim={blurAreaAnim}
