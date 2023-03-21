@@ -243,7 +243,7 @@ export default function AppDrawer({
                       : primaryColors.colors.black,
                   },
                 ]}
-                source={require("../assets/arrow-right.png")}
+                source={require("../assets/close-icon.png")}
               />
             </Pressable>
           </View>
@@ -309,8 +309,8 @@ const styles = StyleSheet.create({
   },
   exitButtonContainer: {
     position: "absolute",
-    bottom: "7%",
-    left: "10%",
+    top: "6%",
+    right: "7%",
     transform: [{ scale: 0.7 }],
   },
 });

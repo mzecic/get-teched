@@ -15,6 +15,7 @@ export default function HeaderBar({
   headerTitle,
   offset,
   headerOpacity,
+  headerHeight,
 }) {
   return (
     <Animated.View
@@ -23,7 +24,7 @@ export default function HeaderBar({
         zIndex: 200,
         flex: 1,
         width: "100%",
-        height: 100,
+        height: headerHeight,
         position: "absolute",
         top: 0,
         alignItems: "center",
@@ -31,12 +32,11 @@ export default function HeaderBar({
         backgroundColor: isDarkMode
           ? colors.colors.black
           : colors.colors.backgroundLightMode,
-        // transform: [
-        //   {
-        //     translateY:
-        //       scrollingDirection === "down" && offset > 1 ? headerOpacity : 0,
-        //   },
-        // ],
+        transform: [
+          {
+            translateY: headerOpacity,
+          },
+        ],
       }}
     >
       <Text
@@ -84,8 +84,8 @@ export default function HeaderBar({
         }}
         style={{
           position: "absolute",
-          right: 16,
-          bottom: 8,
+          right: "5%",
+          bottom: 12,
           zIndex: 200,
         }}
       >

@@ -1,5 +1,4 @@
 import {
-  Animated,
   StyleSheet,
   View,
   Platform,
@@ -11,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
 import * as colors from "../assets/colors/primaryColors";
+import Animated from "react-native-reanimated";
 
 import TechGridTile from "../components/TechGridTile";
 

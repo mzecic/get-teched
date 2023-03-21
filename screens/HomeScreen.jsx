@@ -67,6 +67,7 @@ export default function HomeScreen({
   setSoundEffectsOn,
   soundHandler,
   playSound,
+  headerHeight
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -288,6 +289,7 @@ export default function HomeScreen({
       ) : (
         <>
           <HeaderBar
+            headerHeight={headerHeight}
             headerTitle={"News"}
             offset={offset}
             headerOpacity={headerOpacity}

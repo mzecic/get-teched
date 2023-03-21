@@ -18,7 +18,6 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  // Animated,
 } from "react-native";
 import {
   NavigationContainer,
@@ -104,21 +103,6 @@ export default function App() {
       duration: 500,
       easing: Easing.out(Easing.exp),
     });
-    // Animated.timing(closeDrawer, {
-    //   toValue: 0.6 * windowWidth,
-    //   duration: 350,
-    //   useNativeDriver: true,
-    // }).start();
-    // Animated.timing(blurAreaAnim, {
-    //   toValue: windowWidth,
-    //   duration: 0,
-    //   useNativeDriver: true,
-    // }).start();
-    // Animated.timing(blurIntensity, {
-    //   toValue: 0,
-    //   duration: 350,
-    //   useNativeDriver: true,
-    // }).start();
   }
 
   function openBlur() {
@@ -142,24 +126,6 @@ export default function App() {
       duration: 1000,
       easing: Easing.out(Easing.exp),
     });
-    // Animated.timing(closeDrawer, {
-    //   toValue: 0,
-    //   duration: 350,
-    //   useNativeDriver: true,
-    // }).start();
-    // setTimeout(function () {
-    //   Animated.timing(blurAreaAnim, {
-    //     toValue: 0,
-    //     duration: 0,
-    //     useNativeDriver: true,
-    //   }).start();
-    // }, 330);
-
-    // Animated.timing(blurIntensity, {
-    //   toValue: 40,
-    //   duration: 350,
-    //   useNativeDriver: true,
-    // }).start();
   }
 
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -226,9 +192,11 @@ export default function App() {
   }
 
   const yOffset = useRef(new Animated.Value(0)).current;
-  const headerOpacity = yOffset.interpolate({
-    inputRange: [lastOffset, lastOffset + 1000],
-    outputRange: [0, -400],
+  HEADER_HEIGHT = 100;
+  const diffClampYOffset = Animated.diffClamp(yOffset, 0, HEADER_HEIGHT);
+  const headerOpacity = Animated.interpolateNode(diffClampYOffset, {
+    inputRange: [0, HEADER_HEIGHT],
+    outputRange: [0, -HEADER_HEIGHT],
   });
   const scaleY = useRef(new Animated.Value(0)).current;
   const generalListOffset = scaleY.interpolate({
@@ -478,6 +446,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              headerHeight={HEADER_HEIGHT}
                               playSound={playSound}
                               soundEffectsOn={soundEffectsOn}
                               setSoundEffectsOn={setSoundEffectsOn}

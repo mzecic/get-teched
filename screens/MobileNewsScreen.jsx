@@ -1,5 +1,4 @@
 import {
-  Animated,
   StyleSheet,
   View,
   Text,
@@ -13,6 +12,7 @@ import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
 import TechGridTile from "../components/TechGridTile";
 import * as colors from "../assets/colors/primaryColors";
+import Animated from "react-native-reanimated";
 
 export default function MobileNewsScreen({
   techNews,
