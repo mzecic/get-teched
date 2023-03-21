@@ -1,13 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  Animated,
-} from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import colors from "../assets/colors/primaryColors";
 import * as profiles from "../utils/users-api";
+import Animated from "react-native-reanimated";
 
 export default function HeaderBar({
   isDarkMode,
@@ -37,12 +31,12 @@ export default function HeaderBar({
         backgroundColor: isDarkMode
           ? colors.colors.black
           : colors.colors.backgroundLightMode,
-        transform: [
-          {
-            translateY:
-              scrollingDirection === "down" && offset > 1 ? headerOpacity : 0,
-          },
-        ],
+        // transform: [
+        //   {
+        //     translateY:
+        //       scrollingDirection === "down" && offset > 1 ? headerOpacity : 0,
+        //   },
+        // ],
       }}
     >
       <Text

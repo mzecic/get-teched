@@ -232,9 +232,6 @@ export default function AppDrawer({
             <Pressable
               onPress={() => {
                 closeDrawerHandler();
-                setTimeout(function () {
-                  closeBlur();
-                }, 500);
               }}
             >
               <Image

@@ -86,7 +86,7 @@ export default function App() {
   const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
   const blurIntensity = useSharedValue(0);
 
-  const offsetDrawer = useSharedValue(windowWidth);
+  const offsetDrawer = useSharedValue(0.6 * windowWidth);
   const blurOffset = useSharedValue(windowWidth);
 
   const animatedStyles = useAnimatedStyle(() => {
@@ -97,7 +97,7 @@ export default function App() {
 
   function closeDrawerHandler() {
     offsetDrawer.value = withTiming(windowWidth, {
-      duration: 2500,
+      duration: 1500,
       easing: Easing.out(Easing.exp),
     });
     blurIntensity.value = withTiming(0, {

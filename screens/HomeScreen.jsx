@@ -1,5 +1,4 @@
 import {
-  Animated,
   StyleSheet,
   View,
   Text,
@@ -23,6 +22,7 @@ import TechGridTileSmall from "../components/TechGridTileSmall";
 import TechGridTileBig from "../components/TechGridTileBig";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 import CategoryCard from "../components/CategoryCard";
+import Animated from "react-native-reanimated";
 
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
@@ -340,7 +340,7 @@ export default function HomeScreen({
                     if (scrollingDirection === "up") {
                       setLastOffset(offset);
                     } else if (scrollingDirection === "down") {
-                     setHidePoint(offset)
+                      setHidePoint(offset);
                     }
                   },
                   useNativeDriver: true,
