@@ -526,6 +526,12 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
+                              headerOpacity={headerOpacity}
+                              soundEffectsOn={soundEffectsOn}
+                              setLastVisitedScreen={setLastVisitedScreen}
+                              setIsMenu={setIsMenu}
+                              storedCredentials={storedCredentials}
+                              headerHeight={HEADER_HEIGHT}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -535,7 +541,6 @@ export default function App() {
                               techNews={gamingNews}
                               setGamingNews={setGamingNews}
                               yOffset={yOffset}
-                              headerOpacity={headerOpacity}
                               listViewGamingRef={listViewGamingRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
@@ -561,6 +566,12 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
+                              headerOpacity={headerOpacity}
+                              soundEffectsOn={soundEffectsOn}
+                              setLastVisitedScreen={setLastVisitedScreen}
+                              setIsMenu={setIsMenu}
+                              storedCredentials={storedCredentials}
+                              headerHeight={HEADER_HEIGHT}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -570,7 +581,6 @@ export default function App() {
                               techNews={audioNews}
                               setAudioNews={setAudioNews}
                               yOffset={yOffset}
-                              headerOpacity={headerOpacity}
                               listViewAudioRef={listViewAudioRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
@@ -596,6 +606,12 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
+                              headerOpacity={headerOpacity}
+                              soundEffectsOn={soundEffectsOn}
+                              setLastVisitedScreen={setLastVisitedScreen}
+                              setIsMenu={setIsMenu}
+                              storedCredentials={storedCredentials}
+                              headerHeight={HEADER_HEIGHT}
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
@@ -605,7 +621,6 @@ export default function App() {
                               techNews={mobileNews}
                               setMobileNews={setMobileNews}
                               yOffset={yOffset}
-                              headerOpacity={headerOpacity}
                               listViewMobileRef={listViewMobileRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}

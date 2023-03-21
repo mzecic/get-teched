@@ -94,6 +94,7 @@ export default function MobileNewsScreen({
           ]}
         >
           <Animated.FlatList
+            bounces={false}
             refreshControl={
               <RefreshControl
                 tintColor={

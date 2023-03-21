@@ -30,6 +30,11 @@ export default function AudioNewsScreen({
   refreshing,
   setRefreshing,
   playSound,
+  headerOpacity,
+  soundEffectsOn,
+  setLastVisitedScreen,
+  setIsMenu,
+  storedCredentials,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -94,6 +99,7 @@ export default function AudioNewsScreen({
           ]}
         >
           <Animated.FlatList
+            bounces={false}
             refreshControl={
               <RefreshControl
                 tintColor={

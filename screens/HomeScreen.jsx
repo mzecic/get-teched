@@ -67,7 +67,7 @@ export default function HomeScreen({
   setSoundEffectsOn,
   soundHandler,
   playSound,
-  headerHeight
+  headerHeight,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -314,6 +314,7 @@ export default function HomeScreen({
             onLayout={onLayoutRootView}
           >
             <Animated.FlatList
+              bounces={false}
               refreshControl={
                 <RefreshControl
                   tintColor={

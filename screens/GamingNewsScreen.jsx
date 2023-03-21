@@ -13,6 +13,7 @@ import * as colors from "../assets/colors/primaryColors";
 import Animated from "react-native-reanimated";
 
 import TechGridTile from "../components/TechGridTile";
+import HeaderBar from "../components/HeaderBar";
 
 export default function GamingNewsScreen({
   techNews,
@@ -30,6 +31,12 @@ export default function GamingNewsScreen({
   refreshing,
   setRefreshing,
   playSound,
+  headerHeight,
+  headerOpacity,
+  soundEffectsOn,
+  setLastVisitedScreen,
+  setIsMenu,
+  storedCredentials,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -83,61 +90,79 @@ export default function GamingNewsScreen({
           />
         </View>
       ) : (
-        <View
-          style={[
-            styles.list,
-            {
-              backgroundColor: isDarkMode
-                ? colors.colors.black
-                : colors.colors.backgroundLightMode,
-            },
-          ]}
-        >
-          <Animated.FlatList
-            refreshControl={
-              <RefreshControl
-                tintColor={
-                  isDarkMode ? colors.colors.white : colors.colors.black
-                }
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            }
-            onScroll={
-              Platform.OS === "ios"
-                ? Animated.event(
-                    [
-                      {
-                        nativeEvent: {
-                          contentOffset: {
-                            y: yOffset,
+        <>
+          <HeaderBar
+            headerHeight={headerHeight}
+            headerTitle={"News"}
+            offset={offset}
+            headerOpacity={headerOpacity}
+            isDarkMode={isDarkMode}
+            soundEffectsOn={soundEffectsOn}
+            playSound={playSound}
+            navigation={navigation}
+            setLastVisitedScreen={setLastVisitedScreen}
+            setIsMenu={setIsMenu}
+            storedCredentials={storedCredentials}
+            scrollingDirection={scrollingDirection}
+          />
+          <View
+            style={[
+              styles.list,
+              {
+                backgroundColor: isDarkMode
+                  ? colors.colors.black
+                  : colors.colors.backgroundLightMode,
+              },
+            ]}
+          >
+            <Animated.FlatList
+              bounces={false}
+              refreshControl={
+                <RefreshControl
+                  tintColor={
+                    isDarkMode ? colors.colors.white : colors.colors.black
+                  }
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+              }
+              onScroll={
+                Platform.OS === "ios"
+                  ? Animated.event(
+                      [
+                        {
+                          nativeEvent: {
+                            contentOffset: {
+                              y: yOffset,
+                            },
                           },
                         },
-                      },
-                    ],
-                    {
-                      listener: (event) => {
-                        let currentOffset = event.nativeEvent.contentOffset.y;
-                        let direction = currentOffset > offset ? "down" : "up";
-                        setOffset(currentOffset);
-                        setScrollingDirection(direction);
-                      },
-                      useNativeDriver: true,
+                      ],
+                      {
+                        listener: (event) => {
+                          let currentOffset = event.nativeEvent.contentOffset.y;
+                          let direction =
+                            currentOffset > offset ? "down" : "up";
+                          setOffset(currentOffset);
+                          setScrollingDirection(direction);
+                        },
+                        useNativeDriver: true,
+                      }
+                    )
+                  : () => {
+                      return;
                     }
-                  )
-                : () => {
-                    return;
-                  }
-            }
-            scrollEventThrottle={16}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={techNews}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderTechItem}
-            ref={listViewGamingRef}
-          />
-        </View>
+              }
+              scrollEventThrottle={16}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              data={techNews}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderTechItem}
+              ref={listViewGamingRef}
+            />
+          </View>
+        </>
       )}
     </>
   );
