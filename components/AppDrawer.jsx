@@ -309,8 +309,8 @@ const styles = StyleSheet.create({
   },
   exitButtonContainer: {
     position: "absolute",
-    top: "6%",
-    right: "7%",
+    top: "5.5%",
+    right: "6%",
     transform: [{ scale: 0.7 }],
   },
 });
