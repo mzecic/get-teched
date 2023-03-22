@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
 import * as colors from "../assets/colors/primaryColors";
 import TechGridTile from "../components/TechGridTile";
+import HeaderBar from "../components/HeaderBar";
 import Animated from "react-native-reanimated";
 
 export default function AudioNewsScreen({
@@ -35,6 +36,9 @@ export default function AudioNewsScreen({
   setLastVisitedScreen,
   setIsMenu,
   storedCredentials,
+  animatedHeaderStyle,
+  scrollHandler,
+  headerHeight,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -88,57 +92,54 @@ export default function AudioNewsScreen({
           />
         </View>
       ) : (
-        <View
-          style={[
-            styles.list,
-            {
-              backgroundColor: isDarkMode
-                ? colors.colors.black
-                : colors.colors.backgroundLightMode,
-            },
-          ]}
-        >
-          <Animated.FlatList
-            bounces={false}
-            refreshControl={
-              <RefreshControl
-                tintColor={
-                  isDarkMode ? colors.colors.white : colors.colors.black
-                }
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            }
-            onScroll={
-              Platform.OS === "ios"
-                ? Animated.event(
-                    [
-                      {
-                        nativeEvent: {
-                          contentOffset: {
-                            y: yOffset,
-                          },
-                        },
-                      },
-                    ],
-                    {
-                      listener: (event) => {},
-                      useNativeDriver: true,
-                    }
-                  )
-                : () => {
-                    return;
-                  }
-            }
-            scrollEventThrottle={16}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={techNews}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderTechItem}
-            ref={listViewAudioRef}
+        <>
+          <HeaderBar
+            animatedHeaderStyle={animatedHeaderStyle}
+            yOffset={yOffset}
+            headerHeight={headerHeight}
+            headerTitle={"News"}
+            offset={offset}
+            headerOpacity={headerOpacity}
+            isDarkMode={isDarkMode}
+            soundEffectsOn={soundEffectsOn}
+            playSound={playSound}
+            navigation={navigation}
+            setLastVisitedScreen={setLastVisitedScreen}
+            setIsMenu={setIsMenu}
+            storedCredentials={storedCredentials}
+            scrollingDirection={scrollingDirection}
           />
-        </View>
+          <View
+            style={[
+              styles.list,
+              {
+                backgroundColor: isDarkMode
+                  ? colors.colors.black
+                  : colors.colors.backgroundLightMode,
+              },
+            ]}
+          >
+            <Animated.FlatList
+              refreshControl={
+                <RefreshControl
+                  tintColor={
+                    isDarkMode ? colors.colors.white : colors.colors.black
+                  }
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+              }
+              onScroll={scrollHandler}
+              scrollEventThrottle={16}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              data={techNews}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderTechItem}
+              ref={listViewAudioRef}
+            />
+          </View>
+        </>
       )}
     </>
   );

@@ -37,6 +37,8 @@ export default function GamingNewsScreen({
   setLastVisitedScreen,
   setIsMenu,
   storedCredentials,
+  animatedHeaderStyle,
+  scrollHandler,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -92,6 +94,8 @@ export default function GamingNewsScreen({
       ) : (
         <>
           <HeaderBar
+            animatedHeaderStyle={animatedHeaderStyle}
+            yOffset={yOffset}
             headerHeight={headerHeight}
             headerTitle={"News"}
             offset={offset}
@@ -116,7 +120,6 @@ export default function GamingNewsScreen({
             ]}
           >
             <Animated.FlatList
-              // bounces={false}
               refreshControl={
                 <RefreshControl
                   tintColor={
@@ -126,27 +129,7 @@ export default function GamingNewsScreen({
                   onRefresh={onRefresh}
                 />
               }
-              onScroll={
-                Platform.OS === "ios"
-                  ? Animated.event(
-                      [
-                        {
-                          nativeEvent: {
-                            contentOffset: {
-                              y: yOffset,
-                            },
-                          },
-                        },
-                      ],
-                      {
-                        listener: (event) => {},
-                        useNativeDriver: true,
-                      }
-                    )
-                  : () => {
-                      return;
-                    }
-              }
+              onScroll={scrollHandler}
               scrollEventThrottle={16}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}

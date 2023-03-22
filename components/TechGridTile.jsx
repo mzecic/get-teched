@@ -31,10 +31,8 @@ export default function TechGridTile({
         {
           marginTop:
             Platform.OS === "ios"
-              ? data.index === 0 &&
-                Platform.OS === "ios" &&
-                lastVisitedScreen !== "HomeScreen"
-                ? "15%"
+              ? data.index === 0 && Platform.OS === "ios"
+                ? 112
                 : data.index === 0
                 ? "15%"
                 : 12
@@ -66,7 +64,9 @@ export default function TechGridTile({
               { color: isDarkMode ? colors.colors.white : colors.colors.black },
             ]}
           >
-            {data.item.title}
+            {data.item.title.length > 100
+              ? data.item.title.slice(0, 101) + "..."
+              : data.item.title}
           </Text>
           <Text
             style={[
@@ -87,7 +87,7 @@ export default function TechGridTile({
 
 const styles = StyleSheet.create({
   gridItem: {
-    height: 300,
+    height: 330,
     width: "94.7%",
     borderRadius: 12,
     marginHorizontal: "2.5%",
@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
     height: 90,
   },
   title: {
-    fontFamily: "OswaldMedium",
+    fontFamily: "Oswald",
     textAlign: "left",
-    fontSize: 17,
+    fontSize: 16,
   },
   articleSourceText: {
     fontFamily: "OswaldMedium",

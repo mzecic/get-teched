@@ -574,6 +574,9 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
+                              scrollHandler={scrollHandler}
+                              animatedHeaderStyle={animatedHeaderStyle}
+                              yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               soundEffectsOn={soundEffectsOn}
                               setLastVisitedScreen={setLastVisitedScreen}
@@ -587,7 +590,6 @@ export default function App() {
                               setScrollingDirection={setScrollingDirection}
                               techNews={gamingNews}
                               setGamingNews={setGamingNews}
-                              yOffset={yOffset}
                               listViewGamingRef={listViewGamingRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
@@ -613,6 +615,9 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
+                              scrollHandler={scrollHandler}
+                              animatedHeaderStyle={animatedHeaderStyle}
+                              yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               soundEffectsOn={soundEffectsOn}
                               setLastVisitedScreen={setLastVisitedScreen}
@@ -626,7 +631,6 @@ export default function App() {
                               setScrollingDirection={setScrollingDirection}
                               techNews={audioNews}
                               setAudioNews={setAudioNews}
-                              yOffset={yOffset}
                               listViewAudioRef={listViewAudioRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}
@@ -652,6 +656,9 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
+                              scrollHandler={scrollHandler}
+                              animatedHeaderStyle={animatedHeaderStyle}
+                              yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               soundEffectsOn={soundEffectsOn}
                               setLastVisitedScreen={setLastVisitedScreen}
@@ -665,7 +672,6 @@ export default function App() {
                               setScrollingDirection={setScrollingDirection}
                               techNews={mobileNews}
                               setMobileNews={setMobileNews}
-                              yOffset={yOffset}
                               listViewMobileRef={listViewMobileRef}
                               isLoading={isLoading}
                               setIsLoading={setIsLoading}

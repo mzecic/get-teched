@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import * as news from "../utils/gnews";
 import TechGridTile from "../components/TechGridTile";
 import * as colors from "../assets/colors/primaryColors";
+import HeaderBar from "../components/HeaderBar";
 import Animated from "react-native-reanimated";
 
 export default function MobileNewsScreen({
@@ -30,6 +31,14 @@ export default function MobileNewsScreen({
   refreshing,
   setRefreshing,
   playSound,
+  scrollHandler,
+  animatedHeaderStyle,
+  headerHeight,
+  headerOpacity,
+  soundEffectsOn,
+  setLastVisitedScreen,
+  setIsMenu,
+  storedCredentials,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -83,59 +92,54 @@ export default function MobileNewsScreen({
           />
         </View>
       ) : (
-        <View
-          style={[
-            styles.list,
-            {
-              backgroundColor: isDarkMode
-                ? colors.colors.black
-                : colors.colors.backgroundLightMode,
-            },
-          ]}
-        >
-          <Animated.FlatList
-            bounces={false}
-            refreshControl={
-              <RefreshControl
-                tintColor={
-                  isDarkMode ? colors.colors.white : colors.colors.black
-                }
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-              />
-            }
-            onScroll={
-              Platform.OS === "ios"
-                ? Animated.event(
-                    [
-                      {
-                        nativeEvent: {
-                          contentOffset: {
-                            y: yOffset,
-                          },
-                        },
-                      },
-                    ],
-                    {
-                      listener: (event) => {
-                        console.log(event);
-                      },
-                      useNativeDriver: true,
-                    }
-                  )
-                : () => {
-                    return;
-                  }
-            }
-            scrollEventThrottle={16}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={techNews}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderTechItem}
-            ref={listViewMobileRef}
+        <>
+          <HeaderBar
+            animatedHeaderStyle={animatedHeaderStyle}
+            yOffset={yOffset}
+            headerHeight={headerHeight}
+            headerTitle={"News"}
+            offset={offset}
+            headerOpacity={headerOpacity}
+            isDarkMode={isDarkMode}
+            soundEffectsOn={soundEffectsOn}
+            playSound={playSound}
+            navigation={navigation}
+            setLastVisitedScreen={setLastVisitedScreen}
+            setIsMenu={setIsMenu}
+            storedCredentials={storedCredentials}
+            scrollingDirection={scrollingDirection}
           />
-        </View>
+          <View
+            style={[
+              styles.list,
+              {
+                backgroundColor: isDarkMode
+                  ? colors.colors.black
+                  : colors.colors.backgroundLightMode,
+              },
+            ]}
+          >
+            <Animated.FlatList
+              refreshControl={
+                <RefreshControl
+                  tintColor={
+                    isDarkMode ? colors.colors.white : colors.colors.black
+                  }
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+              }
+              onScroll={scrollHandler}
+              scrollEventThrottle={16}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              data={techNews}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderTechItem}
+              ref={listViewMobileRef}
+            />
+          </View>
+        </>
       )}
     </>
   );
