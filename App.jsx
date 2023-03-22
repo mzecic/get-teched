@@ -43,10 +43,14 @@ import BlurAppDrawerArea from "./components/BlurAppDrawerArea";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
   Easing,
+  useAnimatedScrollHandler,
+  interpolate,
+  diffClamp,
 } from "react-native-reanimated";
+
+import { clamp } from "./helpers/clamp";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
@@ -72,7 +76,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [soundEffectsOn, setSoundEffectsOn] = useState(false);
-  const [offset, setOffset] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
   const [scrollingDirection, setScrollingDirection] = useState("");
   const [hidePoint, setHidePoint] = useState(null);
   const [lastOffset, setLastOffset] = useState(0);
@@ -191,21 +195,61 @@ export default function App() {
     }
   }
 
-  const yOffset = useRef(new Animated.Value(0)).current;
+  // const yOffset = useRef(new Animated.Value(0)).current;
+  const yOffset = useSharedValue(0);
+  const offset = useRef(0);
+  const direction = useRef("");
   HEADER_HEIGHT = 100;
-  const diffClampYOffset = Animated.diffClamp(yOffset, 0, HEADER_HEIGHT);
-  const headerOpacity = Animated.interpolateNode(diffClampYOffset, {
-    inputRange: [0, HEADER_HEIGHT],
-    outputRange: [0, -HEADER_HEIGHT],
-  });
-  const scaleY = useRef(new Animated.Value(0)).current;
-  const generalListOffset = scaleY.interpolate({
-    inputRange: [0, 200],
-    outputRange: [1, 0],
+  const headerOpacity = 0;
+  const headerVisibility = useSharedValue(100);
+  const navbarVisibility = useSharedValue(1);
+  // const diffClampYOffset = Animated.diffClamp(yOffset.value, 0, HEADER_HEIGHT);
+  // const headerOpacity = Animated.interpolate(diffClampYOffset, {
+  //   inputRange: [0, HEADER_HEIGHT],
+  //   outputRange: [0, -HEADER_HEIGHT],
+  // });
+
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateY: interpolate(yOffset.value, [0, 100], [0, -100]) },
+      ],
+    };
   });
 
-  // function closeBlurAreaHandler() {}
-  // function openBlurAreaHandler() {}
+  const animatedNavbarStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
+      ],
+    };
+  });
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onBeginDrag: (event, ctx) => {
+      ctx.prevY = event.contentOffset.y;
+    },
+    onScroll: (event, ctx) => {
+      let { y } = event.contentOffset;
+      if (y < 0) {
+        y = 0;
+      }
+      const dy = y - (ctx?.prevY ?? 0);
+      yOffset.value = clamp(yOffset.value + dy, 0, 100);
+      // the clamp function always returns a value between 0 and 100
+      ctx.prevY = y;
+      // let y = event.contentOffset.y;
+      // yOffset.value = y;
+      // console.log(yOffset.value);
+      // headerVisibility.value = y;
+      // if (y > 100) {
+      //   navbarVisibility.value = withTiming(0);
+      // } else {
+      //   navbarVisibility.value = withTiming(1);
+      // }
+    },
+  });
+  // < { prevY?: number } >
 
   const toggleSwitch = async function () {
     setIsDarkMode((previousState) => !previousState);
@@ -446,6 +490,9 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              animatedHeaderStyle={animatedHeaderStyle}
+                              scrollHandler={scrollHandler}
+                              yOffset={yOffset}
                               headerHeight={HEADER_HEIGHT}
                               playSound={playSound}
                               soundEffectsOn={soundEffectsOn}
@@ -461,7 +508,8 @@ export default function App() {
                               setLastOffset={setLastOffset}
                               storedCredentials={storedCredentials}
                               offset={offset}
-                              setOffset={setOffset}
+                              offsetY={offsetY}
+                              setOffsetY={setOffsetY}
                               scrollingDirection={scrollingDirection}
                               setScrollingDirection={setScrollingDirection}
                               onLayoutRootView={onLayoutRootView}
@@ -475,7 +523,6 @@ export default function App() {
                               setAudioNews={setAudioNews}
                               mobileNews={mobileNews}
                               setMobileNews={setMobileNews}
-                              yOffset={yOffset}
                               headerOpacity={headerOpacity}
                               lastVisitedScreen={lastVisitedScreen}
                               setLastVisitedScreen={setLastVisitedScreen}
@@ -535,7 +582,6 @@ export default function App() {
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
-                              setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
                               setScrollingDirection={setScrollingDirection}
                               techNews={gamingNews}
@@ -575,7 +621,6 @@ export default function App() {
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
-                              setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
                               setScrollingDirection={setScrollingDirection}
                               techNews={audioNews}
@@ -615,7 +660,6 @@ export default function App() {
                               refreshing={refreshing}
                               setRefreshing={setRefreshing}
                               offset={offset}
-                              setOffset={setOffset}
                               scrollingDirection={scrollingDirection}
                               setScrollingDirection={setScrollingDirection}
                               techNews={mobileNews}
@@ -675,6 +719,8 @@ export default function App() {
                         </Stack.Screen>
                       </Stack.Navigator>
                       <BottomNavBar
+                        animatedNavbarStyle={animatedNavbarStyle}
+                        navbarVisibility={navbarVisibility}
                         openBlur={openBlur}
                         closeDrawer={closeDrawer}
                         openDrawerHandler={openDrawerHandler}

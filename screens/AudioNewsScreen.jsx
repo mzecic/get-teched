@@ -122,12 +122,7 @@ export default function AudioNewsScreen({
                       },
                     ],
                     {
-                      listener: (event) => {
-                        let currentOffset = event.nativeEvent.contentOffset.y;
-                        let direction = currentOffset > offset ? "down" : "up";
-                        setOffset(currentOffset);
-                        setScrollingDirection(direction);
-                      },
+                      listener: (event) => {},
                       useNativeDriver: true,
                     }
                   )

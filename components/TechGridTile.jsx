@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as colors from "../assets/colors/primaryColors";
+import Animated, { SlideInLeft } from "react-native-reanimated";
 
 export default function TechGridTile({
   data,
@@ -23,7 +24,8 @@ export default function TechGridTile({
   }
 
   return (
-    <View
+    <Animated.View
+      entering={SlideInLeft}
       style={[
         styles.gridItem,
         {
@@ -33,8 +35,8 @@ export default function TechGridTile({
                 Platform.OS === "ios" &&
                 lastVisitedScreen !== "HomeScreen"
                 ? "15%"
-                : data.index === 0 && !isGeneralVisible
-                ? 12
+                : data.index === 0
+                ? "15%"
                 : 12
               : 12,
           backgroundColor: isDarkMode
@@ -79,7 +81,7 @@ export default function TechGridTile({
           <Image style={styles.image} source={{ uri: data.item.image }} />
         </View>
       </Pressable>
-    </View>
+    </Animated.View>
   );
 }
 

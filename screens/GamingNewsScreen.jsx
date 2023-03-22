@@ -116,7 +116,7 @@ export default function GamingNewsScreen({
             ]}
           >
             <Animated.FlatList
-              bounces={false}
+              // bounces={false}
               refreshControl={
                 <RefreshControl
                   tintColor={
@@ -139,13 +139,7 @@ export default function GamingNewsScreen({
                         },
                       ],
                       {
-                        listener: (event) => {
-                          let currentOffset = event.nativeEvent.contentOffset.y;
-                          let direction =
-                            currentOffset > offset ? "down" : "up";
-                          setOffset(currentOffset);
-                          setScrollingDirection(direction);
-                        },
+                        listener: (event) => {},
                         useNativeDriver: true,
                       }
                     )

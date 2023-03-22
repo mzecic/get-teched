@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import colors from "../assets/colors/primaryColors";
 import * as profiles from "../utils/users-api";
-import Animated from "react-native-reanimated";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 export default function HeaderBar({
   isDarkMode,
@@ -16,28 +16,33 @@ export default function HeaderBar({
   offset,
   headerOpacity,
   headerHeight,
+  yOffset,
+  animatedHeaderStyle,
 }) {
   return (
     <Animated.View
-      style={{
-        paddingTop: 46,
-        zIndex: 200,
-        flex: 1,
-        width: "100%",
-        height: headerHeight,
-        position: "absolute",
-        top: 0,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: isDarkMode
-          ? colors.colors.black
-          : colors.colors.backgroundLightMode,
-        transform: [
-          {
-            translateY: headerOpacity,
-          },
-        ],
-      }}
+      style={[
+        {
+          paddingTop: 46,
+          zIndex: 200,
+          flex: 1,
+          width: "100%",
+          height: headerHeight,
+          position: "absolute",
+          top: 0,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: isDarkMode
+            ? colors.colors.black
+            : colors.colors.backgroundLightMode,
+          //   transform: [
+          //     {
+          //       translateY: headerOpacity,
+          //     },
+          //   ],
+        },
+        animatedHeaderStyle,
+      ]}
     >
       <Text
         style={[
@@ -54,6 +59,7 @@ export default function HeaderBar({
           if (soundEffectsOn) {
             playSound();
           }
+          console.log(yOffset._value);
           navigation.navigate("ProfileScreen");
           setLastVisitedScreen("ProfileScreen");
           setIsMenu(true);

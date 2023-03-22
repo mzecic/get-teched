@@ -118,10 +118,7 @@ export default function MobileNewsScreen({
                     ],
                     {
                       listener: (event) => {
-                        let currentOffset = event.nativeEvent.contentOffset.y;
-                        let direction = currentOffset > offset ? "down" : "up";
-                        setOffset(currentOffset);
-                        setScrollingDirection(direction);
+                        console.log(event);
                       },
                       useNativeDriver: true,
                     }

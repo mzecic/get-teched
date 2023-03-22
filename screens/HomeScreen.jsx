@@ -22,10 +22,11 @@ import TechGridTileSmall from "../components/TechGridTileSmall";
 import TechGridTileBig from "../components/TechGridTileBig";
 import GeneralNewsLine from "../components/GeneralNewsLine";
 import CategoryCard from "../components/CategoryCard";
-import Animated from "react-native-reanimated";
+import Animated, { runOnUI, runOnJS } from "react-native-reanimated";
 
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
+import { FlatList } from "react-native-gesture-handler";
 
 export default function HomeScreen({
   techNews,
@@ -49,8 +50,9 @@ export default function HomeScreen({
   setIsLoading,
   isDarkMode,
   setIsDarkMode,
+  offsetY,
+  setOffsetY,
   offset,
-  setOffset,
   hidePoint,
   setHidePoint,
   scrollingDirection,
@@ -68,6 +70,8 @@ export default function HomeScreen({
   soundHandler,
   playSound,
   headerHeight,
+  scrollHandler,
+  animatedHeaderStyle,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -75,6 +79,7 @@ export default function HomeScreen({
       setRefreshing(false);
     }, 500);
   }, []);
+  const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
   function renderTechItem(itemData) {
     if (itemData.index >= 0 && itemData.index < 6) {
@@ -289,6 +294,8 @@ export default function HomeScreen({
       ) : (
         <>
           <HeaderBar
+            animatedHeaderStyle={animatedHeaderStyle}
+            yOffset={yOffset}
             headerHeight={headerHeight}
             headerTitle={"News"}
             offset={offset}
@@ -314,7 +321,6 @@ export default function HomeScreen({
             onLayout={onLayoutRootView}
           >
             <Animated.FlatList
-              bounces={false}
               refreshControl={
                 <RefreshControl
                   tintColor={
@@ -324,31 +330,7 @@ export default function HomeScreen({
                   onRefresh={onRefresh}
                 />
               }
-              onScroll={Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: yOffset,
-                      },
-                    },
-                  },
-                ],
-                {
-                  listener: (event) => {
-                    let currentOffset = event.nativeEvent.contentOffset.y;
-                    let direction = currentOffset > offset ? "down" : "up";
-                    setOffset(currentOffset);
-                    setScrollingDirection(direction);
-                    if (scrollingDirection === "up") {
-                      setLastOffset(offset);
-                    } else if (scrollingDirection === "down") {
-                      setHidePoint(offset);
-                    }
-                  },
-                  useNativeDriver: true,
-                }
-              )}
+              onScroll={scrollHandler}
               scrollEventThrottle={16}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
@@ -363,7 +345,6 @@ export default function HomeScreen({
               keyExtractor={(item, index) => index.toString()}
               renderItem={renderTechItem}
               ref={listViewRef}
-              style={{}}
             />
           </View>
         </>

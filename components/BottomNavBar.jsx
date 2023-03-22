@@ -1,13 +1,7 @@
-import {
-  View,
-  Pressable,
-  StyleSheet,
-  Image,
-  Text,
-  Animated,
-} from "react-native";
+import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -26,6 +20,8 @@ export default function BottomNavBar({
   openDrawerHandler,
   setIsMenu,
   closeDrawer,
+  navbarVisibility,
+  animatedNavbarStyle,
 }) {
   const navigation = useNavigation();
 
@@ -34,19 +30,18 @@ export default function BottomNavBar({
       <Animated.View
         style={[
           styles.navContainer,
+
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
               : primaryColors.colors.backgroundLightMode,
             transform: [
               {
-                scaleY:
-                  isMenu || (scrollingDirection === "down" && offset > 300)
-                    ? 0
-                    : 1,
+                scaleY: isMenu ? 0 : 1,
               },
             ],
           },
+          animatedNavbarStyle,
         ]}
       >
         <View>
