@@ -35,11 +35,6 @@ export default function BottomNavBar({
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
               : primaryColors.colors.backgroundLightMode,
-            transform: [
-              {
-                scaleY: isMenu ? 0 : 1,
-              },
-            ],
           },
           animatedNavbarStyle,
         ]}

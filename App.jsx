@@ -221,6 +221,7 @@ export default function App() {
     return {
       transform: [
         { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
+        { scaleY: isMenu ? 0 : 1 },
       ],
     };
   });
