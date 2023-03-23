@@ -47,7 +47,6 @@ import Animated, {
   Easing,
   useAnimatedScrollHandler,
   interpolate,
-  diffClamp,
 } from "react-native-reanimated";
 
 import { clamp } from "./helpers/clamp";
@@ -195,19 +194,12 @@ export default function App() {
     }
   }
 
-  // const yOffset = useRef(new Animated.Value(0)).current;
   const yOffset = useSharedValue(0);
   const offset = useRef(0);
   const direction = useRef("");
   HEADER_HEIGHT = 100;
   const headerOpacity = 0;
-  const headerVisibility = useSharedValue(100);
   const navbarVisibility = useSharedValue(1);
-  // const diffClampYOffset = Animated.diffClamp(yOffset.value, 0, HEADER_HEIGHT);
-  // const headerOpacity = Animated.interpolate(diffClampYOffset, {
-  //   inputRange: [0, HEADER_HEIGHT],
-  //   outputRange: [0, -HEADER_HEIGHT],
-  // });
 
   const animatedHeaderStyle = useAnimatedStyle(() => {
     return {
@@ -235,19 +227,10 @@ export default function App() {
       if (y < 0) {
         y = 0;
       }
-      const dy = y - (ctx?.prevY ?? 0);
+      const dy = y - (ctx?.prevY ?? -100);
       yOffset.value = clamp(yOffset.value + dy, 0, 100);
       // the clamp function always returns a value between 0 and 100
       ctx.prevY = y;
-      // let y = event.contentOffset.y;
-      // yOffset.value = y;
-      // console.log(yOffset.value);
-      // headerVisibility.value = y;
-      // if (y > 100) {
-      //   navbarVisibility.value = withTiming(0);
-      // } else {
-      //   navbarVisibility.value = withTiming(1);
-      // }
     },
   });
   // < { prevY?: number } >
