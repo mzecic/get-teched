@@ -34,6 +34,7 @@ import AudioNewsScreen from "./screens/AudioNewsScreen";
 import MobileNewsScreen from "./screens/MobileNewsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import MarketplaceScreen from "./screens/MarketplaceScreen";
 import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
@@ -670,6 +671,23 @@ export default function App() {
                         >
                           {(props) => (
                             <SearchScreen
+                              lastVisitedScreen={lastVisitedScreen}
+                              isDarkMode={isDarkMode}
+                              allNews={allNews}
+                              setAllNews={setAllNews}
+                              isLoading={isLoading}
+                              setIsLoading={setIsLoading}
+                            />
+                          )}
+                        </Stack.Screen>
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                          }}
+                          name="MarketplaceScreen"
+                        >
+                          {(props) => (
+                            <MarketplaceScreen
                               lastVisitedScreen={lastVisitedScreen}
                               isDarkMode={isDarkMode}
                               allNews={allNews}

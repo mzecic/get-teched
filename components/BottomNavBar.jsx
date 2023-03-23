@@ -39,7 +39,7 @@ export default function BottomNavBar({
           animatedNavbarStyle,
         ]}
       >
-        <View>
+        <View style={styles.pressableContainer}>
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
@@ -49,7 +49,7 @@ export default function BottomNavBar({
                 scrollToTopHandler();
               }
             }}
-            style={({ pressed }) => [styles.button, styles.pressableContainer]}
+            style={({ pressed }) => [styles.button]}
           >
             <View style={[styles.buttonContainer]}>
               <Image
@@ -61,8 +61,8 @@ export default function BottomNavBar({
                 ]}
                 source={
                   lastVisitedScreen === "HomeScreen"
-                    ? require("../assets/home-fill.png")
-                    : require("../assets/home-icon.png")
+                    ? require("../assets/news-fill.png")
+                    : require("../assets/news-icon.png")
                 }
               />
               <Text
@@ -73,12 +73,12 @@ export default function BottomNavBar({
                   },
                 ]}
               >
-                Home
+                News
               </Text>
             </View>
           </Pressable>
         </View>
-        <View>
+        <View style={styles.pressableContainer}>
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
@@ -88,7 +88,7 @@ export default function BottomNavBar({
                 scrollToTopGamingHandler();
               }
             }}
-            style={({ pressed }) => [styles.button, styles.pressableContainer]}
+            style={({ pressed }) => [styles.button]}
           >
             <View style={styles.buttonContainer}>
               <Image
@@ -100,8 +100,8 @@ export default function BottomNavBar({
                 ]}
                 source={
                   lastVisitedScreen === "GamingNewsScreen"
-                    ? require("../assets/gaming-fill.png")
-                    : require("../assets/gaming-no-fill.png")
+                    ? require("../assets/video-fill.png")
+                    : require("../assets/video-icon.png")
                 }
               />
               <Text
@@ -112,45 +112,7 @@ export default function BottomNavBar({
                   },
                 ]}
               >
-                Gaming
-              </Text>
-            </View>
-          </Pressable>
-        </View>
-        <View style={[styles.pressableContainer]}>
-          <Pressable
-            onPress={() => {
-              if (soundEffectsOn) playSound();
-              navigation.navigate("AudioNewsScreen");
-              setLastVisitedScreen("AudioNewsScreen");
-              if (lastVisitedScreen === "AudioNewsScreen") {
-                scrollToTopAudioHandler();
-              }
-            }}
-          >
-            <View style={styles.buttonContainer}>
-              <Image
-                style={[
-                  styles.navIcon,
-                  {
-                    tintColor: isDarkMode ? "white" : "black",
-                  },
-                ]}
-                source={
-                  lastVisitedScreen === "AudioNewsScreen"
-                    ? require("../assets/audio-fill.png")
-                    : require("../assets/audio-icon.png")
-                }
-              />
-              <Text
-                style={[
-                  styles.imageTag,
-                  {
-                    color: isDarkMode ? "white" : "black",
-                  },
-                ]}
-              >
-                Audio
+                Tech Shorts
               </Text>
             </View>
           </Pressable>
@@ -159,9 +121,9 @@ export default function BottomNavBar({
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
-              navigation.navigate("MobileNewsScreen");
-              setLastVisitedScreen("MobileNewsScreen");
-              if (lastVisitedScreen === "MobileNewsScreen") {
+              navigation.navigate("MarketplaceScreen");
+              setLastVisitedScreen("MarketplaceScreen");
+              if (lastVisitedScreen === "MarketplaceScreen") {
                 scrollToTopMobileHandler();
               }
             }}
@@ -176,9 +138,9 @@ export default function BottomNavBar({
                   },
                 ]}
                 source={
-                  lastVisitedScreen === "MobileNewsScreen"
-                    ? require("../assets/mobile-fill.png")
-                    : require("../assets/mobile-icon.png")
+                  lastVisitedScreen === "MarketplaceScreen"
+                    ? require("../assets/store-fill.png")
+                    : require("../assets/store-icon.png")
                 }
               />
               <Text
@@ -189,7 +151,7 @@ export default function BottomNavBar({
                   },
                 ]}
               >
-                Mobile
+                Marketplace
               </Text>
             </View>
           </Pressable>
@@ -269,12 +231,13 @@ export default function BottomNavBar({
 const styles = StyleSheet.create({
   navContainer: {
     position: "absolute",
-    height: "8%",
+    height: 65,
     width: "100%",
+    paddingTop: 8,
+    paddingHorizontal: 12,
     flexDirection: "row",
     justifyContent: "space-evenly",
-    alignItems: "center",
-    border: "2px solid black",
+    alignItems: "flex-start",
     overflow: "hidden",
     bottom: 0,
     zIndex: 99,
@@ -282,17 +245,17 @@ const styles = StyleSheet.create({
   navIcon: {
     width: 25,
     height: 25,
-    padding: 4,
-    transform: [{ scale: 0.95 }],
+    // transform: [{ scale: 0.95 }],
     alignSelf: "center",
   },
   buttonContainer: {
     width: "100%",
   },
   pressableContainer: {
-    height: "100%",
+    // height: "100%",
     justifyContent: "center",
     alignItems: "center",
+    width: "20%",
   },
   button: {
     borderRadius: 16,
@@ -301,7 +264,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   imageTag: {
-    alignSelf: "center",
+    // alignSelf: "center",
     fontSize: 10,
   },
 });
