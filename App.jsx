@@ -704,6 +704,15 @@ export default function App() {
                         >
                           {(props) => (
                             <ProfileScreen
+                              arrowText={
+                                lastVisitedScreen === "GamingNewsScreen"
+                                  ? "Gaming News"
+                                  : lastVisitedScreen === "AudioNewsScreen"
+                                  ? "Audio News"
+                                  : lastVisitedScreen === "MobileNewsScreen"
+                                  ? "Mobile News"
+                                  : "News"
+                              }
                               playSound={playSound}
                               soundsEffectsOn={soundEffectsOn}
                               toggleSoundEffects={toggleSoundEffects}

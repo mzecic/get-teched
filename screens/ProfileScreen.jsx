@@ -30,6 +30,7 @@ export default function ProfileScreen({
   toggleSoundEffects,
   soundsEffectsOn,
   playSound,
+  arrowText,
 }) {
   const navigation = useNavigation();
 
@@ -81,13 +82,13 @@ export default function ProfileScreen({
                 pressed ? styles.itemPressed : null,
               ]}
               onPress={() => {
-                navigation.navigate("HomeScreen");
-                setLastVisitedScreen("HomeScreen");
+                navigation.navigate(lastVisitedScreen);
+                setLastVisitedScreen(lastVisitedScreen);
                 setIsMenu(false);
               }}
             >
               <View style={styles.backArrow}></View>
-              <Text style={styles.backButtonText}>News</Text>
+              <Text style={styles.backButtonText}>{arrowText}</Text>
             </Pressable>
           </SafeAreaView>
           <View style={styles.mainContainer}>
@@ -341,6 +342,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 18,
     fontWeight: 400,
+    marginHorizontal: 2,
     color: "#007AFF",
   },
   backArrow: {

@@ -282,8 +282,8 @@ const styles = StyleSheet.create({
   navIcon: {
     width: 25,
     height: 25,
-    padding: 12,
-    transform: [{ scale: 0.85 }],
+    padding: 4,
+    transform: [{ scale: 0.95 }],
     alignSelf: "center",
   },
   buttonContainer: {
@@ -301,7 +301,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   imageTag: {
-    // position: "absolute",
     alignSelf: "center",
     fontSize: 10,
   },

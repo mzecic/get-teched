@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 18,
     fontWeight: 400,
+    marginHorizontal: 2,
     color: "#007AFF",
   },
   backArrow: {

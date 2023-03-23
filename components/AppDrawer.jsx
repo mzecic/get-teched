@@ -89,7 +89,11 @@ export default function AppDrawer({
                 <View style={styles.iconContainer}>
                   <Image
                     style={[styles.itemIcon, { tintColor: dynamicTint }]}
-                    source={require("../assets/home-icon.png")}
+                    source={
+                      lastVisitedScreen === "HomeScreen"
+                        ? require("../assets/home-fill.png")
+                        : require("../assets/home-icon.png")
+                    }
                   />
                 </View>
                 <View style={styles.textContainer}>
@@ -120,7 +124,11 @@ export default function AppDrawer({
                 <View style={styles.iconContainer}>
                   <Image
                     style={[styles.itemIcon, { tintColor: dynamicTint }]}
-                    source={require("../assets/gaming-icon.png")}
+                    source={
+                      lastVisitedScreen === "GamingNewsScreen"
+                        ? require("../assets/gaming-fill.png")
+                        : require("../assets/gaming-icon.png")
+                    }
                   />
                 </View>
                 <View style={styles.textContainer}>
@@ -151,7 +159,11 @@ export default function AppDrawer({
                 <View style={styles.iconContainer}>
                   <Image
                     style={[styles.itemIcon, { tintColor: dynamicTint }]}
-                    source={require("../assets/audio-icon.png")}
+                    source={
+                      lastVisitedScreen === "AudioNewsScreen"
+                        ? require("../assets/audio-fill.png")
+                        : require("../assets/audio-icon.png")
+                    }
                   />
                 </View>
                 <View style={styles.textContainer}>
@@ -182,7 +194,11 @@ export default function AppDrawer({
                 <View style={styles.iconContainer}>
                   <Image
                     style={[styles.itemIcon, { tintColor: dynamicTint }]}
-                    source={require("../assets/mobile-icon.png")}
+                    source={
+                      lastVisitedScreen === "MobileNewsScreen"
+                        ? require("../assets/mobile-fill.png")
+                        : require("../assets/mobile-icon.png")
+                    }
                   />
                 </View>
                 <View style={styles.textContainer}>

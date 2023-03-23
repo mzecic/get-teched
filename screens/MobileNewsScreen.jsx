@@ -97,7 +97,7 @@ export default function MobileNewsScreen({
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}
-            headerTitle={"News"}
+            headerTitle={"Mobile News"}
             offset={offset}
             headerOpacity={headerOpacity}
             isDarkMode={isDarkMode}

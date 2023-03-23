@@ -97,7 +97,7 @@ export default function AudioNewsScreen({
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}
-            headerTitle={"News"}
+            headerTitle={"Audio News"}
             offset={offset}
             headerOpacity={headerOpacity}
             isDarkMode={isDarkMode}

@@ -32,7 +32,7 @@ export default function TechGridTile({
           marginTop:
             Platform.OS === "ios"
               ? data.index === 0 && Platform.OS === "ios"
-                ? 112
+                ? 124
                 : data.index === 0
                 ? "15%"
                 : 12

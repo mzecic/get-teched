@@ -35,11 +35,6 @@ export default function HeaderBar({
           backgroundColor: isDarkMode
             ? colors.colors.black
             : colors.colors.backgroundLightMode,
-          //   transform: [
-          //     {
-          //       translateY: headerOpacity,
-          //     },
-          //   ],
         },
         animatedHeaderStyle,
       ]}
@@ -61,7 +56,7 @@ export default function HeaderBar({
           }
           console.log(yOffset._value);
           navigation.navigate("ProfileScreen");
-          setLastVisitedScreen("ProfileScreen");
+        //   setLastVisitedScreen("ProfileScreen");
           setIsMenu(true);
           const getProfile = await profiles.getProfile(storedCredentials.email);
           if (getProfile.length === 0 && loginType === "google") {

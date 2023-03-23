@@ -4,7 +4,7 @@ const colors = {
   black: "black",
   grey: "rgb(50, 50, 50)",
   lighterGrey: "rgb(215, 215, 215)",
-  backgroundDarkMode: "rgb(25, 25, 25)",
+  backgroundDarkMode: "rgb(20, 20, 20)",
   backgroundLightMode: "rgb(240, 240, 247)",
   primaryHighlight: "rgb(150, 150, 150)",
   secondaryHighlight: "rgb(115, 115, 115)",

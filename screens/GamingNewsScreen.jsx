@@ -97,7 +97,7 @@ export default function GamingNewsScreen({
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}
-            headerTitle={"News"}
+            headerTitle={"Gaming News"}
             offset={offset}
             headerOpacity={headerOpacity}
             isDarkMode={isDarkMode}
