@@ -220,7 +220,7 @@ export default function App() {
     return {
       transform: [
         { translateX: navbarLinePosition.value },
-        { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
+        // { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
       ],
     };
   });

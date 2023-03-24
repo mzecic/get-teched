@@ -36,6 +36,7 @@ export default function BottomNavBar({
           {
             paddingHorizontal: 0.025 * windowWidth,
             width: windowWidth,
+            transform: [{ scaleY: isMenu ? 0 : 1 }],
           },
         ]}
       >
@@ -60,8 +61,9 @@ export default function BottomNavBar({
               ? primaryColors.colors.black
               : primaryColors.colors.backgroundLightMode,
             paddingHorizontal: 0.025 * windowWidth,
+            transform: [{ scaleY: isMenu ? 0 : 1 }],
           },
-          animatedNavbarStyle,
+          // animatedNavbarStyle,
         ]}
       >
         <View style={styles.pressableContainer}>
@@ -113,6 +115,7 @@ export default function BottomNavBar({
               navigation.navigate("TechShortsScreen");
               setLastVisitedScreen("TechShortsScreen");
               navbarLinePosition.value = withTiming(0.19 * windowWidth);
+              setIsMenu(false);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -260,9 +263,9 @@ export default function BottomNavBar({
 const styles = StyleSheet.create({
   navContainer: {
     position: "absolute",
-    height: 65,
+    height: 60,
     width: "100%",
-    paddingTop: 8,
+    paddingTop: 6,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
@@ -296,7 +299,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   lineContainer: {
-    bottom: 61,
+    bottom: 57,
     zIndex: 200,
   },
   animatedLine: {
