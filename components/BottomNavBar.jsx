@@ -70,13 +70,22 @@ export default function BottomNavBar({
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
-              navigation.navigate("HomeScreen");
-              setLastVisitedScreen("HomeScreen");
+              if (lastVisitedScreen.split("N").includes("ewsScreen")) {
+                if (lastVisitedScreen === "GamingNewsScreen") {
+                  scrollToTopGamingHandler();
+                } else if (lastVisitedScreen === "AudioNewsScreen") {
+                  scrollToTopAudioHandler();
+                } else if (lastVisitedScreen === "MobileNewsScreen") {
+                  scrollToTopMobileHandler();
+                }
+              } else {
+                navigation.navigate("HomeScreen");
+                setLastVisitedScreen("HomeScreen");
+              }
               if (lastVisitedScreen === "HomeScreen") {
                 scrollToTopHandler();
-              } else {
-                navbarLinePosition.value = withTiming(0);
               }
+              navbarLinePosition.value = withTiming(0);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -92,6 +101,24 @@ export default function BottomNavBar({
                   lastVisitedScreen === "HomeScreen"
                     ? require("../assets/news-fill.png")
                     : require("../assets/news-icon.png")
+                }
+              />
+              <Image
+                style={{
+                  position: "absolute",
+                  tintColor: isDarkMode ? "white" : "black",
+                  width: 12,
+                  height: 12,
+                  right: 10,
+                }}
+                source={
+                  lastVisitedScreen === "GamingNewsScreen"
+                    ? require("../assets/gaming-fill.png")
+                    : lastVisitedScreen === "AudioNewsScreen"
+                    ? require("../assets/audio-fill.png")
+                    : lastVisitedScreen === "MobileNewsScreen"
+                    ? require("../assets/mobile-fill.png")
+                    : require("../assets/empty.png")
                 }
               />
               <Text
@@ -263,9 +290,9 @@ export default function BottomNavBar({
 const styles = StyleSheet.create({
   navContainer: {
     position: "absolute",
-    height: 60,
+    height: 65,
     width: "100%",
-    paddingTop: 6,
+    paddingTop: 8,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
@@ -299,7 +326,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   lineContainer: {
-    bottom: 57,
+    bottom: 63,
     zIndex: 200,
   },
   animatedLine: {

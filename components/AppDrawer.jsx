@@ -10,7 +10,7 @@ import {
 import { BlurView } from "expo-blur";
 import primaryColors from "../assets/colors/primaryColors";
 import { useNavigation } from "@react-navigation/native";
-import Animated from "react-native-reanimated";
+import Animated, { withTiming } from "react-native-reanimated";
 
 export default function AppDrawer({
   setIsMenu,
@@ -24,6 +24,7 @@ export default function AppDrawer({
   storedCredentials,
   animatedStyles,
   closeBlur,
+  navbarLinePosition,
 }) {
   const navigation = useNavigation();
   const fontColor = isDarkMode
@@ -83,6 +84,7 @@ export default function AppDrawer({
                 onPress={() => {
                   navigation.navigate("HomeScreen");
                   setLastVisitedScreen("HomeScreen");
+                  navbarLinePosition.value = withTiming(0);
                   closeDrawerHandler();
                 }}
               >
@@ -118,6 +120,7 @@ export default function AppDrawer({
                 onPress={() => {
                   navigation.navigate("GamingNewsScreen");
                   setLastVisitedScreen("GamingNewsScreen");
+                  navbarLinePosition.value = withTiming(0);
                   closeDrawerHandler();
                 }}
               >
@@ -153,6 +156,7 @@ export default function AppDrawer({
                 onPress={() => {
                   navigation.navigate("AudioNewsScreen");
                   setLastVisitedScreen("AudioNewsScreen");
+                  navbarLinePosition.value = withTiming(0);
                   closeDrawerHandler();
                 }}
               >
@@ -188,6 +192,7 @@ export default function AppDrawer({
                 onPress={() => {
                   navigation.navigate("MobileNewsScreen");
                   setLastVisitedScreen("MobileNewsScreen");
+                  navbarLinePosition.value = withTiming(0);
                   closeDrawerHandler();
                 }}
               >

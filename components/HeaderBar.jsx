@@ -18,6 +18,7 @@ export default function HeaderBar({
   headerHeight,
   yOffset,
   animatedHeaderStyle,
+  lastVisitedScreen,
 }) {
   return (
     <Animated.View
@@ -30,6 +31,7 @@ export default function HeaderBar({
           height: headerHeight,
           position: "absolute",
           top: 0,
+          flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: isDarkMode
@@ -39,6 +41,38 @@ export default function HeaderBar({
         animatedHeaderStyle,
       ]}
     >
+      {lastVisitedScreen.split("N").includes("ewsScreen") ? (
+        <View style={styles.backArrowContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.backButton,
+              pressed ? styles.itemPressed : null,
+            ]}
+            onPress={() => {
+              navigation.navigate("HomeScreen");
+              setLastVisitedScreen("HomeScreen");
+              setIsMenu(false);
+            }}
+          >
+            <View
+              style={[
+                styles.backArrow,
+                {
+                  borderTopColor: isDarkMode
+                    ? colors.colors.white
+                    : colors.colors.black,
+                  borderRightColor: isDarkMode
+                    ? colors.colors.white
+                    : colors.colors.black,
+                },
+              ]}
+            ></View>
+          </Pressable>
+        </View>
+      ) : (
+        <></>
+      )}
+
       <Text
         style={[
           styles.headerTitle,
@@ -56,7 +90,7 @@ export default function HeaderBar({
           }
           console.log(yOffset._value);
           navigation.navigate("ProfileScreen");
-        //   setLastVisitedScreen("ProfileScreen");
+          //   setLastVisitedScreen("ProfileScreen");
           setIsMenu(true);
           const getProfile = await profiles.getProfile(storedCredentials.email);
           if (getProfile.length === 0 && loginType === "google") {
@@ -86,7 +120,7 @@ export default function HeaderBar({
         style={{
           position: "absolute",
           right: "5%",
-          bottom: 12,
+          bottom: 14,
           zIndex: 200,
         }}
       >
@@ -121,5 +155,21 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     textAlign: "center",
+    paddingBottom: 10,
+  },
+  backArrowContainer: {
+    position: "absolute",
+    // backgroundColor: "yellow",
+    left: "7%",
+    bottom: 24,
+  },
+  backArrow: {
+    width: 14,
+    height: 14,
+    borderTopWidth: 2.5,
+    borderRightWidth: 2.5,
+    borderTopColor: "#007AFF",
+    borderRightColor: "#007AFF",
+    transform: [{ rotate: "225deg" }],
   },
 });

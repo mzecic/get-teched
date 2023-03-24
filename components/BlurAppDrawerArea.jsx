@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    zIndex: 98,
+    zIndex: 100,
   },
   blurArea: {
     height: "100%",

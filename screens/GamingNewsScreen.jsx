@@ -39,6 +39,7 @@ export default function GamingNewsScreen({
   storedCredentials,
   animatedHeaderStyle,
   scrollHandler,
+  lastVisitedScreen,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -94,6 +95,7 @@ export default function GamingNewsScreen({
       ) : (
         <>
           <HeaderBar
+            lastVisitedScreen={lastVisitedScreen}
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}

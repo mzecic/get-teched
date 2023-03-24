@@ -39,6 +39,7 @@ export default function AudioNewsScreen({
   animatedHeaderStyle,
   scrollHandler,
   headerHeight,
+  lastVisitedScreen,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -94,6 +95,7 @@ export default function AudioNewsScreen({
       ) : (
         <>
           <HeaderBar
+            lastVisitedScreen={lastVisitedScreen}
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}

@@ -107,7 +107,7 @@ export default function App() {
 
   function closeDrawerHandler() {
     offsetDrawer.value = withTiming(0.6 * windowWidth, {
-      duration: 1500,
+      duration: 1000,
       easing: Easing.out(Easing.exp),
     });
     blurOffset.value = withTiming(windowWidth, {
@@ -447,6 +447,7 @@ export default function App() {
                       >
                         <Stack.Screen
                           options={{
+                            gestureEnabled: false,
                             headerTitle:
                               Platform.OS === "android"
                                 ? () => (
@@ -529,7 +530,10 @@ export default function App() {
                           )}
                         </Stack.Screen>
                         <Stack.Screen
-                          options={{ headerShown: false }}
+                          options={{
+                            gestureEnabled: false,
+                            headerShown: false,
+                          }}
                           name="ProfileUpdateScreen"
                         >
                           {(props) => (
@@ -548,6 +552,7 @@ export default function App() {
                         </Stack.Screen>
                         <Stack.Screen
                           options={{
+                            gestureEnabled: false,
                             title:
                               Platform.OS === "android" ? "Gaming News" : "",
                             headerTitleAlign: "center",
@@ -564,6 +569,7 @@ export default function App() {
                         >
                           {(props) => (
                             <GamingNewsScreen
+                              lastVisitedScreen={lastVisitedScreen}
                               scrollHandler={scrollHandler}
                               animatedHeaderStyle={animatedHeaderStyle}
                               yOffset={yOffset}
@@ -589,6 +595,7 @@ export default function App() {
                         </Stack.Screen>
                         <Stack.Screen
                           options={{
+                            gestureEnabled: false,
                             title:
                               Platform.OS === "android" ? "Audio News" : "",
                             headerTitleAlign: "center",
@@ -605,6 +612,7 @@ export default function App() {
                         >
                           {(props) => (
                             <AudioNewsScreen
+                              lastVisitedScreen={lastVisitedScreen}
                               scrollHandler={scrollHandler}
                               animatedHeaderStyle={animatedHeaderStyle}
                               yOffset={yOffset}
@@ -630,6 +638,7 @@ export default function App() {
                         </Stack.Screen>
                         <Stack.Screen
                           options={{
+                            gestureEnabled: false,
                             title:
                               Platform.OS === "android" ? "Mobile News" : "",
                             headerTitleAlign: "center",
@@ -646,6 +655,7 @@ export default function App() {
                         >
                           {(props) => (
                             <MobileNewsScreen
+                              lastVisitedScreen={lastVisitedScreen}
                               scrollHandler={scrollHandler}
                               animatedHeaderStyle={animatedHeaderStyle}
                               yOffset={yOffset}
@@ -782,6 +792,7 @@ export default function App() {
                         isDarkMode={isDarkMode}
                       />
                       <AppDrawer
+                        navbarLinePosition={navbarLinePosition}
                         animatedStyles={animatedStyles}
                         storedCredentials={storedCredentials}
                         lastVisitedScreen={lastVisitedScreen}

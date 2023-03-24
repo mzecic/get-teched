@@ -294,6 +294,7 @@ export default function HomeScreen({
       ) : (
         <>
           <HeaderBar
+            lastVisitedScreen={lastVisitedScreen}
             animatedHeaderStyle={animatedHeaderStyle}
             yOffset={yOffset}
             headerHeight={headerHeight}
