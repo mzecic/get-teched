@@ -9,7 +9,7 @@ export default function BlurAppDrawerArea({
   blurAreaAnim,
   blurIntensity,
   closeDrawerHandler,
-  animatedStyles,
+  blurAnimatedStyle,
   closeBlur,
   blurOffset,
 }) {
@@ -18,7 +18,7 @@ export default function BlurAppDrawerArea({
     <Animated.View
       style={[
         styles.blurContainer,
-        animatedStyles,
+        blurAnimatedStyle,
         {
           width: windowWidth,
           //   transform: [{ translateX: blurOffset }],
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    zIndex: 499,
+    zIndex: 98,
   },
   blurArea: {
     height: "100%",

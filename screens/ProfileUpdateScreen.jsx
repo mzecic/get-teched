@@ -44,7 +44,7 @@ export default function ProfileCreateScreen({
       isDarkMode: isDarkMode,
       soundEffectsOn: soundEffectsOn,
     });
-    navigation.navigate(lastVisitedScreen);
+    navigation.navigate("ProfileScreen");
     setRefreshing(true);
   }
 
@@ -57,7 +57,7 @@ export default function ProfileCreateScreen({
             pressed ? styles.itemPressed : null,
           ]}
           onPress={() => {
-            navigation.navigate(lastVisitedScreen);
+            navigation.navigate("ProfileScreen");
             setIsMenu(true);
           }}
         >

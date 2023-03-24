@@ -35,6 +35,7 @@ import MobileNewsScreen from "./screens/MobileNewsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import MarketplaceScreen from "./screens/MarketplaceScreen";
+import TechSchortsScreen from "./screens/TechShortsScreen";
 import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
@@ -98,32 +99,26 @@ export default function App() {
     };
   });
 
+  const blurAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: blurOffset.value }],
+    };
+  });
+
   function closeDrawerHandler() {
-    offsetDrawer.value = withTiming(windowWidth, {
+    offsetDrawer.value = withTiming(0.6 * windowWidth, {
       duration: 1500,
       easing: Easing.out(Easing.exp),
     });
-    blurIntensity.value = withTiming(0, {
+    blurOffset.value = withTiming(windowWidth, {
       duration: 500,
       easing: Easing.out(Easing.exp),
     });
   }
 
-  function openBlur() {
-    blurDrawer.value = withTiming(0, {
-      duration: 0,
-      easing: Easing.out(Easing.exp),
-    });
-  }
-  function closeBlur() {
-    blurOffset.value = withTiming(windowWidth, {
-      duration: 0,
-      easing: Easing.out(Easing.exp),
-    });
-  }
   function openDrawerHandler() {
-    blurIntensity.value = withTiming(20, {
-      duration: 1000,
+    blurOffset.value = withTiming(0, {
+      duration: 0,
       easing: Easing.out(Easing.exp),
     });
     offsetDrawer.value = withTiming(0, {
@@ -201,6 +196,8 @@ export default function App() {
   HEADER_HEIGHT = 100;
   const headerOpacity = 0;
   const navbarVisibility = useSharedValue(1);
+  const navbarLinePosition = useSharedValue(0);
+  // 0.19
 
   const animatedHeaderStyle = useAnimatedStyle(() => {
     return {
@@ -215,6 +212,15 @@ export default function App() {
       transform: [
         { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
         { scaleY: isMenu ? 0 : 1 },
+      ],
+    };
+  });
+
+  const animatedNavbarLine = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: navbarLinePosition.value },
+        { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
       ],
     };
   });
@@ -701,6 +707,23 @@ export default function App() {
                           options={{
                             headerShown: false,
                           }}
+                          name="TechShortsScreen"
+                        >
+                          {(props) => (
+                            <TechSchortsScreen
+                              lastVisitedScreen={lastVisitedScreen}
+                              isDarkMode={isDarkMode}
+                              allNews={allNews}
+                              setAllNews={setAllNews}
+                              isLoading={isLoading}
+                              setIsLoading={setIsLoading}
+                            />
+                          )}
+                        </Stack.Screen>
+                        <Stack.Screen
+                          options={{
+                            headerShown: false,
+                          }}
                           name="ProfileScreen"
                         >
                           {(props) => (
@@ -736,9 +759,11 @@ export default function App() {
                         </Stack.Screen>
                       </Stack.Navigator>
                       <BottomNavBar
+                        navbarLinePosition={navbarLinePosition}
+                        animatedNavbarLine={animatedNavbarLine}
+                        windowWidth={windowWidth}
                         animatedNavbarStyle={animatedNavbarStyle}
                         navbarVisibility={navbarVisibility}
-                        openBlur={openBlur}
                         closeDrawer={closeDrawer}
                         openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
@@ -757,7 +782,6 @@ export default function App() {
                         isDarkMode={isDarkMode}
                       />
                       <AppDrawer
-                        closeBlur={closeBlur}
                         animatedStyles={animatedStyles}
                         storedCredentials={storedCredentials}
                         lastVisitedScreen={lastVisitedScreen}
@@ -770,7 +794,7 @@ export default function App() {
                         setIsMenu={setIsMenu}
                       />
                       <BlurAppDrawerArea
-                        closeBlur={closeBlur}
+                        blurAnimatedStyle={blurAnimatedStyle}
                         blurOffset={blurOffset}
                         animatedStyles={animatedStyles}
                         closeDrawerHandler={closeDrawerHandler}

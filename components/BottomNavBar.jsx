@@ -1,7 +1,7 @@
 import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated, { withTiming } from "react-native-reanimated";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -22,19 +22,44 @@ export default function BottomNavBar({
   closeDrawer,
   navbarVisibility,
   animatedNavbarStyle,
+  animatedNavbarLine,
+  navbarLinePosition,
+  windowWidth,
 }) {
   const navigation = useNavigation();
 
   return (
     <>
+      <View
+        style={[
+          styles.lineContainer,
+          {
+            paddingHorizontal: 0.025 * windowWidth,
+            width: windowWidth,
+          },
+        ]}
+      >
+        <Animated.View
+          style={[
+            styles.animatedLine,
+            animatedNavbarLine,
+            {
+              width: 0.19 * windowWidth,
+              backgroundColor: isDarkMode
+                ? primaryColors.colors.white
+                : primaryColors.colors.black,
+            },
+          ]}
+        ></Animated.View>
+      </View>
       <Animated.View
         style={[
           styles.navContainer,
-
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
               : primaryColors.colors.backgroundLightMode,
+            paddingHorizontal: 0.025 * windowWidth,
           },
           animatedNavbarStyle,
         ]}
@@ -47,6 +72,8 @@ export default function BottomNavBar({
               setLastVisitedScreen("HomeScreen");
               if (lastVisitedScreen === "HomeScreen") {
                 scrollToTopHandler();
+              } else {
+                navbarLinePosition.value = withTiming(0);
               }
             }}
             style={({ pressed }) => [styles.button]}
@@ -70,6 +97,7 @@ export default function BottomNavBar({
                   styles.imageTag,
                   {
                     color: isDarkMode ? "white" : "black",
+                    width: 0.19 * windowWidth,
                   },
                 ]}
               >
@@ -82,11 +110,9 @@ export default function BottomNavBar({
           <Pressable
             onPress={() => {
               if (soundEffectsOn) playSound();
-              navigation.navigate("GamingNewsScreen");
-              setLastVisitedScreen("GamingNewsScreen");
-              if (lastVisitedScreen === "GamingNewsScreen") {
-                scrollToTopGamingHandler();
-              }
+              navigation.navigate("TechShortsScreen");
+              setLastVisitedScreen("TechShortsScreen");
+              navbarLinePosition.value = withTiming(0.19 * windowWidth);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -99,7 +125,7 @@ export default function BottomNavBar({
                   },
                 ]}
                 source={
-                  lastVisitedScreen === "GamingNewsScreen"
+                  lastVisitedScreen === "TechShortsScreen"
                     ? require("../assets/video-fill.png")
                     : require("../assets/video-icon.png")
                 }
@@ -109,6 +135,7 @@ export default function BottomNavBar({
                   styles.imageTag,
                   {
                     color: isDarkMode ? "white" : "black",
+                    width: 0.19 * windowWidth,
                   },
                 ]}
               >
@@ -123,9 +150,7 @@ export default function BottomNavBar({
               if (soundEffectsOn) playSound();
               navigation.navigate("MarketplaceScreen");
               setLastVisitedScreen("MarketplaceScreen");
-              if (lastVisitedScreen === "MarketplaceScreen") {
-                scrollToTopMobileHandler();
-              }
+              navbarLinePosition.value = withTiming(0.38 * windowWidth);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -148,6 +173,7 @@ export default function BottomNavBar({
                   styles.imageTag,
                   {
                     color: isDarkMode ? "white" : "black",
+                    width: 0.19 * windowWidth,
                   },
                 ]}
               >
@@ -162,6 +188,7 @@ export default function BottomNavBar({
               if (soundEffectsOn) playSound();
               navigation.navigate("SearchScreen");
               setLastVisitedScreen("SearchScreen");
+              navbarLinePosition.value = withTiming(0.57 * windowWidth);
             }}
             style={({ pressed }) => [styles.button]}
           >
@@ -184,6 +211,7 @@ export default function BottomNavBar({
                   styles.imageTag,
                   {
                     color: isDarkMode ? "white" : "black",
+                    width: 0.19 * windowWidth,
                   },
                 ]}
               >
@@ -215,6 +243,7 @@ export default function BottomNavBar({
                   styles.imageTag,
                   {
                     color: isDarkMode ? "white" : "black",
+                    width: 0.19 * windowWidth,
                   },
                 ]}
               >
@@ -234,7 +263,6 @@ const styles = StyleSheet.create({
     height: 65,
     width: "100%",
     paddingTop: 8,
-    paddingHorizontal: 12,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
@@ -245,7 +273,6 @@ const styles = StyleSheet.create({
   navIcon: {
     width: 25,
     height: 25,
-    // transform: [{ scale: 0.95 }],
     alignSelf: "center",
   },
   buttonContainer: {
@@ -266,5 +293,13 @@ const styles = StyleSheet.create({
   imageTag: {
     // alignSelf: "center",
     fontSize: 10,
+    textAlign: "center",
+  },
+  lineContainer: {
+    bottom: 61,
+    zIndex: 200,
+  },
+  animatedLine: {
+    height: 2,
   },
 });
