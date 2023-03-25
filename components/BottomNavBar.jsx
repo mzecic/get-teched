@@ -1,7 +1,7 @@
 import { View, Pressable, StyleSheet, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import primaryColors from "../assets/colors/primaryColors";
-import Animated, { withTiming } from "react-native-reanimated";
+import Animated, { withTiming, SlideInLeft } from "react-native-reanimated";
 
 export default function BottomNavBar({
   lastVisitedScreen,
@@ -103,24 +103,24 @@ export default function BottomNavBar({
                     : require("../assets/news-icon.png")
                 }
               />
-              <Image
-                style={{
-                  position: "absolute",
-                  tintColor: isDarkMode ? "white" : "black",
-                  width: 12,
-                  height: 12,
-                  right: 10,
-                }}
-                source={
-                  lastVisitedScreen === "GamingNewsScreen"
-                    ? require("../assets/gaming-fill.png")
-                    : lastVisitedScreen === "AudioNewsScreen"
-                    ? require("../assets/audio-fill.png")
-                    : lastVisitedScreen === "MobileNewsScreen"
-                    ? require("../assets/mobile-fill.png")
-                    : require("../assets/empty.png")
-                }
-              />
+              <Animated.View style={{ position: "absolute", right: 10 }}>
+                <Image
+                  style={{
+                    tintColor: isDarkMode ? "white" : "black",
+                    width: 12,
+                    height: 12,
+                  }}
+                  source={
+                    lastVisitedScreen === "GamingNewsScreen"
+                      ? require("../assets/gaming-fill.png")
+                      : lastVisitedScreen === "AudioNewsScreen"
+                      ? require("../assets/audio-fill.png")
+                      : lastVisitedScreen === "MobileNewsScreen"
+                      ? require("../assets/mobile-fill.png")
+                      : require("../assets/empty.png")
+                  }
+                />
+              </Animated.View>
               <Text
                 style={[
                   styles.imageTag,
@@ -290,7 +290,7 @@ export default function BottomNavBar({
 const styles = StyleSheet.create({
   navContainer: {
     position: "absolute",
-    height: 65,
+    height: 80,
     width: "100%",
     paddingTop: 8,
     flexDirection: "row",
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   lineContainer: {
-    bottom: 63,
+    bottom: 77,
     zIndex: 200,
   },
   animatedLine: {
