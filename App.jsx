@@ -1,5 +1,7 @@
 import "expo-dev-client";
+import { IOS_CLIENT_ID, EBAY_TEST_TOKEN } from "@env";
 import * as AppleAuthentication from "expo-apple-authentication";
+import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -129,8 +131,9 @@ export default function App() {
 
   const [request, response, promptAsync] = Google.useAuthRequest({
     // androidClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-    iosClientId:
-      "292437952156-7qb4rlcf7ovhe8o5poc04vpehkst1ie5.apps.googleusercontent.com",
+    // iosClientId:
+    //   "292437952156-7qb4rlcf7ovhe8o5poc04vpehkst1ie5.apps.googleusercontent.com",
+    iosClientId: process.env.IOS_CLIENT_ID,
     extraParams: {
       access_type: "offline",
     },
@@ -304,6 +307,8 @@ export default function App() {
   useEffect(function () {
     checkLoginCredentials();
     console.log(storedCredentials);
+    const appUrl = Linking.createURL();
+    console.log(appUrl);
     setTimeout(async function () {
       if (!storedCredentials) {
         SplashScreen.hideAsync();
