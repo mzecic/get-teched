@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   lineContainer: {
-    bottom: 77,
+    bottom: 80,
     zIndex: 200,
   },
   animatedLine: {

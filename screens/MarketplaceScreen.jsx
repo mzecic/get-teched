@@ -7,9 +7,10 @@ export default function MarketplaceScreen() {
   const [query, setQuery] = useState("");
 
   async function searchHandler() {
-    const result = await ebay.getItem(query);
+    // const result = await ebay.getItem(query);
+    // console.log(result);
+    const result = await ebay.customSearch(query);
     console.log(result);
-    // ebay.testToken();
   }
 
   function onChangeText(text) {
