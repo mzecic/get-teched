@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: 80,
     width: "100%",
-    paddingTop: 8,
+    paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   imageTag: {
-    // alignSelf: "center",
+    marginTop: 2,
     fontSize: 10,
     textAlign: "center",
   },

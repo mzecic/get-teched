@@ -308,7 +308,6 @@ export default function App() {
     checkLoginCredentials();
     console.log(storedCredentials);
     const appUrl = Linking.createURL();
-    console.log(appUrl);
     setTimeout(async function () {
       if (!storedCredentials) {
         SplashScreen.hideAsync();
@@ -726,6 +725,7 @@ export default function App() {
                         >
                           {(props) => (
                             <TechSchortsScreen
+                              storedCredentials={storedCredentials}
                               lastVisitedScreen={lastVisitedScreen}
                               isDarkMode={isDarkMode}
                               allNews={allNews}
