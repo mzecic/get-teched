@@ -27,6 +27,7 @@ import Animated, { runOnUI, runOnJS } from "react-native-reanimated";
 import * as SplashScreen from "expo-splash-screen";
 import * as colors from "../assets/colors/primaryColors";
 import { FlatList } from "react-native-gesture-handler";
+import * as yTubeApi from "../utils/youtube-api";
 
 export default function HomeScreen({
   techNews,
@@ -72,6 +73,7 @@ export default function HomeScreen({
   headerHeight,
   scrollHandler,
   animatedHeaderStyle,
+  setShortsFeed,
 }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -262,6 +264,9 @@ export default function HomeScreen({
           setSoundEffectsOn(getProfile[0].soundEffectsOn);
           setProfile(getProfile[0]);
         }
+        // const shorts = await yTubeApi.getYouTubeList();
+        // setShortsFeed(shorts.items.map((short) => short.id.videoId));
+        // console.log(shorts.items.map((short) => short.id.videoId));
         setTimeout(function () {
           setIsLoading(false);
         }, 750);

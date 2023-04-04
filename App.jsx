@@ -29,6 +29,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import * as yTubeApi from "./utils/youtube-api";
 
 import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
@@ -37,7 +38,7 @@ import MobileNewsScreen from "./screens/MobileNewsScreen";
 import SearchScreen from "./screens/SearchScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import MarketplaceScreen from "./screens/MarketplaceScreen";
-import TechSchortsScreen from "./screens/TechShortsScreen";
+import TechShortsScreen from "./screens/TechShortsScreen";
 import ProfileUpdateScreen from "./screens/ProfileUpdateScreen";
 import BottomNavBar from "./components/BottomNavBar";
 import primaryColors from "./assets/colors/primaryColors";
@@ -83,6 +84,7 @@ export default function App() {
   const [scrollingDirection, setScrollingDirection] = useState("");
   const [hidePoint, setHidePoint] = useState(null);
   const [lastOffset, setLastOffset] = useState(0);
+  const [shortsFeed, setShortsFeed] = useState([]);
   const Stack = createNativeStackNavigator();
 
   const windowWidth = useRef(Dimensions.get("window").width).current;
@@ -486,6 +488,7 @@ export default function App() {
                         >
                           {(props) => (
                             <HomeScreen
+                              setShortsFeed={setShortsFeed}
                               animatedHeaderStyle={animatedHeaderStyle}
                               scrollHandler={scrollHandler}
                               yOffset={yOffset}
@@ -724,7 +727,9 @@ export default function App() {
                           name="TechShortsScreen"
                         >
                           {(props) => (
-                            <TechSchortsScreen
+                            <TechShortsScreen
+                              shortsFeed={shortsFeed}
+                              setShortsFeed={setShortsFeed}
                               storedCredentials={storedCredentials}
                               lastVisitedScreen={lastVisitedScreen}
                               isDarkMode={isDarkMode}

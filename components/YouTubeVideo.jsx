@@ -8,9 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import { useState, useCallback } from "react";
-import * as yTubeApi from "../utils/youtube-api";
 
-export default function YouTubeVideo({ storedCredentials }) {
+export default function YouTubeVideo({ storedCredentials, item }) {
   const [playing, setPlaying] = useState(false);
 
   const screenHeight = Dimensions.get("window").height;
@@ -27,21 +26,14 @@ export default function YouTubeVideo({ storedCredentials }) {
   }, []);
 
   return (
-    <View>
+    <View style={styles.videoContainer}>
       <YoutubePlayer
-        height={300}
-        play={playing}
-        videoId={"iee2TATGMyI"}
-        onChangeState={onStateChange}
+        height={screenHeight}
+        // play={playing}
+        videoId={item.id}
+        // onChangeState={onStateChange}
       />
-      <Pressable
-        onPress={() => {
-          (async function () {
-            const result = await yTubeApi.getYouTubeList();
-            console.log(result);
-          })();
-        }}
-      >
+      {/* <Pressable onPress={() => {}}>
         <Image
           source={
             !playing
@@ -49,7 +41,14 @@ export default function YouTubeVideo({ storedCredentials }) {
               : require("../assets/pause-icon.png")
           }
         />
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  videoContainer: {
+    flex: 1,
+    // height: 300,
+  },
+});
