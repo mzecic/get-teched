@@ -212,6 +212,14 @@ export default function App() {
     };
   });
 
+  const animatedLineTranslateY = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateY: interpolate(yOffset.value, [0, 100], [0, 100]) },
+      ],
+    };
+  });
+
   const animatedNavbarStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -728,6 +736,8 @@ export default function App() {
                         >
                           {(props) => (
                             <TechShortsScreen
+                              scrollHandler={scrollHandler}
+                              yOffset={yOffset}
                               shortsFeed={shortsFeed}
                               setShortsFeed={setShortsFeed}
                               storedCredentials={storedCredentials}
@@ -779,6 +789,7 @@ export default function App() {
                         </Stack.Screen>
                       </Stack.Navigator>
                       <BottomNavBar
+                        animatedLineTranslateY={animatedLineTranslateY}
                         navbarLinePosition={navbarLinePosition}
                         animatedNavbarLine={animatedNavbarLine}
                         windowWidth={windowWidth}

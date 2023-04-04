@@ -3,8 +3,9 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
+  Dimensions,
 } from "react-native";
+import Animated from "react-native-reanimated";
 import YouTubeVideo from "../components/YouTubeVideo";
 import { useState, useEffect } from "react";
 import * as yTubeApi from "../utils/youtube-api";
@@ -17,21 +18,26 @@ export default function TechShortsScreen({
   setIsLoading,
   refreshing,
   isDarkMode,
+  yOffset,
+  scrollHandler,
   shortsFeed,
   setShortsFeed,
 }) {
-  useEffect(function () {
-    // (async function () {
-    //   if (!refreshing) {
-    //     setIsLoading(true);
-    //   }
-    //   const result = await yTubeApi.getYouTubeList();
-    //   setShortsFeed(result.items);
-    //   setTimeout(function () {
-    //     setIsLoading(false);
-    //   }, 750);
-    // })();
-  }, [refreshing]);
+  useEffect(
+    function () {
+      // (async function () {
+      //   if (!refreshing) {
+      //     setIsLoading(true);
+      //   }
+      //   const result = await yTubeApi.getYouTubeList();
+      //   setShortsFeed(result.items);
+      //   setTimeout(function () {
+      //     setIsLoading(false);
+      //   }, 750);
+      // })();
+    },
+    [refreshing]
+  );
 
   function shortsRenderHandler(itemData) {
     return (
@@ -62,13 +68,17 @@ export default function TechShortsScreen({
         </View>
       ) : (
         <View style={styles.mainContainer}>
-          <Text>Flatlist</Text>
-          <FlatList
+          <Animated.FlatList
+            snapToAlignment="center"
+            decelerationRate={"fast"}
+            snapToInterval={Dimensions.get("window").height}
+            onScroll={scrollHandler}
             keyExtractor={(item, index) => index.toString()}
-            data={youtubeTest}
+            data={youtubeTest.filter(
+              (short) => !short.contentDetails.duration.includes("M" || "H")
+            )}
             renderItem={shortsRenderHandler}
           />
-          <Text>{youtubeTest[0].id}</Text>
         </View>
       )}
     </>

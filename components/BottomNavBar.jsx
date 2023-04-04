@@ -23,6 +23,7 @@ export default function BottomNavBar({
   navbarVisibility,
   animatedNavbarStyle,
   animatedNavbarLine,
+  animatedLineTranslateY,
   navbarLinePosition,
   windowWidth,
 }) {
@@ -43,6 +44,9 @@ export default function BottomNavBar({
         <Animated.View
           style={[
             styles.animatedLine,
+            // lastVisitedScreen === "TechShortsScreen"
+            //   ? animatedNavbarStyle
+            //   : null,
             animatedNavbarLine,
             {
               width: 0.19 * windowWidth,
@@ -56,6 +60,7 @@ export default function BottomNavBar({
       <Animated.View
         style={[
           styles.navContainer,
+          // lastVisitedScreen === "TechShortsScreen" ? animatedNavbarStyle : null,
           {
             backgroundColor: isDarkMode
               ? primaryColors.colors.black
@@ -326,7 +331,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   lineContainer: {
-    bottom: 80,
+    bottom: 78.5,
     zIndex: 200,
   },
   animatedLine: {

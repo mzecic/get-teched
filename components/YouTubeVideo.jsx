@@ -12,12 +12,12 @@ import { useState, useCallback } from "react";
 export default function YouTubeVideo({ storedCredentials, item }) {
   const [playing, setPlaying] = useState(false);
 
-  const screenHeight = Dimensions.get("window").height;
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+    Dimensions.get("window");
 
   const onStateChange = useCallback((state) => {
     if (state === "ended") {
       setPlaying(false);
-      Alert.alert("video has finished playing!");
     }
   }, []);
 
@@ -26,14 +26,37 @@ export default function YouTubeVideo({ storedCredentials, item }) {
   }, []);
 
   return (
-    <View style={styles.videoContainer}>
-      <YoutubePlayer
-        height={screenHeight}
-        // play={playing}
-        videoId={item.id}
-        // onChangeState={onStateChange}
-      />
-      {/* <Pressable onPress={() => {}}>
+    <Pressable
+      onPress={() => {
+        if (!playing) {
+          setPlaying(true);
+        }
+      }}
+    >
+      <View style={styles.videoContainer}>
+        <YoutubePlayer
+          allow="fullscreen"
+          onReady={togglePlaying}
+          height={SCREEN_HEIGHT}
+          width={SCREEN_WIDTH}
+          play={playing}
+          videoId={item.id}
+          webViewProps={{
+            injectedJavaScript: `
+            var element = document.getElementsByClassName('container')[0];
+            element.style.position = 'unset';
+            element.style.padding = 0;
+            element.style.margin = 0;
+          `,
+          }}
+          // onChangeState={onStateChange}
+          onChangeState={(event) => {
+            if (event === "paused") {
+              setPlaying(false);
+            }
+          }}
+        />
+        {/* <Pressable onPress={() => {}}>
         <Image
           source={
             !playing
@@ -42,13 +65,13 @@ export default function YouTubeVideo({ storedCredentials, item }) {
           }
         />
       </Pressable> */}
-    </View>
+      </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   videoContainer: {
-    flex: 1,
     // height: 300,
   },
 });
