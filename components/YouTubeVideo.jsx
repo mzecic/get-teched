@@ -9,7 +9,11 @@ import {
 } from "react-native";
 import { useState, useCallback } from "react";
 
-export default function YouTubeVideo({ storedCredentials, item }) {
+export default function YouTubeVideo({
+  storedCredentials,
+  item,
+  focusedIndex,
+}) {
   const [playing, setPlaying] = useState(false);
 
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
@@ -36,11 +40,16 @@ export default function YouTubeVideo({ storedCredentials, item }) {
       <View style={styles.videoContainer}>
         <YoutubePlayer
           allow="fullscreen"
-          onReady={togglePlaying}
+          // onReady={() => setPlaying(true)}
           height={SCREEN_HEIGHT}
           width={SCREEN_WIDTH}
-          play={playing}
-          videoId={item.id}
+          play={
+            focusedIndex === item.index ||
+            (focusedIndex === item.index && state === "paused")
+              ? true
+              : playing
+          }
+          videoId={item.item.id}
           webViewProps={{
             injectedJavaScript: `
             var element = document.getElementsByClassName('container')[0];
@@ -49,22 +58,13 @@ export default function YouTubeVideo({ storedCredentials, item }) {
             element.style.margin = 0;
           `,
           }}
-          // onChangeState={onStateChange}
-          onChangeState={(event) => {
-            if (event === "paused") {
-              setPlaying(false);
-            }
-          }}
+          onChangeState={onStateChange}
+          // onChangeState={(event) => {
+          //   if (event === "paused") {
+          //     setPlaying(false);
+          //   }
+          // }}
         />
-        {/* <Pressable onPress={() => {}}>
-        <Image
-          source={
-            !playing
-              ? require("../assets/play-icon.png")
-              : require("../assets/pause-icon.png")
-          }
-        />
-      </Pressable> */}
       </View>
     </Pressable>
   );

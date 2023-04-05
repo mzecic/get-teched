@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 import YouTubeVideo from "../components/YouTubeVideo";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as yTubeApi from "../utils/youtube-api";
 import { youtubeTest } from "../youtube-test-data";
 import * as colors from "../assets/colors/primaryColors";
@@ -23,6 +23,10 @@ export default function TechShortsScreen({
   shortsFeed,
   setShortsFeed,
 }) {
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+    Dimensions.get("window");
+
   useEffect(
     function () {
       // (async function () {
@@ -39,11 +43,25 @@ export default function TechShortsScreen({
     [refreshing]
   );
 
+  const handleItemFocus = useCallback(
+    ({
+      nativeEvent: {
+        contentOffset: { y },
+      },
+    }: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const offset = Math.round(y / SCREEN_HEIGHT);
+
+      setFocusedIndex(offset);
+    },
+    [setFocusedIndex]
+  );
+
   function shortsRenderHandler(itemData) {
     return (
       <YouTubeVideo
         storedCredentials={storedCredentials}
-        item={itemData.item}
+        item={itemData}
+        focusedIndex={focusedIndex}
       />
     );
   }
@@ -73,6 +91,7 @@ export default function TechShortsScreen({
             decelerationRate={"fast"}
             snapToInterval={Dimensions.get("window").height}
             onScroll={scrollHandler}
+            onMomentumScrollEnd={handleItemFocus}
             keyExtractor={(item, index) => index.toString()}
             data={youtubeTest.filter(
               (short) => !short.contentDetails.duration.includes("M" || "H")
