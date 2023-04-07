@@ -88,6 +88,7 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   const windowWidth = useRef(Dimensions.get("window").width).current;
+  const windowHeight = useRef(Dimensions.get("window").height).current;
   const blurPoint = useRef();
   blurPoint.current = 0.6 * windowWidth;
   const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
@@ -197,6 +198,7 @@ export default function App() {
 
   const yOffset = useSharedValue(0);
   const offset = useRef(0);
+  const focusedIndex = useSharedValue(0);
   const direction = useRef("");
   HEADER_HEIGHT = 100;
   const headerOpacity = 0;
@@ -239,6 +241,10 @@ export default function App() {
   });
 
   const scrollHandler = useAnimatedScrollHandler({
+    onMomentumEnd: (event, ctx) => {
+      const y = event.contentOffset.y;
+      focusedIndex.value = Math.floor(y / windowHeight);
+    },
     onBeginDrag: (event, ctx) => {
       ctx.prevY = event.contentOffset.y;
     },
@@ -443,7 +449,11 @@ export default function App() {
                 ) : (
                   <>
                     <StatusBar
-                      hidden={profile ? false : true}
+                      hidden={
+                        profile && lastVisitedScreen !== "TechShortsScreen"
+                          ? false
+                          : true
+                      }
                       style={isDarkMode && profile ? "light" : "dark"}
                     />
                     <NavigationContainer
@@ -736,6 +746,7 @@ export default function App() {
                         >
                           {(props) => (
                             <TechShortsScreen
+                              focusedIndex={focusedIndex}
                               scrollHandler={scrollHandler}
                               yOffset={yOffset}
                               shortsFeed={shortsFeed}
