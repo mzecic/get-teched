@@ -19,7 +19,9 @@ export default function YouTubeVideo({
   const [playing, setPlaying] = useState(
     item.index === focusedIndex ? true : false
   );
+  const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef();
+  const pressableHeightReduced = useRef(false);
 
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
     Dimensions.get("window");
@@ -41,9 +43,15 @@ export default function YouTubeVideo({
     [focusedIndex]
   );
 
-  const onStateChange = useCallback((state) => {
+  const onStateChange = useCallback(async function (state) {
     if (state === "ended") {
-      setPlaying(false);
+      // setPlaying(false);
+      const currentTime = await playerRef.current?.getCurrentTime();
+      if (currentTime > 0) {
+        playerRef.current.seekTo(0);
+      }
+    } else if (state === "paused") {
+      pressableHeightReduced.current === true;
     }
   }, []);
 
@@ -55,10 +63,9 @@ export default function YouTubeVideo({
     <>
       <Pressable
         style={{
-          height: SCREEN_HEIGHT,
+          height: 0.33 * SCREEN_HEIGHT,
           width: SCREEN_WIDTH,
           zIndex: 503,
-          opacity: 0,
           position: "absolute",
         }}
         onPress={() => {
@@ -72,16 +79,46 @@ export default function YouTubeVideo({
         <View
           style={{
             position: "absolute",
-            height: SCREEN_HEIGHT,
+            height: !playing ? 0.33 * SCREEN_HEIGHT : SCREEN_HEIGHT,
             width: SCREEN_WIDTH,
             backgroundColor: "black",
             zIndex: 502,
+            opacity: 0,
           }}
         ></View>
       </Pressable>
-      {/* <SafeAreaView> */}
+      <Pressable
+        onPress={() => {
+          togglePlaying();
+          console.log("pressed");
+          if (playing) {
+            setPlaying(false);
+          }
+        }}
+        style={{
+          position: "absolute",
+          height: 0.27 * SCREEN_HEIGHT,
+          width: SCREEN_WIDTH,
+          bottom: 0,
+          zIndex: 502,
+          opacity: 1,
+        }}
+      >
+        <View
+          style={{
+            position: "absolute",
+            height: 0.27 * SCREEN_HEIGHT,
+            width: SCREEN_WIDTH,
+            bottom: 0,
+            backgroundColor: "black",
+            zIndex: 502,
+            opacity: 0,
+          }}
+        ></View>
+      </Pressable>
+
       <View
-        pointerEvents="none"
+        // pointerEvents="none"
         style={[
           styles.videoContainer,
           { paddingTop: 0.05 * SCREEN_HEIGHT, backgroundColor: "black" },
@@ -102,9 +139,6 @@ export default function YouTubeVideo({
           ref={playerRef}
           initialPlayerParams={{ controls: false }}
           allow="autoplay"
-          // onReady={() =>
-          //   focusedIndex === item.index ? setPlaying(true) : null
-          // }
           height={0.95 * SCREEN_HEIGHT}
           width={SCREEN_WIDTH}
           play={playing}
@@ -118,34 +152,18 @@ export default function YouTubeVideo({
             true;`,
           }}
           onChangeState={onStateChange}
-          // onChangeState={(event) => {
-          //   if (event === "paused") {
-          //     setPlaying(false);
-          //   }
-          // }}
         />
         <View
           style={{
             backgroundColor: "black",
             bottom: 0,
-            // height: 0.13 * SCREEN_HEIGHT,
             height: 78,
             width: "100%",
             position: "absolute",
             zIndex: 505,
           }}
         ></View>
-        {/* <TouchableOpacity
-          style={{
-            backgroundColor: "black",
-            bottom: 0,
-            height: 0.05 * SCREEN_HEIGHT,
-            width: "100%",
-            position: "absolute",
-          }}
-        /> */}
       </View>
-      {/* </SafeAreaView> */}
     </>
   );
 }

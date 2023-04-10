@@ -31,16 +31,17 @@ export default function TechShortsScreen({
 
   useEffect(
     function () {
-      // (async function () {
-      //   if (!refreshing) {
-      //     setIsLoading(true);
-      //   }
-      //   const result = await yTubeApi.getYouTubeList();
-      //   setShortsFeed(result.items);
-      //   setTimeout(function () {
-      //     setIsLoading(false);
-      //   }, 750);
-      // })();
+      (async function () {
+        if (!refreshing) {
+          setIsLoading(true);
+        }
+        const result = await yTubeApi.getYouTubeList();
+        setShortsFeed(result.items);
+        console.log(shortsFeed.length);
+        setTimeout(function () {
+          setIsLoading(false);
+        }, 500);
+      })();
     },
     [refreshing]
   );
@@ -94,7 +95,7 @@ export default function TechShortsScreen({
             snapToInterval={Dimensions.get("window").height}
             onScroll={handleItemFocus}
             keyExtractor={(item, index) => index.toString()}
-            data={youtubeTest.filter(
+            data={shortsFeed.filter(
               (short) => !short.contentDetails.duration.includes("M" || "H")
             )}
             renderItem={shortsRenderHandler}
