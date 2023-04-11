@@ -149,7 +149,7 @@ export default function YouTubeVideo({
             element.style.position = 'unset';
             element.style.padding = 0;
             element.style.margin = 0;
-            true;`,
+            true`,
           }}
           onChangeState={onStateChange}
         />
