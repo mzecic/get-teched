@@ -79,7 +79,7 @@ export default function YouTubeVideo({
         <View
           style={{
             position: "absolute",
-            height: !playing ? 0.33 * SCREEN_HEIGHT : SCREEN_HEIGHT,
+            height: !playing ? 0.67 * SCREEN_HEIGHT : SCREEN_HEIGHT,
             width: SCREEN_WIDTH,
             backgroundColor: "black",
             zIndex: 502,
