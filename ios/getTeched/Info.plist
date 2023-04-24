@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>Get Teched</string>
+    <string>getTeched</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -83,7 +83,5 @@
     <string>Light</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
     <false/>
-    <key>CADisableMinimumFrameDurationOnPhone</key>
-    <true/>
   </dict>
 </plist>

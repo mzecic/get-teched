@@ -231,7 +231,7 @@ export default function AppDrawer({
                 }}
               >
                 <Text style={[styles.itemText, { color: fontColor }]}>
-                  All Listing
+                  All Listings
                 </Text>
               </Pressable>
             </View>
