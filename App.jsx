@@ -5,11 +5,11 @@ import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Sound from "react-native-sound";
+// import {default as Sound} from "react-native-sound";
 import { Audio } from "expo-av";
 import { CredentialContext } from "./components/CredentialsContext";
 import * as Updates from "expo-updates";
-import { useEffect, useState, useRef, useCallback, useContext } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -29,8 +29,6 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import * as yTubeApi from "./utils/youtube-api";
-
 import HomeScreen from "./screens/HomeScreen";
 import GamingNewsScreen from "./screens/GamingNewsScreen";
 import AudioNewsScreen from "./screens/AudioNewsScreen";
@@ -58,7 +56,7 @@ import { clamp } from "./helpers/clamp";
 
 SplashScreen.preventAutoHideAsync();
 WebBrowser.maybeCompleteAuthSession();
-Sound.setCategory("Playback");
+// Sound.setCategory("Playback");
 
 export default function App() {
   const [sound, setSound] = useState();
@@ -91,8 +89,8 @@ export default function App() {
   const windowHeight = useRef(Dimensions.get("window").height).current;
   const blurPoint = useRef();
   blurPoint.current = 0.6 * windowWidth;
-  const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
-  const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
+  // const closeDrawer = useRef(new Animated.Value(0.6 * windowWidth)).current;
+  // const blurAreaAnim = useRef(new Animated.Value(windowWidth)).current;
   const blurIntensity = useSharedValue(0);
 
   const offsetDrawer = useSharedValue(0.6 * windowWidth);
@@ -806,7 +804,7 @@ export default function App() {
                         windowWidth={windowWidth}
                         animatedNavbarStyle={animatedNavbarStyle}
                         navbarVisibility={navbarVisibility}
-                        closeDrawer={closeDrawer}
+                        // closeDrawer={closeDrawer}
                         openDrawerHandler={openDrawerHandler}
                         playSound={playSound}
                         soundEffectsOn={soundEffectsOn}
@@ -830,7 +828,7 @@ export default function App() {
                         lastVisitedScreen={lastVisitedScreen}
                         setLastVisitedScreen={setLastVisitedScreen}
                         isDarkMode={isDarkMode}
-                        closeDrawer={closeDrawer}
+                        // closeDrawer={closeDrawer}
                         closeDrawerHandler={closeDrawerHandler}
                         windowWidth={windowWidth}
                         isMenu={isMenu}
@@ -842,10 +840,10 @@ export default function App() {
                         animatedStyles={animatedStyles}
                         closeDrawerHandler={closeDrawerHandler}
                         blurIntensity={blurIntensity}
-                        blurAreaAnim={blurAreaAnim}
+                        // blurAreaAnim={blurAreaAnim}
                         isDarkMode={isDarkMode}
                         windowWidth={windowWidth}
-                        closeDrawer={closeDrawer}
+                        // closeDrawer={closeDrawer}
                       />
                     </NavigationContainer>
                   </>

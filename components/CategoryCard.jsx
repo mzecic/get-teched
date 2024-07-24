@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image, Platform } from "react-native";
 import primaryColors from "../assets/colors/primaryColors";
 import * as WebBrowser from "expo-web-browser";
 
