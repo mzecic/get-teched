@@ -88,7 +88,6 @@ export default function HeaderBar({
           if (soundEffectsOn) {
             playSound();
           }
-          console.log(yOffset._value);
           navigation.navigate("ProfileScreen");
           //   setLastVisitedScreen("ProfileScreen");
           setIsMenu(true);
